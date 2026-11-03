@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>go2_description</name>
+  <version>1.0.0</version>
+  <description>Official Unitree Go2 Edu Quadruped URDF and DAE Meshes</description>
+  <maintainer email="support@unitree.com">Unitree Robotics</maintainer>
+  <license>BSD</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
