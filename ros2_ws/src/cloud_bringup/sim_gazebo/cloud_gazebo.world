@@ -167,5 +167,12 @@
       </link>
     </model>
 
+    <!-- Official Unitree Go2 Robot Model -->
+    <include>
+      <name>unitree_go2</name>
+      <uri>model://go2</uri>
+      <pose>0.0 0.0 0.35 0 0 0</pose>
+    </include>
+
   </world>
 </sdf>
