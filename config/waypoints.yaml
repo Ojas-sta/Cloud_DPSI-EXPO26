@@ -1,0 +1,116 @@
+# Project Cloud: Master Topological Landmark & Waypoint Graph
+# Platform: Unitree Go2 Edu
+# Reference: PROJECT.md Appendix A & Appendix C
+
+aruco_dictionary: "DICT_5X5_250"
+default_standoff_distance_meters: 1.80
+marker_elevation_meters: 1.15
+camera_height_offset_meters: 0.38
+
+nodes:
+  - id: "NODE_00"
+    label: "Exhibition Entrance / VIP Reception"
+    marker_id: 0
+    pose: { x: 0.0, y: 0.0, z: 0.0, yaw: 0.0 }
+    action: "DOCENT_GREET"
+    narration_key: "reception_welcome"
+    outbound_edges:
+      - target: "NODE_10"
+        transit_vector: { dx: 12.0, dy: 0.0, heading_deg: 0.0, nominal_speed: 0.35 }
+        clearance_radius_m: 1.2
+
+  - id: "NODE_10"
+    label: "Exhibit Booth 1: Solar Tracker Cart"
+    marker_id: 10
+    pose: { x: 12.0, y: 0.0, z: 0.0, yaw: 0.0 }
+    action: "DOCENT_PIVOT_AND_NARRATE"
+    narration_key: "booth_1_solar_cart"
+    outbound_edges:
+      - target: "NODE_11"
+        transit_vector: { dx: 0.0, dy: 8.5, heading_deg: 90.0, nominal_speed: 0.35 }
+        clearance_radius_m: 1.2
+
+  - id: "NODE_11"
+    label: "Exhibit Booth 2: Edge-AI Agri-Drone"
+    marker_id: 11
+    pose: { x: 12.0, y: 8.5, z: 0.0, yaw: 90.0 }
+    action: "DOCENT_PIVOT_AND_NARRATE"
+    narration_key: "booth_2_agri_drone"
+    outbound_edges:
+      - target: "NODE_12"
+        transit_vector: { dx: -6.0, dy: 0.0, heading_deg: 180.0, nominal_speed: 0.35 }
+        clearance_radius_m: 1.2
+
+  - id: "NODE_12"
+    label: "Exhibit Booth 3: Bionic Myoelectric Prosthetic"
+    marker_id: 12
+    pose: { x: 6.0, y: 8.5, z: 0.0, yaw: 180.0 }
+    action: "DOCENT_PIVOT_AND_NARRATE"
+    narration_key: "booth_3_bionic_prosthetic"
+    outbound_edges:
+      - target: "NODE_13"
+        transit_vector: { dx: -6.0, dy: 0.0, heading_deg: 180.0, nominal_speed: 0.35 }
+        clearance_radius_m: 1.2
+
+  - id: "NODE_13"
+    label: "Exhibit Booth 4: IoT Smart Microgrid"
+    marker_id: 13
+    pose: { x: 0.0, y: 8.5, z: 0.0, yaw: 180.0 }
+    action: "DOCENT_PIVOT_AND_NARRATE"
+    narration_key: "booth_4_smart_grid"
+    outbound_edges:
+      - target: "NODE_30"
+        transit_vector: { dx: 0.0, dy: -8.5, heading_deg: -90.0, nominal_speed: 0.35 }
+        clearance_radius_m: 1.2
+
+  - id: "NODE_30"
+    label: "Central Demonstration Stage Finale"
+    marker_id: 30
+    pose: { x: 0.0, y: 0.0, z: 0.0, yaw: 0.0 }
+    action: "DOCENT_STAGE_FINALE"
+    narration_key: "stage_finale"
+    outbound_edges:
+      - target: "NODE_99"
+        transit_vector: { dx: -4.0, dy: -4.0, heading_deg: -135.0, nominal_speed: 0.30 }
+        clearance_radius_m: 1.0
+
+  - id: "NODE_99"
+    label: "Autonomous Recharge Bay / Home Prone"
+    marker_id: 99
+    pose: { x: -4.0, y: -4.0, z: 0.0, yaw: -135.0 }
+    action: "PRONE_REST"
+    narration_key: "docking_standby"
+    outbound_edges: []
+
+# Makerspace Storage & Patrolling Nodes (ARGUS Mode)
+makerspace_nodes:
+  - id: "CAB_01"
+    label: "Makerspace Electronics & Microcontrollers Cabinet"
+    marker_id: 1
+    cabinet_id: 1
+    pose: { x: 3.5, y: -2.0, z: 0.0, yaw: -90.0 }
+  - id: "CAB_02"
+    label: "Makerspace Passive Components Cabinet"
+    marker_id: 2
+    cabinet_id: 2
+    pose: { x: 5.5, y: -2.0, z: 0.0, yaw: -90.0 }
+  - id: "CAB_03"
+    label: "Makerspace Sensors & Actuators Cabinet"
+    marker_id: 3
+    cabinet_id: 3
+    pose: { x: 7.5, y: -2.0, z: 0.0, yaw: -90.0 }
+  - id: "CAB_04"
+    label: "Makerspace Precision Hand Tools Cabinet"
+    marker_id: 4
+    cabinet_id: 4
+    pose: { x: 9.5, y: -2.0, z: 0.0, yaw: -90.0 }
+  - id: "CAB_05"
+    label: "Rapid 3D Printing & Filament Farm"
+    marker_id: 5
+    cabinet_id: 5
+    pose: { x: 11.5, y: -2.0, z: 0.0, yaw: -90.0 }
+  - id: "BENCH_SOLDERING"
+    label: "Soldering & Fume Extraction Bench"
+    marker_id: 6
+    cabinet_id: 6
+    pose: { x: 13.5, y: -2.0, z: 0.0, yaw: -90.0 }

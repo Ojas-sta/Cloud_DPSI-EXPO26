@@ -1,0 +1,9 @@
+# TriggerTour.srv: Command to initiate exhibition tour
+# Request
+string tour_profile             # "VIP_EXECUTIVE", "DEEP_TECHNICAL", "STEM_OUTREACH"
+string starting_node            # defaults to "NODE_00" if empty
+---
+# Response
+bool accepted
+string message
+string initial_state

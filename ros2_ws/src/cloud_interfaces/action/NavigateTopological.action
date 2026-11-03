@@ -1,0 +1,18 @@
+# NavigateTopological.action: Directed landmark transit
+# Goal
+string target_node_id           # e.g., "NODE_11"
+float32 target_standoff_m       # e.g., 1.80m
+float32 max_speed_mps           # e.g., 0.35m/s
+---
+# Result
+bool reached
+string final_node_id
+float32 total_transit_time_sec
+string completion_status        # "SUCCESS", "OBSTRUCTED_EGRESS", "MARKER_LOST"
+---
+# Feedback
+string current_segment_source
+string current_segment_target
+float32 distance_remaining_m
+float32 optical_confidence
+bool crowd_slowdown_active

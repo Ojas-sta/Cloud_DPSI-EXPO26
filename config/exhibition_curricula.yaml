@@ -1,0 +1,158 @@
+# Project Cloud: Exhibition Narration Curricula & Fact Sheets
+# Event: DPSI EXPO '26 // Robotics & Engineering Pavilion
+# Reference: PROJECT.md Appendix E
+
+reception_welcome:
+  booth_id: "RECEPTION"
+  marker_id: 0
+  title: "Official VIP Reception & Interception"
+  speaker_role: "THE DOCENT"
+  greeting_script: >
+    Honorable evaluators and distinguished guests, welcome to the DPSI EXPO 2026.
+    I am Cloud, your autonomous quadruped VIP tour docent and ground utility steward.
+    Engineered on the Unitree Go2 Edu platform with dual cognitive AI personas, 
+    active optical telemetry, and student mechatronics, I will guide you through 
+    our premier engineering capstones. Please press my green console button whenever 
+    you are ready to proceed.
+  qa_pairs:
+    - q: "What is your primary purpose?"
+      a: "I serve a dual operational role: daily makerspace logistics workhorse as ARGUS, and official autonomous exhibition ambassador as The Docent."
+    - q: "Who built your systems?"
+      a: "I was engineered by the DPSI student robotics team, combining custom PETG mechatronics, dual cognitive AI agents, and optical sensor fusion."
+
+booth_1_solar_cart:
+  booth_id: "BOOTH_01"
+  marker_id: 10
+  title: "Autonomous Solar Tracking Cart"
+  speaker_role: "THE DOCENT"
+  narration_script: >
+    Honorable evaluators, welcome to Booth 1: The Autonomous Solar Tracking Cart.
+    This capstone project addresses efficiency losses in fixed photovoltaic installations.
+    Notice the dual-axis worm gear drive 3D-printed in our makerspace with PETG-CF.
+    By tracking peak solar vectors via four LDR sensors and an onboard MPPT algorithm,
+    this team achieved a measured 34.2% gain in daily energy yield. The system runs on an STM32F401 microcontroller.
+  key_specs:
+    microcontroller: "STM32F401 Black Pill ARM Cortex-M4"
+    actuation: "Dual-axis worm gear drive in PETG-CF"
+    efficiency_gain: "+34.2% daily energy yield over fixed panel"
+    tracking_sensors: "Quad-quadrant light-dependent resistor (LDR) matrix"
+  qa_pairs:
+    - q: "How does the tracking mechanism handle overcast skies?"
+      a: "The firmware blends real-time LDR differential readings with a mathematical solar ephemeris calculation to maintain optimal orientation during cloud cover."
+
+booth_2_agri_drone:
+  booth_id: "BOOTH_02"
+  marker_id: 11
+  title: "Edge-AI Agricultural Inspection Drone"
+  speaker_role: "THE DOCENT"
+  narration_script: >
+    Here at Booth 2, we present the Edge-AI Agricultural Inspection Drone. Engineered for precision viticulture,
+    this autonomous quadrotor platform executes real-time foliar disease classification directly at the edge.
+    Notice the custom carbon-fiber payload gimbal housing a 5-band multispectral camera. By detecting early-stage
+    fungal blight before visible symptoms emerge, this system reduces chemical fungicide application by up to 40%.
+  key_specs:
+    compute: "NVIDIA Jetson Orin Nano with TensorRT quantization"
+    payload: "5-band multispectral camera on 2-axis carbon-fiber gimbal"
+    inference_latency: "28ms per foliar image tile"
+    chemical_reduction: "Up to 40% reduction in chemical fungicide application"
+  qa_pairs:
+    - q: "What deep learning model does it run?"
+      a: "It runs a custom pruned YOLOv8-Nano model quantized to INT8 precision, running at 35 frames per second on the Jetson Orin Nano."
+
+booth_3_bionic_prosthetic:
+  booth_id: "BOOTH_03"
+  marker_id: 12
+  title: "Low-Cost Bionic Myoelectric Upper-Limb Prosthetic"
+  speaker_role: "THE DOCENT"
+  narration_script: >
+    Welcome to Booth 3: The Low-Cost Bionic Myoelectric Prosthetic. This project democratizes advanced prosthetic
+    technology by replacing $20,000 clinical devices with a $350 rapid-prototyped alternative. Utilizing four
+    non-invasive surface EMG electrode pads, the onboard dual-core microcontroller classifies five distinct finger
+    grip patterns in under 45 milliseconds using a localized 1D-Convolutional Neural Network.
+  key_specs:
+    bill_of_materials: "$350 total fabrication cost vs. $20,000 commercial clinical units"
+    actuation: "Five micro linear actuators with tendon-driven flexible TPU joints"
+    classification_speed: "< 45ms pattern classification latency"
+    sensing: "4-channel surface electromyography (sEMG) front-end"
+  qa_pairs:
+    - q: "How many grip patterns can the user execute?"
+      a: "The neural network classifies 5 functional grips: power grasp, precision pinch, tripod grip, index point, and lateral key grip."
+
+booth_4_smart_grid:
+  booth_id: "BOOTH_04"
+  marker_id: 13
+  title: "Decentralized IoT Smart Microgrid Power Node"
+  speaker_role: "THE DOCENT"
+  narration_script: >
+    At Booth 4, we examine the Decentralized IoT Microgrid Power Node. Designed for rural electrification resilience,
+    this bi-directional inverter node balances localized renewable energy generation with battery storage. Using a
+    custom frequency-droop control algorithm, adjacent nodes share load dynamically across a private mesh network
+    without requiring a fragile central coordinator.
+  key_specs:
+    topology: "Decentralized peer-to-peer mesh with ESP32-S3 nodes"
+    control_algorithm: "Frequency-droop autonomous load balancing"
+    fault_tolerance: "Sub-10ms automatic islanding on grid disconnect"
+
+booth_5_soft_gripper:
+  booth_id: "BOOTH_05"
+  marker_id: 14
+  title: "Biomimetic Soft Robotic Marine Gripper"
+  speaker_role: "THE DOCENT"
+  narration_script: >
+    Booth 5 presents the Biomimetic Soft Robotic Marine Gripper. Engineered for delicate benthic specimen sampling,
+    this end-effector utilizes pneumatic silicone chambers that inflate elastomeric fingers around fragile marine
+    organisms without applying destructive crushing forces. Actuation pressure is regulated via micro-solenoid valves.
+  key_specs:
+    material: "Dragon Skin 30 silicone elastomeric matrix"
+    pressure_control: "Closed-loop micro-solenoid PWM regulation (0 to 120 kPa)"
+
+booth_6_planetary_rover:
+  booth_id: "BOOTH_06"
+  marker_id: 15
+  title: "Autonomous Planetary Exploration Rover"
+  speaker_role: "THE DOCENT"
+  narration_script: >
+    Welcome to Booth 6: The Autonomous Planetary Exploration Rover. Featuring a passive rocker-bogie suspension
+    system, this rover climbs obstacles twice the diameter of its custom TPU flexible wheels. Its visual odometry
+    pipeline executes onboard stereo SLAM, computing safe traversability hazard maps across loose gravel and sand.
+  key_specs:
+    suspension: "Passive rocker-bogie mechanism with titanium pivot joints"
+    wheels: "Parametrically gyroid-infilled flexible TPU95A"
+
+booth_7_hydroponics:
+  booth_id: "BOOTH_07"
+  marker_id: 16
+  title: "Automated Closed-Loop Smart Hydroponic Bioreactor"
+  speaker_role: "THE DOCENT"
+  narration_script: >
+    Here at Booth 7, we view the Closed-Loop Smart Hydroponic Bioreactor. This system automates vertical agriculture
+    by continuously monitoring and balancing nutrient electrical conductivity and pH levels via peristaltic
+    dosing pumps. Automated LED spectrum shifting accelerates photosynthetic biomass accumulation by 22%.
+  key_specs:
+    dosing: "Dual stepper peristaltic pumps with ±0.05 pH precision"
+    biomass_gain: "+22% measured photosynthetic yield"
+
+booth_8_exoskeleton:
+  booth_id: "BOOTH_08"
+  marker_id: 17
+  title: "Wearable Pneumatic Rehabilitation Exoskeleton"
+  speaker_role: "THE DOCENT"
+  narration_script: >
+    Finally, at Booth 8, we present the Wearable Pneumatic Exoskeleton for stroke rehabilitation. Actuated by
+    custom braided McKibben artificial muscles, this lightweight upper-limb suit provides active assistive torque
+    to the human elbow joint, reducing muscle fatigue during repetitive physical therapy regimens.
+  key_specs:
+    actuator: "High-contraction braided pneumatic McKibben artificial muscles"
+    assistive_torque: "Up to 14.5 N·m dynamic elbow joint assistance"
+
+stage_finale:
+  booth_id: "STAGE_FINALE"
+  marker_id: 30
+  title: "Central Demonstration Stage Synthesis & Evaluator Q&A"
+  speaker_role: "THE DOCENT"
+  narration_script: >
+    Distinguished evaluators, that concludes our tour of the DPSI EXPO 2026 capstones.
+    From precision viticulture and democratized prosthetics to decentralized power and autonomous robotics,
+    our student engineering teams have demonstrated rigorous, applied innovation.
+    I will now open for questions, or inspect my custom mechatronics and optical systems in person.
+    Thank you for your dedication to student engineering.

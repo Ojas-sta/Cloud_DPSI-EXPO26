@@ -1,0 +1,47 @@
+# Project Cloud: Centralized Parameter Specification
+# Reference: PROJECT.md Section 7.8
+
+mock_go2_robot:
+  ros__parameters:
+    dt: 0.05
+    nominal_body_height_m: 0.32
+    max_linear_velocity_mps: 0.60
+    max_angular_velocity_radps: 1.20
+    starting_battery_pct: 98.0
+
+aruco_tracker_node:
+  ros__parameters:
+    dictionary: "DICT_5X5_250"
+    marker_size_m: 0.16
+    camera_fov_h_deg: 69.4
+    camera_fov_v_deg: 42.5
+
+floor_spill_detector:
+  ros__parameters:
+    confidence_threshold: 0.80
+    min_area_sq_m: 0.05
+    camera_height_m: 0.38
+
+optical_follower_node:
+  ros__parameters:
+    target_standoff_m: 1.80
+    kp_z: 0.50
+    kd_z: 0.10
+    kp_x: 0.85
+    kd_x: 0.15
+
+presenter_pivot_node:
+  ros__parameters:
+    turn_duration_sec: 4.0
+    pitch_tilt_deg: 8.0
+    chassis_height_m: 0.28
+
+inventory_service_node:
+  ros__parameters:
+    db_relative_path: "config/cloud_inventory.db"
+    max_query_latency_ms: 15.0
+
+cloud_supervisory_fsm:
+  ros__parameters:
+    starting_node: "NODE_00"
+    default_persona: "THE_DOCENT"

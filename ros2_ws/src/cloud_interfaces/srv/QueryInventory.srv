@@ -1,0 +1,10 @@
+# QueryInventory.srv: Fuzzy spoken query to canonical storage resolution
+# Request
+string spoken_query             # e.g., "where are the esp32 modules"
+---
+# Response
+bool success
+string message
+InventoryItem item
+float32 match_confidence       # 0.0 to 1.0 Levenshtein / Soundex confidence
+string speech_response          # Formatted natural language reply for TTS

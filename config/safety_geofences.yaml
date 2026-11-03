@@ -1,0 +1,44 @@
+# Project Cloud: Safety Geofences & Kinematic Envelope Enforcer
+# Reference: PROJECT.md Section 7.6 & ISO 13482:2014 Compliance
+
+kinematic_limits:
+  max_linear_velocity_mps: 0.65
+  nominal_patrol_velocity_mps: 0.60
+  nominal_docent_velocity_mps: 0.35
+  max_angular_velocity_radps: 0.85
+  crowd_social_buffer_meters: 1.20
+  emergency_stop_deceleration_mps2: 2.50
+
+egress_parameters:
+  crowd_encirclement_timeout_seconds: 60.0
+  warning_audio_prompt: "Pardon me, my navigation path is obstructed. Please step back one meter to allow safe maneuvering."
+  reversal_angle_degrees: 180.0
+  reversal_speed_mps: 0.25
+
+keepout_zones:
+  - name: "STAIRCASE_DESCENT_SOUTH"
+    polygon_points_2d:
+      - [ -2.0, -8.0 ]
+      - [  4.0, -8.0 ]
+      - [  4.0, -11.0 ]
+      - [ -2.0, -11.0 ]
+    buffer_distance_m: 1.00
+    action_on_breach: "EMERGENCY_STOP"
+
+  - name: "HIGH_VOLTAGE_TRANSFORMER_BAY"
+    polygon_points_2d:
+      - [ 15.0,  3.0 ]
+      - [ 20.0,  3.0 ]
+      - [ 20.0, -2.0 ]
+      - [ 15.0, -2.0 ]
+    buffer_distance_m: 1.20
+    action_on_breach: "EMERGENCY_STOP"
+
+  - name: "CHEMICAL_ETCHING_ZONE"
+    polygon_points_2d:
+      - [ 12.0, 10.0 ]
+      - [ 16.0, 10.0 ]
+      - [ 16.0, 14.0 ]
+      - [ 12.0, 14.0 ]
+    buffer_distance_m: 0.80
+    action_on_breach: "EMERGENCY_STOP"
