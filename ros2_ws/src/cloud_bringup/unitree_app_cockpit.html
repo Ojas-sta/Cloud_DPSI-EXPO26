@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unitree Go2 Pro - Cloud Cockpit</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.75; transform: scale(1.04); }
+    }
+    .radar-grid {
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.08) 0%, rgba(15, 23, 42, 0) 70%);
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 antialiased p-3 sm:p-5 font-sans min-h-screen">
+  <div class="max-w-6xl mx-auto space-y-4">
+
+    <!-- Top App Navigation Bar (Unitree Style) -->
+    <header class="bg-slate-900/90 backdrop-blur border border-slate-800 rounded-2xl p-4 shadow-xl flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-cyan-500/20">
+          <svg class="w-6 h-6 text-slate-950" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19 13h-1.26l-1.35-4.04C16.14 8.35 15.54 8 14.88 8H9.12c-.66 0-1.26.35-1.51.96L6.26 13H5a2 2 0 0 0-2 2v2a1 1 0 0 0 1 1h1.08A2.99 2.99 0 0 0 8 20a2.99 2.99 0 0 0 2.92-2h2.16A2.99 2.99 0 0 0 16 20a2.99 2.99 0 0 0 2.92-2H20a1 1 0 0 0 1-1v-2a2 2 0 0 0-2-2zM8 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm8 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <h1 class="font-bold text-base sm:text-lg tracking-wide text-white">UNITREE GO2 PRO</h1>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-400 font-semibold border border-cyan-500/30">CLOUD-DOCENT</span>
+          </div>
+          <div class="flex items-center space-x-3 text-xs text-slate-400">
+            <span class="flex items-center space-x-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span class="text-emerald-400 font-medium">ONLINE (5G Wi-Fi 100 Mbps)</span>
+            </span>
+            <span>•</span>
+            <span>SN: GO2-PRO-984210</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Telemetry Chips -->
+      <div class="flex items-center space-x-3 text-xs">
+        <!-- Battery Pill -->
+        <div class="bg-slate-800/80 border border-slate-700/80 rounded-xl px-3 py-1.5 flex items-center space-x-2.5 shadow-inner">
+          <div class="flex items-center space-x-1">
+            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <rect x="2" y="6" width="16" height="12" rx="2" stroke-width="2"/>
+              <path d="M22 10v4" stroke-width="2" stroke-linecap="round"/>
+              <rect x="4" y="8" width="10" height="8" rx="1" fill="currentColor"/>
+            </svg>
+            <span id="txt-soc" class="font-bold text-emerald-400 text-sm">92%</span>
+          </div>
+          <div class="border-l border-slate-700 pl-2 text-slate-300">
+            <span id="txt-volt">28.5 V</span> | <span id="txt-curr">-4.2 A</span>
+          </div>
+        </div>
+
+        <!-- Mode Badge -->
+        <div id="badge-mode" class="bg-cyan-500/10 border border-cyan-500/30 rounded-xl px-3 py-1.5 text-cyan-400 font-semibold uppercase tracking-wider text-xs flex items-center space-x-1.5">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+          <span id="txt-fsm">EGO MODEL DWA: ACTIVE</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Central Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+
+      <!-- LEFT: Live 3D Ego Polar Radar & 4D LiDAR Scanner (7 Cols) -->
+      <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl flex flex-col space-y-3">
+        <div class="flex items-center justify-between border-b border-slate-800/80 pb-2.5">
+          <div class="flex items-center space-x-2">
+            <div class="w-2.5 h-2.5 rounded-full bg-cyan-400"></div>
+            <h2 class="font-bold text-sm tracking-wide text-slate-200">EGO-CENTRIC 4D LiDAR & MODEL TRAJECTORY</h2>
+          </div>
+          <div class="flex items-center space-x-2 text-xs text-slate-400">
+            <span class="inline-block w-2.5 h-1 bg-cyan-400 rounded"></span>
+            <span>Optimal Model Arc</span>
+            <span class="inline-block w-2.5 h-1 border-t border-dashed border-slate-500 ml-2"></span>
+            <span>Evaluated Candidates</span>
+          </div>
+        </div>
+
+        <!-- Polar Radar Canvas -->
+        <div class="relative w-full aspect-square max-h-[460px] mx-auto bg-slate-950 rounded-xl overflow-hidden border border-slate-800 flex items-center justify-center radar-grid">
+          <canvas id="radarCanvas" width="460" height="460" class="w-full h-full cursor-crosshair"></canvas>
+
+          <!-- Range Legend Overlays -->
+          <div class="absolute top-2 right-3 text-right text-xs space-y-0.5 pointer-events-none">
+            <div class="text-slate-500">Outer Ring: <span class="text-slate-300 font-mono">3.0m</span></div>
+            <div class="text-slate-500">Mid Ring: <span class="text-slate-300 font-mono">2.0m</span></div>
+            <div class="text-slate-500">Inner Ring: <span class="text-slate-300 font-mono">1.0m</span></div>
+            <div class="text-red-500 font-semibold">Danger Core: <span class="font-mono">0.5m</span></div>
+          </div>
+
+          <!-- Central Robot Status HUD -->
+          <div class="absolute bottom-3 left-3 bg-slate-900/85 backdrop-blur border border-slate-700/80 rounded-lg p-2 text-xs space-y-1 pointer-events-none shadow-lg">
+            <div class="text-slate-400 font-medium">Model Planner: <span class="text-cyan-400 font-bold">Dynamic Window (DWA)</span></div>
+            <div class="text-slate-400">Forward Velocity: <span id="hud-v" class="text-white font-mono font-bold">0.52 m/s</span></div>
+            <div class="text-slate-400">Steering Yaw Rate: <span id="hud-w" class="text-white font-mono font-bold">+0.18 rad/s</span></div>
+            <div class="text-slate-400">Safety State: <span id="hud-safety" class="text-emerald-400 font-bold">SAFETY_CLEAR</span></div>
+          </div>
+        </div>
+
+        <!-- Sectoral Clearance Bars (Unitree App Style) -->
+        <div class="grid grid-cols-4 gap-2 text-center text-xs pt-1">
+          <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-2">
+            <div class="text-slate-400 text-xs">FRONT SECTOR</div>
+            <div id="sec-front" class="font-bold text-sm text-cyan-400 font-mono mt-0.5">1.84 m</div>
+            <div id="stat-front" class="text-[11px] text-emerald-400 font-semibold">CLEAR</div>
+          </div>
+          <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-2">
+            <div class="text-slate-400 text-xs">LEFT FLANK</div>
+            <div id="sec-left" class="font-bold text-sm text-cyan-400 font-mono mt-0.5">2.45 m</div>
+            <div id="stat-left" class="text-[11px] text-emerald-400 font-semibold">CLEAR</div>
+          </div>
+          <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-2">
+            <div class="text-slate-400 text-xs">RIGHT FLANK</div>
+            <div id="sec-right" class="font-bold text-sm text-amber-400 font-mono mt-0.5">0.92 m</div>
+            <div id="stat-right" class="text-[11px] text-amber-400 font-semibold">CAUTION</div>
+          </div>
+          <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-2">
+            <div class="text-slate-400 text-xs">REAR SECTOR</div>
+            <div id="sec-rear" class="font-bold text-sm text-cyan-400 font-mono mt-0.5">3.10 m</div>
+            <div id="stat-rear" class="text-[11px] text-emerald-400 font-semibold">CLEAR</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Instruments, Inclinometer & Foot Forces (5 Cols) -->
+      <div class="lg:col-span-5 flex flex-col space-y-4">
+
+        <!-- Artificial Horizon & Inclinometer -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
+            <div class="flex items-center space-x-2">
+              <div class="w-2.5 h-2.5 rounded-full bg-indigo-400"></div>
+              <h2 class="font-bold text-sm tracking-wide text-slate-200">IMU ARTIFICIAL HORIZON & ATTITUDE</h2>
+            </div>
+            <span class="text-xs text-indigo-400 font-mono">6-DOF COMPLEMENTARY</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 items-center">
+            <!-- Horizon Dial -->
+            <div class="relative w-36 h-36 mx-auto bg-slate-950 rounded-full border-2 border-slate-700 overflow-hidden shadow-inner flex items-center justify-center">
+              <div id="horizonSky" class="absolute w-full h-full bg-gradient-to-b from-sky-700 to-sky-900 transition-transform duration-75"></div>
+              <div id="horizonGround" class="absolute w-full h-1/2 bottom-0 bg-gradient-to-t from-amber-950 to-amber-900 border-t-2 border-amber-400 transition-transform duration-75 origin-top"></div>
+              <!-- Crosshair Center -->
+              <div class="absolute w-12 h-0.5 bg-yellow-400"></div>
+              <div class="absolute w-0.5 h-6 bg-yellow-400"></div>
+              <div class="absolute w-2 h-2 rounded-full bg-yellow-400"></div>
+            </div>
+
+            <!-- Pitch/Roll Readouts -->
+            <div class="space-y-2 text-xs">
+              <div class="bg-slate-800/70 border border-slate-700 rounded-xl p-2.5">
+                <div class="text-slate-400">PITCH (INCLINATION)</div>
+                <div class="flex items-baseline space-x-1">
+                  <span id="txt-pitch" class="text-lg font-bold font-mono text-cyan-400">+2.4°</span>
+                  <span class="text-slate-400 text-[11px]">(Fore/Aft)</span>
+                </div>
+              </div>
+              <div class="bg-slate-800/70 border border-slate-700 rounded-xl p-2.5">
+                <div class="text-slate-400">ROLL (LATERAL TILT)</div>
+                <div class="flex items-baseline space-x-1">
+                  <span id="txt-roll" class="text-lg font-bold font-mono text-indigo-400">-0.6°</span>
+                  <span class="text-slate-400 text-[11px]">(Left/Right)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Foot Ground Force Sensors -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
+            <div class="flex items-center space-x-2">
+              <div class="w-2.5 h-2.5 rounded-full bg-emerald-400"></div>
+              <h2 class="font-bold text-sm tracking-wide text-slate-200">GROUND REACTION FORCES</h2>
+            </div>
+            <span class="text-xs text-emerald-400 font-mono">NORMAL LOAD (N)</span>
+          </div>
+
+          <div class="grid grid-cols-4 gap-2 pt-1 text-center">
+            <!-- FL Foot -->
+            <div class="space-y-1.5">
+              <div class="text-[11px] text-slate-400 font-bold">FL (Front-L)</div>
+              <div class="w-full h-24 bg-slate-950 rounded-lg p-1 flex flex-col justify-end border border-slate-800">
+                <div id="bar-fl" class="w-full bg-gradient-to-t from-emerald-600 to-emerald-400 rounded transition-all duration-75" style="height: 75%;"></div>
+              </div>
+              <div id="txt-fl" class="font-mono text-xs font-bold text-emerald-400">82 N</div>
+            </div>
+            <!-- FR Foot -->
+            <div class="space-y-1.5">
+              <div class="text-[11px] text-slate-400 font-bold">FR (Front-R)</div>
+              <div class="w-full h-24 bg-slate-950 rounded-lg p-1 flex flex-col justify-end border border-slate-800">
+                <div id="bar-fr" class="w-full bg-gradient-to-t from-emerald-600 to-emerald-400 rounded transition-all duration-75" style="height: 0%;"></div>
+              </div>
+              <div id="txt-fr" class="font-mono text-xs font-bold text-slate-500">0 N</div>
+            </div>
+            <!-- RL Foot -->
+            <div class="space-y-1.5">
+              <div class="text-[11px] text-slate-400 font-bold">RL (Rear-L)</div>
+              <div class="w-full h-24 bg-slate-950 rounded-lg p-1 flex flex-col justify-end border border-slate-800">
+                <div id="bar-rl" class="w-full bg-gradient-to-t from-emerald-600 to-emerald-400 rounded transition-all duration-75" style="height: 0%;"></div>
+              </div>
+              <div id="txt-rl" class="font-mono text-xs font-bold text-slate-500">0 N</div>
+            </div>
+            <!-- RR Foot -->
+            <div class="space-y-1.5">
+              <div class="text-[11px] text-slate-400 font-bold">RR (Rear-R)</div>
+              <div class="w-full h-24 bg-slate-950 rounded-lg p-1 flex flex-col justify-end border border-slate-800">
+                <div id="bar-rr" class="w-full bg-gradient-to-t from-emerald-600 to-emerald-400 rounded transition-all duration-75" style="height: 78%;"></div>
+              </div>
+              <div id="txt-rr" class="font-mono text-xs font-bold text-emerald-400">85 N</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 12-Joint Motor Health Mini-Matrix -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl space-y-2 text-xs">
+          <div class="flex items-center justify-between border-b border-slate-800/80 pb-1.5">
+            <span class="font-bold text-slate-300">12-JOINT MOTOR DIAGNOSTICS</span>
+            <span class="text-emerald-400 font-medium">ALL MOTORS HEALTHY (12/12)</span>
+          </div>
+          <div class="grid grid-cols-4 gap-1.5 text-center text-[11px]">
+            <div class="bg-slate-800/50 p-1.5 rounded-lg border border-slate-700/50">
+              <div class="text-slate-400 font-semibold">FL Leg</div>
+              <div class="text-slate-200 mt-0.5">31.2°C</div>
+              <div class="text-slate-400 font-mono">11.4 Nm</div>
+            </div>
+            <div class="bg-slate-800/50 p-1.5 rounded-lg border border-slate-700/50">
+              <div class="text-slate-400 font-semibold">FR Leg</div>
+              <div class="text-slate-200 mt-0.5">30.8°C</div>
+              <div class="text-slate-400 font-mono">10.8 Nm</div>
+            </div>
+            <div class="bg-slate-800/50 p-1.5 rounded-lg border border-slate-700/50">
+              <div class="text-slate-400 font-semibold">RL Leg</div>
+              <div class="text-slate-200 mt-0.5">31.5°C</div>
+              <div class="text-slate-400 font-mono">11.9 Nm</div>
+            </div>
+            <div class="bg-slate-800/50 p-1.5 rounded-lg border border-slate-700/50">
+              <div class="text-slate-400 font-semibold">RR Leg</div>
+              <div class="text-slate-200 mt-0.5">31.1°C</div>
+              <div class="text-slate-400 font-mono">11.2 Nm</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bottom Interactive Control Deck -->
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl space-y-3">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center space-x-2">
+          <span class="text-xs font-bold tracking-wide text-slate-300">GAIT & POSTURE:</span>
+          <div class="flex flex-wrap gap-1.5">
+            <button onclick="setMode('TROT')" id="btn-trot" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20">DYNAMIC TROT</button>
+            <button onclick="setMode('GREET')" id="btn-greet" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700">VIP GREET</button>
+            <button onclick="setMode('PRESENT')" id="btn-present" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700">DOCENT TILT</button>
+            <button onclick="setMode('PRONE')" id="btn-prone" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700">PRONE SLEEP</button>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-4">
+          <!-- Speed Slider -->
+          <div class="flex items-center space-x-2 text-xs">
+            <span class="text-slate-400 font-medium">Speed:</span>
+            <input type="range" id="speedSlider" min="0.1" max="1.0" step="0.05" value="0.55" class="w-24 accent-cyan-400" oninput="updateSpeed(this.value)">
+            <span id="txt-speed-val" class="font-mono text-cyan-400 font-bold w-12">0.55m/s</span>
+          </div>
+
+          <!-- Big Red E-STOP Button -->
+          <button onclick="toggleEstop()" id="btn-estop" class="px-4 py-2 rounded-xl text-xs font-bold bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-600/30 active:scale-95 transition-all flex items-center space-x-1.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            <span>EMERGENCY E-STOP</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Cockpit State
+    let currentMode = 'TROT';
+    let isEstop = false;
+    let targetSpeed = 0.55;
+    let simTime = 0.0;
+
+    // Obstacle scenario relative to robot (ego coordinates: x forward, y left)
+    let obstacles = [
+      { x: 1.6, y: 0.15, r: 0.18, name: "Caution Cone" },
+      { x: 2.1, y: -0.20, r: 0.22, name: "Spill Boundary" },
+      { x: 2.4, y: 0.25, r: 0.18, name: "Hazard Stanchion" }
+    ];
+
+    // Model candidate rollout arcs
+    let vCandidates = [0.20, 0.38, 0.55];
+    let wCandidates = [-0.60, -0.40, -0.20, 0.0, 0.20, 0.40, 0.60];
+
+    function setMode(mode) {
+      if (isEstop) return;
+      currentMode = mode;
+      ['trot', 'greet', 'present', 'prone'].forEach(m => {
+        const btn = document.getElementById('btn-' + m);
+        if (m === mode.toLowerCase()) {
+          btn.className = "px-3 py-1.5 rounded-xl text-xs font-semibold bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20";
+        } else {
+          btn.className = "px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700";
+        }
+      });
+      document.getElementById('txt-fsm').innerText = "MODE: " + mode;
+    }
+
+    function toggleEstop() {
+      isEstop = !isEstop;
+      const btn = document.getElementById('btn-estop');
+      const badge = document.getElementById('badge-mode');
+      if (isEstop) {
+        btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-lg shadow-amber-500/30";
+        btn.innerHTML = "<span>RESUME OPERATION</span>";
+        badge.className = "bg-red-500/20 border border-red-500/50 rounded-xl px-3 py-1.5 text-red-400 font-bold uppercase tracking-wider text-xs flex items-center space-x-1.5";
+        document.getElementById('txt-fsm').innerText = "SAFETY_ESTOP (BRACED)";
+        document.getElementById('hud-safety').innerText = "SAFETY_ESTOP";
+        document.getElementById('hud-safety').className = "text-red-400 font-bold";
+      } else {
+        btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-600/30";
+        btn.innerHTML = "<span>EMERGENCY E-STOP</span>";
+        badge.className = "bg-cyan-500/10 border border-cyan-500/30 rounded-xl px-3 py-1.5 text-cyan-400 font-semibold uppercase tracking-wider text-xs flex items-center space-x-1.5";
+        document.getElementById('txt-fsm').innerText = "EGO MODEL DWA: ACTIVE";
+        document.getElementById('hud-safety').innerText = "SAFETY_CLEAR";
+        document.getElementById('hud-safety').className = "text-emerald-400 font-bold";
+      }
+    }
+
+    function updateSpeed(val) {
+      targetSpeed = parseFloat(val);
+      document.getElementById('txt-speed-val').innerText = targetSpeed.toFixed(2) + "m/s";
+    }
+
+    // Canvas Radar Rendering Loop
+    const canvas = document.getElementById('radarCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function drawRadar() {
+      simTime += 0.033;
+      const w = canvas.width;
+      const h = canvas.height;
+      const cx = w / 2;
+      const cy = h * 0.75; // Robot near bottom-center looking forward
+      const scale = 110; // 1 meter = 110 pixels
+
+      ctx.clearRect(0, 0, w, h);
+
+      // Range Rings (0.5m, 1.0m, 2.0m, 3.0m)
+      const rings = [0.5, 1.0, 2.0, 3.0];
+      rings.forEach(r => {
+        ctx.beginPath();
+        ctx.arc(cx, cy, r * scale, Math.PI, 2 * Math.PI);
+        ctx.strokeStyle = (r === 0.5) ? 'rgba(239, 68, 68, 0.45)' : 'rgba(51, 65, 85, 0.55)';
+        ctx.lineWidth = (r === 0.5) ? 1.5 : 1;
+        ctx.setLineDash((r === 0.5) ? [4, 4] : [2, 4]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Label
+        ctx.fillStyle = 'rgba(148, 163, 184, 0.6)';
+        ctx.font = '10px monospace';
+        ctx.fillText(r.toFixed(1) + 'm', cx + 6, cy - r * scale + 12);
+      });
+
+      // Radial angle lines (-45°, 0°, +45°)
+      [-Math.PI / 4, 0, Math.PI / 4].forEach(ang => {
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(cx + Math.sin(ang) * 3.2 * scale, cy - Math.cos(ang) * 3.2 * scale);
+        ctx.strokeStyle = 'rgba(51, 65, 85, 0.35)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      });
+
+      // Dynamic Trot Step Animation
+      let gaitPhase = simTime * 2.5 * Math.PI;
+      let trotBob = Math.sin(gaitPhase * 2) * 0.01;
+      let fl_f = (Math.sin(gaitPhase) > 0) ? (75 + Math.sin(gaitPhase) * 25) : 0;
+      let rr_f = (Math.sin(gaitPhase) > 0) ? (78 + Math.sin(gaitPhase) * 22) : 0;
+      let fr_f = (Math.sin(gaitPhase) <= 0) ? (76 - Math.sin(gaitPhase) * 24) : 0;
+      let rl_f = (Math.sin(gaitPhase) <= 0) ? (77 - Math.sin(gaitPhase) * 23) : 0;
+
+      if (isEstop || currentMode === 'PRONE') {
+        fl_f = 0; fr_f = 0; rl_f = 0; rr_f = 0;
+      }
+
+      document.getElementById('bar-fl').style.height = (fl_f) + '%';
+      document.getElementById('txt-fl').innerText = Math.round(fl_f) + ' N';
+      document.getElementById('bar-fr').style.height = (fr_f) + '%';
+      document.getElementById('txt-fr').innerText = Math.round(fr_f) + ' N';
+      document.getElementById('bar-rl').style.height = (rl_f) + '%';
+      document.getElementById('txt-rl').innerText = Math.round(rl_f) + ' N';
+      document.getElementById('bar-rr').style.height = (rr_f) + '%';
+      document.getElementById('txt-rr').innerText = Math.round(rr_f) + ' N';
+
+      // Pitch & Roll Dynamics
+      let pitchDeg = 2.4;
+      let rollDeg = -0.6 + Math.sin(gaitPhase) * 1.2;
+      if (currentMode === 'GREET') pitchDeg = 1.0 + Math.sin(simTime * 3) * 6.0;
+      if (currentMode === 'PRESENT') pitchDeg = 8.0;
+      if (currentMode === 'PRONE') pitchDeg = -2.0;
+
+      document.getElementById('txt-pitch').innerText = (pitchDeg >= 0 ? '+' : '') + pitchDeg.toFixed(1) + '°';
+      document.getElementById('txt-roll').innerText = (rollDeg >= 0 ? '+' : '') + rollDeg.toFixed(1) + '°';
+
+      // Horizon Tilt
+      document.getElementById('horizonSky').style.transform = `rotate(${-rollDeg}deg) translateY(${pitchDeg * 1.5}px)`;
+      document.getElementById('horizonGround').style.transform = `rotate(${-rollDeg}deg) translateY(${pitchDeg * 1.5}px)`;
+
+      // Render Detected Obstacles in Local Frame
+      obstacles.forEach(obs => {
+        const ox = cx - obs.y * scale; // In canvas: left is -y
+        const oy = cy - obs.x * scale; // forward is -x in canvas y
+
+        ctx.beginPath();
+        ctx.arc(ox, oy, obs.r * scale, 0, 2 * Math.PI);
+        ctx.fillStyle = 'rgba(239, 68, 68, 0.4)';
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(239, 68, 68, 0.9)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.fillStyle = '#fca5a5';
+        ctx.font = '11px sans-serif';
+        ctx.fillText(obs.name, ox + 14, oy + 4);
+      });
+
+      // Render Evaluated Candidate Trajectories (Dashed Arcs)
+      if (!isEstop && currentMode === 'TROT') {
+        wCandidates.forEach(w => {
+          ctx.beginPath();
+          ctx.moveTo(cx, cy);
+          for (let step = 1; step <= 8; step++) {
+            let t = (step / 8) * 1.6;
+            let th = w * t;
+            let x = (Math.abs(w) > 0.05) ? (0.55 / w) * Math.sin(th) : 0.55 * t;
+            let y = (Math.abs(w) > 0.05) ? (0.55 / w) * (1 - Math.cos(th)) : 0;
+            ctx.lineTo(cx - y * scale, cy - x * scale);
+          }
+          ctx.strokeStyle = 'rgba(100, 116, 139, 0.35)';
+          ctx.lineWidth = 1;
+          ctx.setLineDash([3, 4]);
+          ctx.stroke();
+          ctx.setLineDash([]);
+        });
+
+        // Render Chosen Optimal Model Trajectory (Electric Cyan)
+        let optW = 0.38; // Model selects left avoidance curve
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        for (let step = 1; step <= 10; step++) {
+          let t = (step / 10) * 1.8;
+          let th = optW * t;
+          let x = (0.52 / optW) * Math.sin(th);
+          let y = (0.52 / optW) * (1 - Math.cos(th));
+          ctx.lineTo(cx - y * scale, cy - x * scale);
+        }
+        ctx.strokeStyle = '#06b6d4';
+        ctx.lineWidth = 3.5;
+        ctx.shadowColor = '#06b6d4';
+        ctx.shadowBlur = 10;
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        document.getElementById('hud-v').innerText = (targetSpeed * 0.95).toFixed(2) + " m/s";
+        document.getElementById('hud-w').innerText = "+0.38 rad/s";
+      } else {
+        document.getElementById('hud-v').innerText = "0.00 m/s";
+        document.getElementById('hud-w').innerText = "0.00 rad/s";
+      }
+
+      // Draw Robot Footprint Icon at Center
+      ctx.save();
+      ctx.translate(cx, cy);
+      // Robot Chassis
+      ctx.fillStyle = '#0ea5e9';
+      ctx.fillRect(-18, -28, 36, 56);
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(-18, -28, 36, 56);
+      // Head / 4D LiDAR Nose
+      ctx.fillStyle = '#00f0ff';
+      ctx.beginPath();
+      ctx.arc(0, -28, 9, Math.PI, 2 * Math.PI);
+      ctx.fill();
+      // Foot points
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillRect(-24, -30, 8, 8); // FL
+      ctx.fillRect(16, -30, 8, 8);  // FR
+      ctx.fillRect(-24, 22, 8, 8);  // RL
+      ctx.fillRect(16, 22, 8, 8);   // RR
+      ctx.restore();
+
+      requestAnimationFrame(drawRadar);
+    }
+
+    requestAnimationFrame(drawRadar);
+  </script>
+</body>
+</html>

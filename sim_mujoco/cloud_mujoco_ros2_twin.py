@@ -253,9 +253,9 @@ class Unitree4DLiDAR:
                         min_front_dist = noisy_d
                         closest_obstacle = hit_geom_name
 
-                    # Obstacle points in forward travel corridor
-                    if 0.35 <= xs <= 3.5 and abs(ys) <= 0.85 and zw > 0.03:
-                        forward_obstacles.append((xw, yw, noisy_d))
+                    # Obstacle points in forward travel corridor (in robot local frame)
+                    if 0.25 <= xs <= 3.5 and abs(ys) <= 1.20 and zw > 0.03:
+                        forward_obstacles.append((xs, ys, noisy_d))
 
         return {
             "origin": p0,
@@ -265,8 +265,89 @@ class Unitree4DLiDAR:
             "min_front": min_front_dist,
             "closest_geom": closest_obstacle,
             "hazard_detected": hazard_detected,
-            "forward_obstacles": forward_obstacles
+            "local_obstacles": forward_obstacles
         }
+
+class EgoModelPredictivePlanner:
+    """
+    Model-Based Ego-Centric Predictive Path & Velocity Planner (DWA / MPPI).
+    Operates strictly in the robot's local frame (base_link) using only onboard sensors:
+    - 4D LiDAR local obstacle points (xs, ys) & sectoral clearances
+    - Onboard IMU (pitch, roll, angular rate)
+    - Kinematic leg odometry velocity (v_x, omega_z)
+    Zero privileged global room coordinates or room boundaries in the decision loop.
+    """
+    def __init__(self):
+        self.robot_radius = 0.30
+        self.safety_margin = 0.18
+        self.horizon_time = 1.8
+        self.num_steps = 9
+        self.v_samples = [0.18, 0.35, 0.52, 0.65]
+        self.w_samples = np.linspace(-1.05, 1.05, 15)
+
+    def plan(self, local_obstacles, min_front_clearance, current_v, current_w,
+             target_rel_yaw=0.0, v_pref=0.55, imu_pitch=0.0):
+        best_cost = float("inf")
+        best_v = 0.0
+        best_w = 0.0
+        best_traj_local = []
+        all_trajs = []
+
+        obs_xy = np.array([[o[0], o[1]] for o in local_obstacles]) if len(local_obstacles) > 0 else np.empty((0, 2))
+
+        for v in self.v_samples:
+            for w in self.w_samples:
+                traj = []
+                collision = False
+                min_dist_to_obs = 999.0
+
+                for step in range(1, self.num_steps + 1):
+                    t = (step / self.num_steps) * self.horizon_time
+                    th = w * t
+                    if abs(w) > 0.04:
+                        x = (v / w) * math.sin(th)
+                        y = (v / w) * (1.0 - math.cos(th))
+                    else:
+                        x = v * t
+                        y = 0.0
+                    traj.append((x, y))
+
+                    if len(obs_xy) > 0:
+                        dists = np.hypot(obs_xy[:, 0] - x, obs_xy[:, 1] - y)
+                        step_min_d = np.min(dists)
+                        if step_min_d < min_dist_to_obs:
+                            min_dist_to_obs = step_min_d
+                        if step_min_d < (self.robot_radius + self.safety_margin):
+                            collision = True
+
+                all_trajs.append({
+                    "v": v, "w": w, "traj": traj,
+                    "collision": collision, "min_dist": min_dist_to_obs
+                })
+
+                if collision:
+                    cost = 1000.0 + (100.0 / max(0.05, min_dist_to_obs))
+                else:
+                    heading_err = abs(w * self.horizon_time - target_rel_yaw)
+                    clearance_cost = 1.0 / max(0.20, min_dist_to_obs)
+                    speed_cost = (v_pref - v) ** 2
+                    turn_cost = abs(w) * 0.4
+                    pitch_cost = max(0.0, abs(imu_pitch) - 0.15) * 10.0
+                    cost = (2.2 * heading_err + 6.5 * clearance_cost +
+                            1.0 * speed_cost + turn_cost + pitch_cost)
+
+                if cost < best_cost:
+                    best_cost = cost
+                    best_v = v
+                    best_w = w
+                    best_traj_local = traj
+
+        # Emergency braking fallback if critical front clearance
+        if min_front_clearance <= 0.65 or best_cost > 500.0:
+            best_v = 0.0
+            best_w = 0.0
+
+        return best_v, best_w, best_traj_local, all_trajs
 
 class CloudMuJoCoTwin(Node):
     def __init__(self, xml_path=None, headless=True):
@@ -328,6 +409,12 @@ class CloudMuJoCoTwin(Node):
         self.pub_reactive_path = self.create_publisher(Path, '/cloud/reactive_path', 10)
         self.pub_odom_path = self.create_publisher(Path, '/cloud/odom_path', 10)
         self.pub_markers = self.create_publisher(MarkerArray, '/cloud/markers', 10)
+        self.pub_candidates = self.create_publisher(MarkerArray, '/cloud/planner/candidates', 10)
+
+        # Instantiate Ego-Centric Model Predictive Planner (DWA)
+        self.planner = EgoModelPredictivePlanner()
+        self.best_traj_local = []
+        self.candidate_trajs = []
 
         self.tf_broadcaster = tf2_ros.TransformBroadcaster(self)
 
@@ -460,102 +547,93 @@ class CloudMuJoCoTwin(Node):
         scene = self.scenes[self.scene_idx]
 
         # -------------------------------------------------------------
-        # 1. Run Unitree 4D LiDAR L1 Scan
+        # 1. Run Unitree 4D LiDAR L1 Scan (Ego-Centric Perception)
         # -------------------------------------------------------------
         scan_res = self.lidar.scan()
         min_front = scan_res["min_front"]
         closest_geom = scan_res["closest_geom"]
-        forward_obstacles = scan_res["forward_obstacles"]
+        local_obstacles = scan_res["local_obstacles"]
 
         # -------------------------------------------------------------
-        # 2. 20% Dynamic Reactive Autonomy Engine
+        # 2. Ego-Centric Model Predictive Planner (DWA / MPPI)
         # -------------------------------------------------------------
         target_x = scene["target_x"]
         target_yaw = scene["target_yaw"]
 
-        # Reactive Obstacle Potential Field around Chemical Spill / Cones
-        # Hazard zone is x in [3.2, 6.2]. Aisle centerline is y = 0.0.
-        desired_y_offset = 0.0
-        if 2.8 <= self.pos_x <= 6.4:
-            # Sensed obstacles ahead in corridor
-            if forward_obstacles or (3.2 <= self.pos_x <= 6.0):
-                # Smooth cubic / sine transition to evade obstacle to +y aisle
-                s = min(1.0, max(0.0, (self.pos_x - 2.8) / 1.0))
-                smooth_s = s * s * (3.0 - 2.0 * s)
-                if self.pos_x < 5.4:
-                    desired_y_offset = 0.62 * smooth_s
-                else:
-                    # Returning back to centerline
-                    re_s = min(1.0, max(0.0, (self.pos_x - 5.4) / 1.0))
-                    re_smooth = re_s * re_s * (3.0 - 2.0 * re_s)
-                    desired_y_offset = 0.62 * (1.0 - re_smooth)
+        dx_goal = target_x - self.pos_x
+        dy_goal = scene["target_y"] - self.pos_y
+        dist_to_goal = math.hypot(dx_goal, dy_goal)
+        target_heading_global = math.atan2(dy_goal, dx_goal)
+        rel_target_yaw = wrap_to_pi(target_heading_global - self.yaw)
 
-        # Smooth lateral reactive adjustment
-        self.reactive_y_offset += (desired_y_offset - self.reactive_y_offset) * min(1.0, dt * 3.5)
-        reactive_target_y = scene["target_y"] + self.reactive_y_offset
+        # Closed-Loop Standoff Docking at Booth 1 using real-time LiDAR feedback
+        if scene["id"] == 4 and min_front < 2.5:
+            range_error = min_front - self.target_standoff_distance
+            if abs(range_error) < 0.08:
+                dist_to_goal = 0.05  # Arrived at standoff distance
 
-        # Reactive Speed Throttling based on forward LiDAR clearance
-        speed_limit = 0.65
-        if min_front < 1.8:
-            speed_limit = max(0.18, (min_front - 0.70) * 0.45)
-
-        # Dynamic Safety State Machine
-        if min_front <= 0.68 and self.in_transit:
-            self.safety_state = "SAFETY_ESTOP"
-            cmd_v = 0.0
-            cmd_w = 0.0
-        elif min_front <= 1.4:
-            self.safety_state = "SAFETY_CAUTION"
-        elif self.reactive_y_offset > 0.15:
-            self.safety_state = "SAFETY_AVOIDING"
-        else:
-            self.safety_state = "SAFETY_CLEAR"
-
-        # -------------------------------------------------------------
-        # 3. High-Level FSM Navigation
-        # -------------------------------------------------------------
         cmd_v = 0.0
         cmd_w = 0.0
         body_pitch_target = 0.0
         is_prone = False
 
         if self.in_transit:
-            dx = target_x - self.pos_x
-            dy = reactive_target_y - self.pos_y
-            dist_to_wp = math.hypot(dx, dy)
-
-            # Closed-Loop Standoff Docking at Booth 1 (Scene 4)
-            if scene["id"] == 4 and min_front < 2.5:
-                # Use real LiDAR distance to booth table
-                range_error = min_front - self.target_standoff_distance
-                if abs(range_error) < 0.08:
-                    dist_to_wp = 0.05  # Trigger arrival
-
-            if dist_to_wp > 0.12 and self.safety_state != "SAFETY_ESTOP":
-                heading = math.atan2(dy, dx)
-                yaw_err = wrap_to_pi(heading - self.yaw)
-
-                if abs(yaw_err) > 0.35:
-                    cmd_w = math.copysign(min(1.2, abs(yaw_err) * 1.8), yaw_err)
-                    cmd_v = 0.15
-                else:
-                    cmd_w = yaw_err * 1.5
-                    cmd_v = min(speed_limit, max(0.22, dist_to_wp * 0.75))
+            if dist_to_goal > 0.15:
+                # Plan motion purely relative to sensed obstacles via candidate rollouts
+                v_pref = 0.55 if dist_to_goal > 0.6 else min(0.35, max(0.18, dist_to_goal * 0.7))
+                opt_v, opt_w, best_traj_local, candidate_trajs = self.planner.plan(
+                    local_obstacles=local_obstacles,
+                    min_front_clearance=min_front,
+                    current_v=self.linear_vel,
+                    current_w=self.yaw_rate,
+                    target_rel_yaw=rel_target_yaw,
+                    v_pref=v_pref,
+                    imu_pitch=self.pitch
+                )
+                cmd_v = opt_v
+                cmd_w = opt_w
+                self.best_traj_local = best_traj_local
+                self.candidate_trajs = candidate_trajs
             else:
-                # Close to waypoint, align final yaw
+                # Arrived at waypoint position: align final yaw orientation
                 final_yaw_err = wrap_to_pi(target_yaw - self.yaw)
                 if abs(final_yaw_err) > 0.08:
                     cmd_w = math.copysign(min(1.0, abs(final_yaw_err) * 1.8), final_yaw_err)
                     cmd_v = 0.0
                 else:
-                    # Station reached!
                     self.in_transit = False
                     self.stage_timer = 0.0
-                    self.get_logger().info(f"Reached Station: {scene['name']}")
+                    self.get_logger().info(f"Station reached via Model Planner: {scene['name']}")
+                    cmd_v = 0.0
+                    cmd_w = 0.0
+                    self.best_traj_local = []
+                    self.candidate_trajs = []
+
+            # Dynamic Safety State Machine (evaluated from real onboard sensors)
+            if min_front <= 0.65:
+                self.safety_state = "SAFETY_ESTOP"
+                cmd_v = 0.0
+                cmd_w = 0.0
+            elif abs(cmd_w) > 0.28:
+                self.safety_state = "SAFETY_AVOIDING"
+            elif min_front < 1.4:
+                self.safety_state = "SAFETY_CAUTION"
+            else:
+                self.safety_state = "SAFETY_CLEAR"
 
         else:
             # Station holding & expressive docent gestures
             self.stage_timer += dt
+            # Continuously evaluate ego-centric candidate rollouts for live visualization
+            _, _, self.best_traj_local, self.candidate_trajs = self.planner.plan(
+                local_obstacles=local_obstacles,
+                min_front_clearance=min_front,
+                current_v=0.0,
+                current_w=0.0,
+                target_rel_yaw=rel_target_yaw,
+                v_pref=0.45,
+                imu_pitch=self.pitch
+            )
             if scene["fsm"] == "STATE_DOCENT_GREET":
                 body_pitch_target = 0.12 * math.sin(self.stage_timer * 2.5)  # Welcome nod
             elif scene["fsm"] == "STATE_HAZARD_AVOID":
@@ -827,30 +905,22 @@ class CloudMuJoCoTwin(Node):
         }
         self.pub_high_state.publish(String(data=json.dumps(high_state)))
 
-        # 9. 20% Reactive Dynamic Avoidance Path
+        # 9. Model-Planned Ego-Centric Predictive Trajectory
         r_path = Path()
         r_path.header.stamp = stamp
         r_path.header.frame_id = 'odom'
-        # Generate 40-step preview spline based on current reactive offset
-        x_horizon = np.linspace(max(0.0, self.pos_x - 0.5), min(8.5, self.pos_x + 3.5), 35)
-        for x_step in x_horizon:
-            ps = PoseStamped()
-            ps.header.frame_id = 'odom'
-            ps.pose.position.x = float(x_step)
-            # Preview lateral curve
-            if 2.8 <= x_step <= 6.4:
-                s = min(1.0, max(0.0, (x_step - 2.8) / 1.0))
-                smooth_s = s * s * (3.0 - 2.0 * s)
-                if x_step < 5.4:
-                    y_prev = 0.62 * smooth_s
-                else:
-                    re_s = min(1.0, max(0.0, (x_step - 5.4) / 1.0))
-                    y_prev = 0.62 * (1.0 - (re_s * re_s * (3.0 - 2.0 * re_s)))
-            else:
-                y_prev = 0.0
-            ps.pose.position.y = float(y_prev)
-            ps.pose.position.z = 0.025
-            r_path.poses.append(ps)
+        cos_yaw = math.cos(self.yaw)
+        sin_yaw = math.sin(self.yaw)
+
+        if hasattr(self, 'best_traj_local') and len(self.best_traj_local) > 0:
+            for lx, ly in self.best_traj_local:
+                ps = PoseStamped()
+                ps.header.stamp = stamp
+                ps.header.frame_id = 'odom'
+                ps.pose.position.x = self.pos_x + (lx * cos_yaw - ly * sin_yaw)
+                ps.pose.position.y = self.pos_y + (lx * sin_yaw + ly * cos_yaw)
+                ps.pose.position.z = 0.025
+                r_path.poses.append(ps)
         self.pub_reactive_path.publish(r_path)
 
         # 10. Odometry Breadcrumb Trail
@@ -1003,6 +1073,33 @@ class CloudMuJoCoTwin(Node):
         markers.markers.append(m_stage)
 
         self.pub_markers.publish(markers)
+
+        # Marker 8: Model Predictive Rollout Candidates Fan (Ego-Centric Trajectory Tree)
+        cand_markers = MarkerArray()
+        cos_yaw = math.cos(self.yaw)
+        sin_yaw = math.sin(self.yaw)
+        if hasattr(self, 'candidate_trajs') and len(self.candidate_trajs) > 0:
+            for c_idx, cand in enumerate(self.candidate_trajs):
+                m_cand = Marker()
+                m_cand.header.stamp = stamp
+                m_cand.header.frame_id = 'odom'
+                m_cand.ns = 'dwa_rollouts'
+                m_cand.id = c_idx
+                m_cand.type = Marker.LINE_STRIP
+                m_cand.action = Marker.ADD
+                m_cand.scale.x = 0.012
+                if cand["collision"]:
+                    m_cand.color.r = 1.0; m_cand.color.g = 0.2; m_cand.color.b = 0.2; m_cand.color.a = 0.35
+                else:
+                    m_cand.color.r = 0.1; m_cand.color.g = 0.85; m_cand.color.b = 1.0; m_cand.color.a = 0.20
+                for lx, ly in cand["traj"]:
+                    p = Point()
+                    p.x = self.pos_x + (lx * cos_yaw - ly * sin_yaw)
+                    p.y = self.pos_y + (lx * sin_yaw + ly * cos_yaw)
+                    p.z = 0.015
+                    m_cand.points.append(p)
+                cand_markers.markers.append(m_cand)
+        self.pub_candidates.publish(cand_markers)
 
 def main():
     parser = argparse.ArgumentParser(description="Project Cloud: Unified MuJoCo Physics & ROS 2 Twin")
