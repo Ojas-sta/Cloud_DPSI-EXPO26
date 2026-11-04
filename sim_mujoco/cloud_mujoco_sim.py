@@ -7,15 +7,22 @@ Key Features:
 - Physics-grounded Quadruped Locomotion with Ground Contacts & Friction
 - Closed-Form Analytical 3-DOF Leg Inverse Kinematics (IK)
 - Dynamic 2-Beat Diagonal Quadruped Trot Gait Engine
-- True Spatial Exhibition Mission across 6 distinct stations:
-  1. Central Stage Platform (x=0.0m) - VIP Greeting with head nods
-  2. Corridor Avenue (x=3.5m) - Dynamic trot patrol with 4D LiDAR
-  3. Chemical Spill Hazard (x=4.75m) - Reactive E-stop & wide bracing stance before puddle & cones
-  4. Booth 1 Stand (x=8.6m) - ArUco ID 10 board docking at 1.4m standoff
-  5. Presenter Pivot (x=8.6m) - 180° in-place stepping turn facing delegates, +8° head tilt
-  6. Central Stage Return (x=0.0m) - Mounts platform, folds into prone sleep rest mode
-- Multi-Camera System with Dedicated Station Framing & Smooth 3rd-Person Follow
-- Interactive Viewer Controls & Automatic Milestone Proof Snapshots
+- Simulated Unitree 4D LiDAR L1:
+  * 360° Horizontal Laser Scan (72-beam radial sweep at 5° resolution)
+  * Downward-tilted ground slope ray for spill and hazard detection
+  * Native MuJoCo C-raycast query (mujoco.mj_ray) against physical walls & obstacles
+  * Real-time 3D Point Cloud generation & Sectoral Clearances (Front, Left, Right, Rear)
+  * Hardware telemetry channels from 11 native <rangefinder> sensors
+  * Reactive safety state machine (SAFETY_CLEAR, SAFETY_CAUTION, SAFETY_ESTOP)
+  * Live visual laser beam and point cloud rendering in interactive viewer (user_scn)
+- Architectural Pavilion World (DPSI EXPO-2026):
+  * Outer perimeter walls (West backdrop, East boundary, North & South side walls)
+  * Corridor guide railings & semi-transparent tempered glass partitions
+  * Exhibition booths: Booth 1 (Solar Cart Standoff), Booth 2 (Robotics & AI), Booth 3 (GreenTech)
+  * Chemical spill hazard zone with fluid slick, caution cones, and flanking stanchions
+  * Central Stage with illuminated glowing rim
+- 6 Mission Stations with Automatic Photographic Proof Snapshots & HUD Radar Overlay
+- Multi-Camera System with 8 Dedicated Framing Views (including Go2 First-Person LiDAR FPV)
 """
 
 import sys
@@ -28,7 +35,7 @@ import numpy as np
 try:
     import mujoco
     import mujoco.viewer
-    from PIL import Image
+    from PIL import Image, ImageDraw, ImageFont
 except ImportError as e:
     print(f"[ERROR] Missing dependency: {e}")
     print("Please install via: pip install mujoco pillow")
@@ -91,6 +98,200 @@ def quaternion_to_yaw(qw, qx, qy, qz):
     cosy_cosp = 1.0 - 2.0 * (qy * qy + qz * qz)
     return math.atan2(siny_cosp, cosy_cosp)
 
+class Go2LiDAR:
+    """
+    High-fidelity simulated Unitree 4D LiDAR L1.
+    Performs real-time C-accelerated raycasts against physical world geometry,
+    computes 3D point clouds, sectoral clearances, and renders visual beams.
+    """
+    def __init__(self, model, data, num_rays=72, max_range=16.0):
+        self.model = model
+        self.data = data
+        self.num_rays = num_rays
+        self.max_range = max_range
+        self.base_body_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, "base")
+        self.site_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_SITE, "lidar_origin")
+        self.geomid_buf = np.zeros(1, dtype=np.int32)
+
+        # Pre-identify all robot self-bodies to filter out self-occlusions
+        self.robot_bodies = set()
+        for b in range(model.nbody):
+            bname = mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_BODY, b)
+            if bname and any(p in bname for p in ["base", "FL", "FR", "RL", "RR"]):
+                self.robot_bodies.add(b)
+
+        # 360° Horizontal Angular Sweep [-pi, pi]
+        self.angles = np.linspace(-math.pi, math.pi, num_rays, endpoint=False)
+        self.cos_angles = np.cos(self.angles)
+        self.sin_angles = np.sin(self.angles)
+
+        # Pre-allocated local ray unit vectors
+        self.local_rays = np.zeros((num_rays, 3), dtype=np.float64)
+        self.local_rays[:, 0] = self.cos_angles
+        self.local_rays[:, 1] = self.sin_angles
+        self.local_rays[:, 2] = 0.0
+
+        self.last_scan = None
+
+    def scan(self):
+        """Executes full 360° spatial laser scan in MuJoCo world."""
+        p0 = self.data.site_xpos[self.site_id].copy()
+        R = self.data.site_xmat[self.site_id].reshape((3, 3))
+
+        scan_points = []
+        ranges = []
+        geom_names = []
+        is_hazards = []
+
+        front_dists = []
+        left_dists = []
+        right_dists = []
+        rear_dists = []
+
+        min_overall_dist = 999.0
+        closest_geom = "none"
+
+        for i in range(self.num_rays):
+            th = self.angles[i]
+            v_world = R @ self.local_rays[i]
+
+            # Raycast with automatic self-body pass-through
+            curr_p = p0.copy()
+            total_dist = 0.0
+            hit_geom_name = "none"
+            hit_p = None
+
+            for _ in range(4): # Step past up to 4 internal robot bodies
+                dist = mujoco.mj_ray(self.model, self.data, curr_p, v_world, None, 1, -1, self.geomid_buf)
+                if dist < 0.0 or total_dist + dist > self.max_range:
+                    total_dist = -1.0
+                    break
+                total_dist += dist
+                hit_body = self.model.geom_bodyid[self.geomid_buf[0]]
+                if hit_body in self.robot_bodies:
+                    curr_p = curr_p + (dist + 0.02) * v_world
+                else:
+                    gid = self.geomid_buf[0]
+                    hit_geom_name = mujoco.mj_id2name(self.model, mujoco.mjtObj.mjOBJ_GEOM, gid) or "obstacle"
+                    hit_p = p0 + total_dist * v_world
+                    break
+
+            if total_dist > 0.0 and total_dist <= self.max_range:
+                hazard = ("cone" in hit_geom_name) or ("spill" in hit_geom_name)
+
+                scan_points.append(hit_p)
+                ranges.append(total_dist)
+                geom_names.append(hit_geom_name)
+                is_hazards.append(hazard)
+
+                if total_dist < min_overall_dist:
+                    min_overall_dist = total_dist
+                    closest_geom = hit_geom_name
+
+                # Sectoral categorization in robot-forward frame
+                abs_th = abs(th)
+                if abs_th < math.pi / 6.0:       # Front [-30°, +30°]
+                    front_dists.append(total_dist)
+                elif th >= math.pi / 6.0 and th <= 5.0 * math.pi / 6.0:  # Left [+30°, +150°]
+                    left_dists.append(total_dist)
+                elif th <= -math.pi / 6.0 and th >= -5.0 * math.pi / 6.0: # Right [-150°, -30°]
+                    right_dists.append(total_dist)
+                else:                            # Rear [> 150°]
+                    rear_dists.append(total_dist)
+            else:
+                scan_points.append(None)
+                ranges.append(-1.0)
+                geom_names.append("out_of_range")
+                is_hazards.append(False)
+
+        # Downward Ground Ray for Hazard / Puddle Detection
+        v_down_local = np.array([0.866, 0.0, -0.500], dtype=np.float64)
+        v_down_world = R @ v_down_local
+        curr_p = p0.copy()
+        ground_geom = "floor"
+        for _ in range(4):
+            dist_down = mujoco.mj_ray(self.model, self.data, curr_p, v_down_world, None, 1, -1, self.geomid_buf)
+            if dist_down < 0 or dist_down > 3.0:
+                break
+            hit_body = self.model.geom_bodyid[self.geomid_buf[0]]
+            if hit_body in self.robot_bodies:
+                curr_p = curr_p + (dist_down + 0.02) * v_down_world
+            else:
+                ground_geom = mujoco.mj_id2name(self.model, mujoco.mjtObj.mjOBJ_GEOM, self.geomid_buf[0]) or "floor"
+                break
+
+        min_front = min(front_dists) if front_dists else 16.0
+        min_left = min(left_dists) if left_dists else 16.0
+        min_right = min(right_dists) if right_dists else 16.0
+        min_rear = min(rear_dists) if rear_dists else 16.0
+
+        # Safety State Machine
+        if min_front <= 0.85 or ("spill" in ground_geom) or ("cone" in closest_geom and min_overall_dist < 1.0):
+            safety_state = "SAFETY_ESTOP"
+        elif min_front <= 1.80:
+            safety_state = "SAFETY_CAUTION"
+        else:
+            safety_state = "SAFETY_CLEAR"
+
+        self.last_scan = {
+            "origin": p0,
+            "ranges": np.array(ranges),
+            "angles": self.angles,
+            "points": scan_points,
+            "geoms": geom_names,
+            "hazards": is_hazards,
+            "front_dist": min_front,
+            "left_dist": min_left,
+            "right_dist": min_right,
+            "rear_dist": min_rear,
+            "min_dist": min_overall_dist,
+            "closest_geom": closest_geom,
+            "ground_geom": ground_geom,
+            "safety_state": safety_state,
+            "hit_count": len([r for r in ranges if r > 0])
+        }
+        return self.last_scan
+
+    def render_to_scene(self, scn, draw_beams=True, draw_hits=True):
+        """Injects laser beam connector lines and hit markers into an MjvScene."""
+        if self.last_scan is None:
+            return
+
+        p0 = self.last_scan["origin"]
+        points = self.last_scan["points"]
+        hazards = self.last_scan["hazards"]
+        ranges = self.last_scan["ranges"]
+
+        # Color definitions
+        cyan_beam = np.array([0.0, 0.88, 1.0, 0.28], dtype=np.float32)
+        red_beam = np.array([1.0, 0.22, 0.12, 0.75], dtype=np.float32)
+        green_hit = np.array([0.0, 1.0, 0.55, 0.85], dtype=np.float32)
+        red_hit = np.array([1.0, 0.15, 0.15, 0.95], dtype=np.float32)
+
+        for i, pt in enumerate(points):
+            if pt is None or ranges[i] <= 0:
+                continue
+
+            is_haz = hazards[i] or (ranges[i] < 1.0 and is_haz)
+
+            # Draw laser line beam
+            if draw_beams and scn.ngeom < scn.maxgeom:
+                idx = scn.ngeom
+                scn.ngeom += 1
+                geom = scn.geoms[idx]
+                col = red_beam if is_haz else cyan_beam
+                mujoco.mjv_initGeom(geom, mujoco.mjtGeom.mjGEOM_LINE, np.zeros(3), np.zeros(3), np.eye(3).flatten(), col)
+                mujoco.mjv_connector(geom, mujoco.mjtGeom.mjGEOM_LINE, 1.5, p0, pt)
+
+            # Draw laser hit sphere
+            if draw_hits and scn.ngeom < scn.maxgeom:
+                idx = scn.ngeom
+                scn.ngeom += 1
+                geom = scn.geoms[idx]
+                col = red_hit if is_haz else green_hit
+                sz = np.array([0.032, 0.032, 0.032], dtype=np.float64) if is_haz else np.array([0.024, 0.024, 0.024], dtype=np.float64)
+                mujoco.mjv_initGeom(geom, mujoco.mjtGeom.mjGEOM_SPHERE, sz, pt, np.eye(3).flatten(), col)
+
 class CloudMuJoCoSimulator:
     def __init__(self, xml_path=None, headless=False):
         if xml_path is None:
@@ -107,7 +308,11 @@ class CloudMuJoCoSimulator:
 
         self.base_body_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, "base")
 
-        # 6 Spatial Mission Scenes Across the Pavilion
+        # Initialize Unitree 4D LiDAR L1 Engine
+        self.lidar = Go2LiDAR(self.model, self.data, num_rays=72, max_range=16.0)
+        self.show_lidar = True
+
+        # 6 Spatial Mission Stations Across the Pavilion
         self.scenes = [
             {
                 "id": 1,
@@ -125,7 +330,7 @@ class CloudMuJoCoSimulator:
                 "target_x": 2.5, "target_y": 0.0, "target_yaw": 0.0,
                 "camera": "cam_patrol_corridor",
                 "transit_time": 4.0, "station_time": 4.5,
-                "desc": "Trotting along the main pavilion avenue (x=2.5m) with simulated 4D LiDAR."
+                "desc": "Trotting along the main pavilion avenue (x=2.5m) with active 4D LiDAR scan."
             },
             {
                 "id": 3,
@@ -187,7 +392,7 @@ class CloudMuJoCoSimulator:
         self.camera_names = [
             "cam_stage_greeting", "cam_patrol_corridor", "cam_hazard_stop",
             "cam_booth_standoff", "cam_presenter_audience", "cam_stage_dock",
-            "cam_pavilion_overview"
+            "cam_pavilion_overview", "cam_lidar_fpv"
         ]
         self.cam_idx = 0
 
@@ -204,7 +409,7 @@ class CloudMuJoCoSimulator:
         mujoco.mj_forward(self.model, self.data)
 
     def update_simulation_step(self, dt):
-        """High-precision physics & spatial trajectory updater."""
+        """High-precision physics, spatial trajectory, and LiDAR scan updater."""
         scene = self.scenes[self.scene_idx]
         self.phase_timer += dt
         self.sim_time += dt
@@ -218,22 +423,23 @@ class CloudMuJoCoSimulator:
         body_pitch_target = 0.0
         is_prone = False
 
+        # Run Real-Time LiDAR Scan
+        lidar_data = self.lidar.scan()
+
         # -------------------------------------------------------------
         # 1. State Machine Navigation & Station Behaviors
         # -------------------------------------------------------------
         if self.in_transit:
-            # Traveling towards the station
             dx = target_x - self.pos_x
             dy = target_y - self.pos_y
             dist = math.hypot(dx, dy)
 
             # Curved bypass path around the spill hazard when transiting to Booth 1
             if scene["id"] == 4 and self.pos_x < 5.8:
-                # Steer laterally along y=0.5m to cleanly clear the hazard puddle
                 dy_target = 0.45 * math.sin(min(math.pi, (self.pos_x - 4.5) / 1.5 * math.pi))
                 dy = (dy_target - self.pos_y)
 
-            # Angular error to heading
+            # Reactive LiDAR Deceleration when approaching obstacles
             if dist > 0.15:
                 heading = math.atan2(dy, dx)
                 yaw_err = wrap_to_pi(heading - self.yaw)
@@ -242,9 +448,12 @@ class CloudMuJoCoSimulator:
                     linear_vel = 0.22
                 else:
                     yaw_rate = yaw_err * 1.5
-                    linear_vel = min(0.95, max(0.35, dist * 0.95))
+                    # Throttle speed if LiDAR detects front obstacle within caution range
+                    speed_cap = 0.95
+                    if lidar_data["front_dist"] < 1.5:
+                        speed_cap = max(0.20, lidar_data["front_dist"] * 0.45)
+                    linear_vel = min(speed_cap, max(0.32, dist * 0.90))
             else:
-                # Arrived at position, align target yaw
                 yaw_err = wrap_to_pi(target_yaw - self.yaw)
                 if abs(yaw_err) > 0.06:
                     yaw_rate = math.copysign(min(1.0, abs(yaw_err) * 1.8), yaw_err)
@@ -258,24 +467,20 @@ class CloudMuJoCoSimulator:
                     self.yaw = target_yaw
                     print(f"\n>>> [ARRIVED AT STATION] -> {scene['name']}")
                     print(f"    Position: ({self.pos_x:.2f}m, {self.pos_y:.2f}m) | Heading: {math.degrees(self.yaw):.0f}°")
+                    print(f"    LiDAR: Front {lidar_data['front_dist']:.2f}m ({lidar_data['closest_geom']}) | Safety: {lidar_data['safety_state']}")
                     print(f"    {scene['desc']}")
 
         else:
             # Standing / Presenting at Station
             if scene["fsm"] == "STATE_DOCENT_GREET":
-                # Polite welcoming head nod
                 body_pitch_target = 0.12 * math.sin(self.phase_timer * 2.5)
             elif scene["fsm"] == "STATE_HAZARD_ALERT":
-                # Emergency bracing posture
                 body_pitch_target = -0.08
             elif scene["fsm"] == "STATE_DOCENT_NARRATE":
-                # Docent presentation mode: +8° head tilt
                 body_pitch_target = 0.14
             elif scene["fsm"] == "STATE_PRONE_REST":
-                # Folding into prone sleep dock
                 is_prone = True
 
-            # Check if station stay time elapsed -> move to next station
             if self.phase_timer >= scene["station_time"]:
                 self.scene_idx = (self.scene_idx + 1) % len(self.scenes)
                 self.in_transit = True
@@ -291,10 +496,8 @@ class CloudMuJoCoSimulator:
         self.pos_x += linear_vel * math.cos(self.yaw) * dt
         self.pos_y += linear_vel * math.sin(self.yaw) * dt
 
-        # Smooth pitch filter
         self.pitch += (body_pitch_target - self.pitch) * min(1.0, dt * 5.0)
 
-        # Base nominal height (stage is at 0.05m elevation, pavilion floor is at 0.0m)
         on_stage = math.hypot(self.pos_x, self.pos_y) < 1.75
         base_floor_z = 0.05 if on_stage else 0.0
 
@@ -311,7 +514,6 @@ class CloudMuJoCoSimulator:
         step_len = min(MAX_STEP_LEN, linear_vel * 0.32) if is_stepping else 0.0
 
         if is_stepping:
-            # Trot gait frequency scales with speed
             gait_freq = 2.0 * math.pi * (1.5 + linear_vel * 0.8 + abs(yaw_rate) * 0.4)
             self.gait_phase = (self.gait_phase + gait_freq * dt) % (2.0 * math.pi)
             body_bob = 0.006 * math.cos(2.0 * self.gait_phase)
@@ -323,11 +525,9 @@ class CloudMuJoCoSimulator:
 
         cur_base_z = nominal_z + body_bob
 
-        # Diagonal Leg Phase Pairing (FL+RR vs FR+RL at 180° anti-phase)
         phase_A = self.gait_phase
         phase_B = (self.gait_phase + math.pi) % (2.0 * math.pi)
 
-        # Yaw turning steering differential
         turn_diff = (yaw_rate * 0.28) * 0.15
         step_L = step_len - turn_diff
         step_R = step_len + turn_diff
@@ -336,12 +536,10 @@ class CloudMuJoCoSimulator:
             if not is_stepping or abs(s_len) < 0.005:
                 return 0.0, 0.0, -STANCE_HEIGHT
             if phase < math.pi:
-                # Stance Phase (Pushes backward at exact matching velocity -> Zero Slip)
                 s = phase / math.pi
                 xf = (s_len / 2.0) * math.cos(phase)
                 zf = -STANCE_HEIGHT
             else:
-                # Swing Phase (Smooth parabolic clearance arc)
                 s = (phase - math.pi) / math.pi
                 xf = -(s_len / 2.0) * math.cos(phase)
                 zf = -STANCE_HEIGHT + STEP_CLEARANCE * math.sin(math.pi * s)
@@ -381,36 +579,102 @@ class CloudMuJoCoSimulator:
         )
 
         # Auto-Capture High-Resolution Milestone Proof Snapshots
-        if not self.in_transit and self.phase_timer > 2.0 and scene["id"] not in self.saved_snapshots:
+        if not self.in_transit and self.phase_timer > 1.0 and scene["id"] not in self.saved_snapshots:
             self.save_station_proof(scene)
             self.saved_snapshots.add(scene["id"])
 
     def save_station_proof(self, scene):
-        """Renders and saves a 1080p snapshot of each exhibition station."""
+        """Renders and saves a 1080p snapshot of each exhibition station with LiDAR beams and HUD overlay."""
         try:
             renderer = mujoco.Renderer(self.model, 720, 1280)
             renderer.update_scene(self.data, camera=scene["camera"])
-            img = Image.fromarray(renderer.render())
+            scn = renderer.scene
+
+            # Invalidate and re-scan at current camera frame
+            scan_data = self.lidar.scan()
+            self.lidar.render_to_scene(scn, draw_beams=True, draw_hits=True)
+
+            rgb = renderer.render()
+            base_img = Image.fromarray(rgb).convert("RGBA")
+
+            # Composite HUD Telemetry Banner & Polar Radar Overlay
+            hud = Image.new("RGBA", (1280, 720), (0, 0, 0, 0))
+            draw = ImageDraw.Draw(hud)
+
+            # 1. Top-Left Telemetry Banner
+            draw.rectangle([20, 15, 660, 125], fill=(8, 14, 25, 215), outline=(0, 180, 240, 220), width=2)
+            draw.text((35, 24), "PROJECT CLOUD | DPSI EXPO-2026 DOCENT PATROL", fill=(0, 220, 255, 255))
+            draw.text((35, 46), f"{scene['name']} | Unitree Go2 4D LiDAR L1 Active", fill=(255, 255, 255, 240))
+            draw.text((35, 68), f"Position: X={self.pos_x:+.2f}m, Y={self.pos_y:+.2f}m | Yaw: {math.degrees(self.yaw):.0f}° | FSM: {scene['fsm']}", fill=(180, 210, 240, 240))
+
+            safety_color = (0, 255, 160, 255) if scan_data["safety_state"] == "SAFETY_CLEAR" else ((255, 180, 0, 255) if scan_data["safety_state"] == "SAFETY_CAUTION" else (255, 50, 50, 255))
+            draw.text((35, 88), f"Clearances: Front {scan_data['front_dist']:.2f}m | Left {scan_data['left_dist']:.2f}m | Right {scan_data['right_dist']:.2f}m", fill=(200, 225, 255, 240))
+            draw.text((35, 106), f"Closest Obstacle: {scan_data['closest_geom']} at {scan_data['min_dist']:.2f}m | Status: {scan_data['safety_state']}", fill=safety_color)
+
+            # 2. Top-Right 360° Polar Radar Scanner Mini-Map
+            rcx, rcy, rad = 1170, 95, 75
+            draw.ellipse([rcx-rad, rcy-rad, rcx+rad, rcy+rad], fill=(6, 12, 22, 225), outline=(0, 200, 255, 240), width=2)
+            for ring_r in [rad * 0.33, rad * 0.66, rad]:
+                draw.ellipse([rcx-ring_r, rcy-ring_r, rcx+ring_r, rcy+ring_r], outline=(0, 120, 180, 110), width=1)
+            draw.line([rcx-rad, rcy, rcx+rad, rcy], fill=(0, 120, 180, 110), width=1)
+            draw.line([rcx, rcy-rad, rcx, rcy+rad], fill=(0, 120, 180, 110), width=1)
+
+            # Robot center indicator
+            draw.polygon([(rcx, rcy-7), (rcx-4, rcy+4), (rcx+4, rcy+4)], fill=(0, 255, 255, 255))
+
+            # Plot radar hits
+            max_vis_range = 10.0
+            for i in range(len(scan_data["ranges"])):
+                r_dist = scan_data["ranges"][i]
+                if r_dist > 0 and r_dist <= max_vis_range:
+                    th = scan_data["angles"][i]
+                    d_px = (r_dist / max_vis_range) * rad
+                    px = rcx + d_px * math.sin(th)
+                    py = rcy - d_px * math.cos(th)
+                    dot_color = (255, 60, 40, 255) if scan_data["hazards"][i] else (0, 255, 140, 220)
+                    draw.ellipse([px-2, py-2, px+2, py+2], fill=dot_color)
+
+            draw.text((rcx-rad+10, rcy+rad+6), "4D LiDAR RADAR (10m)", fill=(0, 200, 255, 220))
+
+            final_img = Image.alpha_composite(base_img, hud).convert("RGB")
             filename = f"proof_mujoco_scene_{scene['id']}.png"
             path = os.path.join(self.output_dir, filename)
-            img.save(path)
+            final_img.save(path)
             print(f"[PROOF CAPTURE] Saved {filename} from camera '{scene['camera']}' at x={self.pos_x:.2f}m")
         except Exception as e:
             print(f"[WARN] Proof capture failed: {e}")
 
     def run_interactive(self):
         """Runs the interactive simulation under mjpython."""
-        print("\n" + "=" * 75)
+        print("\n" + "=" * 80)
         print("  PROJECT CLOUD: MASTER MUJOCO EXHIBITION SIMULATION RUNNING")
+        print("  Unitree Go2 4D LiDAR L1 Active with Physical Walls & Obstacle Mapping")
         print("  Controls:")
         print("    [Space] : Pause / Resume")
-        print("    [C]     : Cycle Station Framing Cameras")
+        print("    [L]     : Toggle 360° LiDAR Visual Laser Beams")
+        print("    [C]     : Cycle Station Framing Cameras (including LiDAR FPV)")
         print("    [1-6]   : Trigger Mission Station 1..6")
         print("    [Mouse] : Orbit / Zoom / Pan")
-        print("=" * 75 + "\n")
+        print("=" * 80 + "\n")
 
-        with mujoco.viewer.launch_passive(self.model, self.data) as viewer:
-            # 3rd-Person Dynamic Follow Camera (tracks robot across the room)
+        def key_callback(keycode):
+            # 'L' or 'l'
+            if keycode in [ord('l'), ord('L')]:
+                self.show_lidar = not self.show_lidar
+                print(f"[INTERACTIVE] LiDAR Visual Beams: {'ON' if self.show_lidar else 'OFF'}")
+            # 'C' or 'c'
+            elif keycode in [ord('c'), ord('C')]:
+                self.cam_idx = (self.cam_idx + 1) % len(self.camera_names)
+                print(f"[INTERACTIVE] Camera Switched to: {self.camera_names[self.cam_idx]}")
+            # '1'..'6'
+            elif keycode in [ord('1'), ord('2'), ord('3'), ord('4'), ord('5'), ord('6')]:
+                target_idx = keycode - ord('1')
+                self.scene_idx = target_idx
+                self.in_transit = True
+                self.phase_timer = 0.0
+                print(f"[INTERACTIVE] Manual override -> Triggered {self.scenes[self.scene_idx]['name']}")
+
+        with mujoco.viewer.launch_passive(self.model, self.data, key_callback=key_callback) as viewer:
             viewer.cam.type = mujoco.mjtCamera.mjCAMERA_TRACKING
             viewer.cam.trackbodyid = self.base_body_id
             viewer.cam.distance = 3.6
@@ -424,13 +688,22 @@ class CloudMuJoCoSimulator:
                 step_start = time.time()
 
                 self.update_simulation_step(dt)
+
+                # Update live LiDAR beams in viewer.user_scn
+                if viewer.user_scn is not None:
+                    viewer.user_scn.ngeom = 0
+                    if self.show_lidar:
+                        self.lidar.render_to_scene(viewer.user_scn, draw_beams=True, draw_hits=True)
+
                 viewer.sync()
 
                 if time.time() - last_print > 1.2:
                     scene = self.scenes[self.scene_idx]
                     status = "TRANSIT" if self.in_transit else "STATION"
-                    print(f"[{scene['fsm']:20s} | {status:7s}] Pos: ({self.pos_x:5.2f}m, {self.pos_y:5.2f}m, {self.data.qpos[2]:4.2f}m) | "
-                          f"Yaw: {math.degrees(self.yaw):5.0f}° | SimTime: {self.sim_time:5.1f}s")
+                    l_data = self.lidar.last_scan
+                    print(f"[{scene['fsm']:20s} | {status:7s}] Pos: ({self.pos_x:5.2f}m, {self.pos_y:5.2f}m) | "
+                          f"LiDAR: Front {l_data['front_dist']:4.2f}m ({l_data['closest_geom']:16s}) | "
+                          f"L: {l_data['left_dist']:4.2f}m, R: {l_data['right_dist']:4.2f}m | Safety: {l_data['safety_state']}")
                     last_print = time.time()
 
                 time_spent = time.time() - step_start
@@ -438,8 +711,8 @@ class CloudMuJoCoSimulator:
                     time.sleep(dt - time_spent)
 
     def run_headless(self, duration=45.0):
-        """Runs the full exhibition mission headlessly to generate all 6 photographic proof images."""
-        print(f"[INFO] Running Headless Exhibition Tour for {duration} seconds...")
+        """Runs the full exhibition mission headlessly to generate all photographic proof images."""
+        print(f"[INFO] Running Headless Exhibition Tour for {duration} seconds with LiDAR & Walls...")
         dt = 0.016
         steps = int(duration / dt)
 
@@ -450,13 +723,21 @@ class CloudMuJoCoSimulator:
             if time.time() - last_print > 3.0:
                 scene = self.scenes[self.scene_idx]
                 status = "TRANSIT" if self.in_transit else "STATION"
-                print(f"[HEADLESS] Time: {self.sim_time:5.1f}s | Pos: ({self.pos_x:5.2f}m, {self.pos_y:5.2f}m) | {scene['name']} ({status})")
+                l_data = self.lidar.last_scan
+                print(f"[HEADLESS] Time: {self.sim_time:5.1f}s | Pos: ({self.pos_x:5.2f}m, {self.pos_y:5.2f}m) | {scene['name']} ({status}) | LiDAR Front: {l_data['front_dist']:.2f}m")
                 last_print = time.time()
 
-        # Also capture high overview of entire pavilion
+        # Render High Aerial Overview of entire pavilion
         renderer = mujoco.Renderer(self.model, 720, 1280)
         renderer.update_scene(self.data, camera="cam_pavilion_overview")
+        self.lidar.render_to_scene(renderer.scene, draw_beams=True, draw_hits=True)
         Image.fromarray(renderer.render()).save(os.path.join(self.output_dir, "proof_mujoco_pavilion_overview.png"))
+
+        # Render First-Person LiDAR Camera view
+        renderer.update_scene(self.data, camera="cam_lidar_fpv")
+        self.lidar.render_to_scene(renderer.scene, draw_beams=True, draw_hits=True)
+        Image.fromarray(renderer.render()).save(os.path.join(self.output_dir, "proof_mujoco_lidar_fpv.png"))
+
         print(f"[INFO] Headless Mission completed! Saved snapshots: {len(self.saved_snapshots)}")
 
 def main():
