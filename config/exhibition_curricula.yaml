@@ -80,7 +80,7 @@ booth_3_bionic_prosthetic:
 
 booth_4_smart_grid:
   booth_id: "BOOTH_04"
-  marker_id: 13
+  marker_id: 104
   title: "Decentralized IoT Smart Microgrid Power Node"
   speaker_role: "THE DOCENT"
   narration_script: >
@@ -167,6 +167,45 @@ stall_p01_gait_ai:
       a: "Stepwise AI provides early detection of neurological and musculoskeletal gait impairments, facilitating personalized physical rehabilitation regimens."
     - q: "How is the data processed?"
       a: "Raw sensor data is filtered via an onboard Madgwick AHRS filter and processed by a quantized TensorFlow Lite micro-model directly on the ESP32-S3."
+
+stall_p06_moving_bin:
+  booth_id: "P06"
+  marker_id: 6
+  title: "Robotic Smart Moving Bin System"
+  category: "Physical Computing & Robotics"
+  speaker_role: "THE DOCENT"
+  narration_script: >
+    Welcome to Stall P06: The Robotic Smart Moving Bin System. This autonomous mobile platform revolutionizes
+    indoor campus waste management by utilizing 2D planar LiDAR SLAM and ultrasonic waste fill-level telemetry.
+    When trash capacity reaches 85%, the system disengages from its docking station and traverses designated
+    hallway waypoints to the central processing facility, reducing custodial workload by 65%.
+  key_specs:
+    chassis: "Differential drive AMR with optical wheel odometry"
+    sensing: "Ultrasonic fill-level array & planar LiDAR obstacle avoidance"
+    payload_capacity: "Up to 35 kg internal volumetric load"
+    efficiency_gain: "65% reduction in manual custodial retrieval routes"
+  qa_pairs:
+    - q: "How does the bin navigate through crowded hallways?"
+      a: "The bin uses dynamic window local obstacle avoidance combined with a 2D occupancy costmap to navigate around pedestrians and unexpected obstacles."
+
+stall_d01_farmer_verify:
+  booth_id: "D01"
+  marker_id: 13
+  title: "Farm To Home: Farmer Verification System"
+  category: "Digital Solutions & Edge AI"
+  speaker_role: "THE DOCENT"
+  narration_script: >
+    Here at Stall D01, we examine Farm To Home: An AI-Driven Farmer Verification System.
+    This software platform bridges agricultural supply chains by combining computer vision produce quality grading
+    with cryptographic identity verification. Smallholder farmers scan harvest batches on mobile devices,
+    generating tamper-proof quality certifications that link directly to wholesale procurement markets.
+  key_specs:
+    edge_model: "Quantized MobileNetV3 produce defect grading classifier"
+    verification: "Zero-knowledge cryptographic batch provenance verification"
+    processing_latency: "< 120ms local on-device inference without cloud dependency"
+  qa_pairs:
+    - q: "Does the system require continuous internet connectivity in the field?"
+      a: "No, all defect grading models run locally on low-cost smartphones, caching verified ledger records until a cellular or Wi-Fi connection is detected."
 
 stage_finale:
   booth_id: "STAGE_FINALE"
