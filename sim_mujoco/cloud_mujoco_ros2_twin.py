@@ -500,15 +500,23 @@ class CloudMuJoCoTwin(Node):
         self._broadcast_static_tf()
         self._init_and_publish_map()
 
-        # Robot Physical State
-        self.pos_x = 0.0
-        self.pos_y = 0.0
-        self.pos_z = STANCE_HEIGHT + 0.05
+        # Robot Physical State (Default: Central Keynote Stage Platform)
+        self.pos_x = -2.00
+        self.pos_y = 0.00
+        self.pos_z = STANCE_HEIGHT + 0.09
         self.yaw = 0.0
         self.pitch = 0.0
         self.roll = 0.0
 
-        if spawn_stall and os.path.exists(yaml_db_path):
+        if spawn_stall in ["STAGE", "STAGE_DOCK", "DOCK_STAGE_99", "99", "DOCK"]:
+            self.pos_x = -2.00
+            self.pos_y = 0.00
+            self.pos_z = STANCE_HEIGHT + 0.09
+            self.yaw = 0.0
+            self.external_control_latched = True
+            self.in_transit = False
+            self.get_logger().info("Spawned Go2 on Central Keynote Stage Platform (-2.00, 0.00), yaw=0.0° (external control latched)")
+        elif spawn_stall and os.path.exists(yaml_db_path):
             try:
                 with open(yaml_db_path, "r", encoding="utf-8") as f:
                     db_cfg = yaml.safe_load(f)
@@ -1223,8 +1231,8 @@ class CloudMuJoCoTwin(Node):
                 if dist <= r_stage:
                     grid[r * width + c] = 50 if dist < (r_stage - 0.15) else 100
 
-        # Recharge Dock 99 plate
-        set_box(-1.25, -1.15, -0.25, 0.25, 100)
+        # Recharge Dock 99 plate (rear west of dais)
+        set_box(-3.45, -3.35, -0.25, 0.25, 100)
 
         # 40 Stalls from database
         for s in self.stalls_data:
@@ -1333,7 +1341,7 @@ class CloudMuJoCoTwin(Node):
         m_dock_bg.id = 2
         m_dock_bg.type = Marker.CUBE
         m_dock_bg.action = Marker.ADD
-        m_dock_bg.pose.position.x = -1.20
+        m_dock_bg.pose.position.x = -3.40
         m_dock_bg.pose.position.y = 0.0
         m_dock_bg.pose.position.z = 0.30
         m_dock_bg.scale.x = 0.02
@@ -1348,7 +1356,7 @@ class CloudMuJoCoTwin(Node):
         m_dock_fg.id = 3
         m_dock_fg.type = Marker.CUBE
         m_dock_fg.action = Marker.ADD
-        m_dock_fg.pose.position.x = -1.19
+        m_dock_fg.pose.position.x = -3.39
         m_dock_fg.pose.position.y = 0.0
         m_dock_fg.pose.position.z = 0.30
         m_dock_fg.scale.x = 0.024
@@ -1363,7 +1371,7 @@ class CloudMuJoCoTwin(Node):
         m_dock_txt.id = 4
         m_dock_txt.type = Marker.TEXT_VIEW_FACING
         m_dock_txt.action = Marker.ADD
-        m_dock_txt.pose.position.x = -1.20
+        m_dock_txt.pose.position.x = -3.40
         m_dock_txt.pose.position.y = 0.0
         m_dock_txt.pose.position.z = 0.70
         m_dock_txt.scale.z = 0.22
