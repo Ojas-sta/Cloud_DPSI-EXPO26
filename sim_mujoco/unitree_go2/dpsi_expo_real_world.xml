@@ -1,0 +1,845 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mujoco model="Project Cloud: DPSI Expo Real World with ArUco Markers">
+  <include file="go2.xml"/>
+  <compiler angle="radian" coordinate="local" autolimits="true"/>
+  <option gravity="0 0 -9.81" timestep="0.005" integrator="implicitfast"/>
+
+  <visual>
+    <global elevation="-22" azimuth="115"/>
+    <headlight ambient="0.45 0.45 0.45" diffuse="0.85 0.85 0.85" specular="0.25 0.25 0.25"/>
+  </visual>
+
+  <asset>
+    <texture type="skybox" builtin="gradient" rgb1="0.08 0.12 0.22" rgb2="0.02 0.04 0.08" width="512" height="512"/>
+    <texture name="floor_grid" type="2d" builtin="checker" rgb1="0.88 0.90 0.93" rgb2="0.78 0.81 0.85" width="1024" height="1024"/>
+    <material name="floor_mat" texture="floor_grid" texrepeat="30 25" reflectance="0.15" roughness="0.4"/>
+    <material name="wall_mat" rgba="0.25 0.32 0.42 1.0" roughness="0.5"/>
+    <material name="wood_mat" rgba="0.65 0.45 0.28 1.0" roughness="0.4"/>
+    <material name="portal_mat" rgba="0.20 0.25 0.35 1.0" specular="0.8" shininess="0.5"/>
+    <material name="glass_mat" rgba="0.70 0.85 0.95 0.45" roughness="0.1"/>
+    <material name="desk_mat" rgba="0.78 0.60 0.40 1.0" roughness="0.3"/>
+    <material name="plinth_mat" rgba="0.12 0.16 0.24 1.0" roughness="0.5"/>
+    <material name="screen_mat" rgba="0.05 0.08 0.15 1.0" roughness="0.2"/>
+    <material name="marker_stand_mat" rgba="0.15 0.15 0.18 1.0" roughness="0.4"/>
+    <material name="white_mat" rgba="0.95 0.95 0.95 1.0" roughness="0.2"/>
+
+    <!-- Category accent materials -->
+    <material name="mat_physical" rgba="0.96 0.62 0.07 1.0"/>
+    <material name="mat_digital" rgba="0.02 0.52 0.78 1.0"/>
+    <material name="mat_business" rgba="0.02 0.59 0.41 1.0"/>
+    <material name="mat_showntell" rgba="0.49 0.23 0.93 1.0"/>
+    <material name="mat_robotics" rgba="0.86 0.15 0.15 1.0"/>
+    <material name="track_mat" rgba="0.12 0.14 0.18 1.0" roughness="0.8"/>
+    <material name="turf_mat" rgba="0.10 0.45 0.22 1.0" roughness="0.9"/>
+
+    <!-- ArUco Marker Textures & Materials on Stall Tables -->
+    <texture name="tex_aruco_P01" type="2d" file="assets/aruco/aruco_P01.png"/>
+    <material name="mat_aruco_P01" texture="tex_aruco_P01"/>
+    <texture name="tex_aruco_P02" type="2d" file="assets/aruco/aruco_P02.png"/>
+    <material name="mat_aruco_P02" texture="tex_aruco_P02"/>
+    <texture name="tex_aruco_P03" type="2d" file="assets/aruco/aruco_P03.png"/>
+    <material name="mat_aruco_P03" texture="tex_aruco_P03"/>
+    <texture name="tex_aruco_P04" type="2d" file="assets/aruco/aruco_P04.png"/>
+    <material name="mat_aruco_P04" texture="tex_aruco_P04"/>
+    <texture name="tex_aruco_P05" type="2d" file="assets/aruco/aruco_P05.png"/>
+    <material name="mat_aruco_P05" texture="tex_aruco_P05"/>
+    <texture name="tex_aruco_P06" type="2d" file="assets/aruco/aruco_P06.png"/>
+    <material name="mat_aruco_P06" texture="tex_aruco_P06"/>
+    <texture name="tex_aruco_P07" type="2d" file="assets/aruco/aruco_P07.png"/>
+    <material name="mat_aruco_P07" texture="tex_aruco_P07"/>
+    <texture name="tex_aruco_P08" type="2d" file="assets/aruco/aruco_P08.png"/>
+    <material name="mat_aruco_P08" texture="tex_aruco_P08"/>
+    <texture name="tex_aruco_P09" type="2d" file="assets/aruco/aruco_P09.png"/>
+    <material name="mat_aruco_P09" texture="tex_aruco_P09"/>
+    <texture name="tex_aruco_P10" type="2d" file="assets/aruco/aruco_P10.png"/>
+    <material name="mat_aruco_P10" texture="tex_aruco_P10"/>
+    <texture name="tex_aruco_P11" type="2d" file="assets/aruco/aruco_P11.png"/>
+    <material name="mat_aruco_P11" texture="tex_aruco_P11"/>
+    <texture name="tex_aruco_P12" type="2d" file="assets/aruco/aruco_P12.png"/>
+    <material name="mat_aruco_P12" texture="tex_aruco_P12"/>
+    <texture name="tex_aruco_D01" type="2d" file="assets/aruco/aruco_D01.png"/>
+    <material name="mat_aruco_D01" texture="tex_aruco_D01"/>
+    <texture name="tex_aruco_D02" type="2d" file="assets/aruco/aruco_D02.png"/>
+    <material name="mat_aruco_D02" texture="tex_aruco_D02"/>
+    <texture name="tex_aruco_D03" type="2d" file="assets/aruco/aruco_D03.png"/>
+    <material name="mat_aruco_D03" texture="tex_aruco_D03"/>
+    <texture name="tex_aruco_D04" type="2d" file="assets/aruco/aruco_D04.png"/>
+    <material name="mat_aruco_D04" texture="tex_aruco_D04"/>
+    <texture name="tex_aruco_D05" type="2d" file="assets/aruco/aruco_D05.png"/>
+    <material name="mat_aruco_D05" texture="tex_aruco_D05"/>
+    <texture name="tex_aruco_D06" type="2d" file="assets/aruco/aruco_D06.png"/>
+    <material name="mat_aruco_D06" texture="tex_aruco_D06"/>
+    <texture name="tex_aruco_D07" type="2d" file="assets/aruco/aruco_D07.png"/>
+    <material name="mat_aruco_D07" texture="tex_aruco_D07"/>
+    <texture name="tex_aruco_D08" type="2d" file="assets/aruco/aruco_D08.png"/>
+    <material name="mat_aruco_D08" texture="tex_aruco_D08"/>
+    <texture name="tex_aruco_D09" type="2d" file="assets/aruco/aruco_D09.png"/>
+    <material name="mat_aruco_D09" texture="tex_aruco_D09"/>
+    <texture name="tex_aruco_D10" type="2d" file="assets/aruco/aruco_D10.png"/>
+    <material name="mat_aruco_D10" texture="tex_aruco_D10"/>
+    <texture name="tex_aruco_D11" type="2d" file="assets/aruco/aruco_D11.png"/>
+    <material name="mat_aruco_D11" texture="tex_aruco_D11"/>
+    <texture name="tex_aruco_D12" type="2d" file="assets/aruco/aruco_D12.png"/>
+    <material name="mat_aruco_D12" texture="tex_aruco_D12"/>
+    <texture name="tex_aruco_B01" type="2d" file="assets/aruco/aruco_B01.png"/>
+    <material name="mat_aruco_B01" texture="tex_aruco_B01"/>
+    <texture name="tex_aruco_B02" type="2d" file="assets/aruco/aruco_B02.png"/>
+    <material name="mat_aruco_B02" texture="tex_aruco_B02"/>
+    <texture name="tex_aruco_B03" type="2d" file="assets/aruco/aruco_B03.png"/>
+    <material name="mat_aruco_B03" texture="tex_aruco_B03"/>
+    <texture name="tex_aruco_B04" type="2d" file="assets/aruco/aruco_B04.png"/>
+    <material name="mat_aruco_B04" texture="tex_aruco_B04"/>
+    <texture name="tex_aruco_B05" type="2d" file="assets/aruco/aruco_B05.png"/>
+    <material name="mat_aruco_B05" texture="tex_aruco_B05"/>
+    <texture name="tex_aruco_B06" type="2d" file="assets/aruco/aruco_B06.png"/>
+    <material name="mat_aruco_B06" texture="tex_aruco_B06"/>
+    <texture name="tex_aruco_B07" type="2d" file="assets/aruco/aruco_B07.png"/>
+    <material name="mat_aruco_B07" texture="tex_aruco_B07"/>
+    <texture name="tex_aruco_B08" type="2d" file="assets/aruco/aruco_B08.png"/>
+    <material name="mat_aruco_B08" texture="tex_aruco_B08"/>
+    <texture name="tex_aruco_ST01" type="2d" file="assets/aruco/aruco_ST01.png"/>
+    <material name="mat_aruco_ST01" texture="tex_aruco_ST01"/>
+    <texture name="tex_aruco_ST02" type="2d" file="assets/aruco/aruco_ST02.png"/>
+    <material name="mat_aruco_ST02" texture="tex_aruco_ST02"/>
+    <texture name="tex_aruco_ST03" type="2d" file="assets/aruco/aruco_ST03.png"/>
+    <material name="mat_aruco_ST03" texture="tex_aruco_ST03"/>
+    <texture name="tex_aruco_ST04" type="2d" file="assets/aruco/aruco_ST04.png"/>
+    <material name="mat_aruco_ST04" texture="tex_aruco_ST04"/>
+    <texture name="tex_aruco_ST05" type="2d" file="assets/aruco/aruco_ST05.png"/>
+    <material name="mat_aruco_ST05" texture="tex_aruco_ST05"/>
+    <texture name="tex_aruco_ST06" type="2d" file="assets/aruco/aruco_ST06.png"/>
+    <material name="mat_aruco_ST06" texture="tex_aruco_ST06"/>
+    <texture name="tex_aruco_ST07" type="2d" file="assets/aruco/aruco_ST07.png"/>
+    <material name="mat_aruco_ST07" texture="tex_aruco_ST07"/>
+    <texture name="tex_aruco_ST08" type="2d" file="assets/aruco/aruco_ST08.png"/>
+    <material name="mat_aruco_ST08" texture="tex_aruco_ST08"/>
+    <texture name="tex_aruco_R01" type="2d" file="assets/aruco/aruco_R01.png"/>
+    <material name="mat_aruco_R01" texture="tex_aruco_R01"/>
+    <texture name="tex_aruco_R02" type="2d" file="assets/aruco/aruco_R02.png"/>
+    <material name="mat_aruco_R02" texture="tex_aruco_R02"/>
+    <texture name="tex_aruco_S01" type="2d" file="assets/aruco/aruco_S01.png"/>
+    <material name="mat_aruco_S01" texture="tex_aruco_S01"/>
+    <texture name="tex_aruco_S02" type="2d" file="assets/aruco/aruco_S02.png"/>
+    <material name="mat_aruco_S02" texture="tex_aruco_S02"/>
+  </asset>
+
+  <worldbody>
+    <!-- 1. Ambient & Directional Lighting -->
+    <light pos="0 10 25" dir="0 0 -1" diffuse="0.85 0.85 0.85" specular="0.3 0.3 0.3" castshadow="true"/>
+    <light pos="20 25 20" dir="-0.5 -0.5 -1" diffuse="0.5 0.5 0.5"/>
+    <light pos="-20 -5 18" dir="0.5 0.5 -1" diffuse="0.5 0.5 0.5"/>
+
+    <!-- 2. Global Ground Floor (59.6m x 45.6m) -->
+    <geom name="ground_floor" type="plane" pos="-2.0 12.0 0.0" size="30.0 23.0 0.1" material="floor_mat" friction="0.8 0.1 0.1" contype="1" conaffinity="1"/>
+
+    <!-- 3. Perimeter Enclosure Walls & Partitions -->
+    <geom name="north_back_wall" type="box" pos="-2.0 34.8 5.25" size="29.8000 0.2000 5.2500" material="wall_mat" contype="1" conaffinity="1"/>
+    <geom name="west_wall" type="box" pos="-31.8 12.0 5.25" size="0.2000 22.8000 5.2500" material="wall_mat" contype="1" conaffinity="1"/>
+    <geom name="east_wall" type="box" pos="27.8 12.0 5.25" size="0.2000 22.8000 5.2500" material="wood_mat" contype="1" conaffinity="1"/>
+    <geom name="south_wall_left" type="box" pos="-24.0 -10.8 2.5" size="7.8000 0.2000 2.5000" material="portal_mat" contype="1" conaffinity="1"/>
+    <geom name="south_wall_right" type="box" pos="20.0 -10.8 2.5" size="7.8000 0.2000 2.5000" material="portal_mat" contype="1" conaffinity="1"/>
+    <geom name="west_partition_north" type="box" pos="-7.0 21.15 2.5" size="0.1250 13.6500 2.5000" material="glass_mat" contype="1" conaffinity="1"/>
+    <geom name="west_partition_south" type="box" pos="-7.0 -6.15 2.5" size="0.1250 4.6500 2.5000" material="glass_mat" contype="1" conaffinity="1"/>
+    <geom name="robotics_balustrade" type="box" pos="10.4 18.9 0.55" size="16.0000 0.0400 0.5500" material="glass_mat" contype="1" conaffinity="1"/>
+
+    <!-- 4. Portal Framing Columns & Lintels -->
+    <geom name="portal_col_south" type="box" pos="-7.0 -1.5 2.5" size="0.1500 0.1500 2.5000" material="portal_mat" contype="1" conaffinity="1"/>
+    <geom name="portal_col_north" type="box" pos="-7.0 7.5 2.5" size="0.1500 0.1500 2.5000" material="portal_mat" contype="1" conaffinity="1"/>
+    <geom name="portal_lintel" type="box" pos="-7.0 3.0 4.8" size="0.1500 4.5000 0.2000" material="portal_mat" contype="1" conaffinity="1"/>
+
+    <!-- 5. Zone 3 Robotics Arena: Speedway, Ramps & Obstacles -->
+    <geom name="speedway_floor" type="box" pos="-1.0 25.5 0.01" size="4.0 4.0 0.02" material="track_mat"/>
+    <geom name="speedway_wall_n" type="box" pos="-1.0 29.5 0.3" size="4.0000 0.0750 0.3000" material="portal_mat" contype="1" conaffinity="1"/>
+    <geom name="speedway_wall_s" type="box" pos="-1.0 21.5 0.3" size="4.0000 0.0750 0.3000" material="portal_mat" contype="1" conaffinity="1"/>
+    <geom name="speedway_wall_w" type="box" pos="-5.0 25.5 0.3" size="0.0750 4.0000 0.3000" material="portal_mat" contype="1" conaffinity="1"/>
+    <geom name="speedway_wall_e" type="box" pos="3.0 25.5 0.3" size="0.0750 4.0000 0.3000" material="portal_mat" contype="1" conaffinity="1"/>
+    <geom name="ascending_ramp" type="box" pos="-1.7 27.5 0.325" size="0.8000 0.6000 0.04" euler="0 -0.36 0" material="track_mat" contype="1" conaffinity="1"/>
+    <geom name="elevated_bridge_deck" type="box" pos="0.0 27.5 0.65" size="0.9000 0.6000 0.0500" material="track_mat" contype="1" conaffinity="1"/>
+    <geom name="descending_ramp" type="box" pos="1.7 27.5 0.325" size="0.8000 0.6000 0.04" euler="0 0.36 0" material="track_mat" contype="1" conaffinity="1"/>
+
+    <!-- 6. Zone 3 Robotics Arena: Robo Soccer Pitch -->
+    <geom name="soccer_turf" type="box" pos="18.0 25.5 0.01" size="5.0 7.0 0.02" material="turf_mat"/>
+    <geom name="soccer_wall_n" type="box" pos="18.0 32.5 0.25" size="5.0000 0.0600 0.2500" material="portal_mat" contype="1" conaffinity="1"/>
+    <geom name="soccer_wall_s" type="box" pos="18.0 18.5 0.25" size="5.0000 0.0600 0.2500" material="portal_mat" contype="1" conaffinity="1"/>
+    <geom name="soccer_wall_w" type="box" pos="13.0 25.5 0.25" size="0.0600 7.0000 0.2500" material="portal_mat" contype="1" conaffinity="1"/>
+    <geom name="soccer_wall_e" type="box" pos="23.0 25.5 0.25" size="0.0600 7.0000 0.2500" material="portal_mat" contype="1" conaffinity="1"/>
+    <geom name="goal_north" type="box" pos="18.0 32.2 0.3" size="1.2000 0.3000 0.3000" rgba="0.9 0.9 0.9 0.6" contype="1" conaffinity="1"/>
+    <geom name="goal_south" type="box" pos="18.0 18.8 0.3" size="1.2000 0.3000 0.3000" rgba="0.9 0.9 0.9 0.6" contype="1" conaffinity="1"/>
+
+    <!-- 7. 44 Exhibition Stalls with Tables, Screens & Tabletop ArUco Markers -->
+    <body name="stall_P01" pos="0.0 14.0 0.0" euler="0 0 -0.0">
+      <geom name="plinth_P01" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_P01" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_physical"/>
+      <geom name="desk_P01" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_P01" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_P01" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_P01" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_P01" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #1 -->
+      <geom name="aruco_stand_P01" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_P01" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_P01" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_P01" contype="0" conaffinity="0"/>
+      <site name="aruco_site_P01" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_P01" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_P02" pos="3.2 14.0 0.0" euler="0 0 -0.0">
+      <geom name="plinth_P02" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_P02" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_physical"/>
+      <geom name="desk_P02" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_P02" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_P02" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_P02" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_P02" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #2 -->
+      <geom name="aruco_stand_P02" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_P02" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_P02" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_P02" contype="0" conaffinity="0"/>
+      <site name="aruco_site_P02" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_P02" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_P03" pos="6.4 14.0 0.0" euler="0 0 -0.0">
+      <geom name="plinth_P03" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_P03" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_physical"/>
+      <geom name="desk_P03" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_P03" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_P03" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_P03" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_P03" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #3 -->
+      <geom name="aruco_stand_P03" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_P03" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_P03" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_P03" contype="0" conaffinity="0"/>
+      <site name="aruco_site_P03" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_P03" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_P04" pos="9.6 14.0 0.0" euler="0 0 -0.0">
+      <geom name="plinth_P04" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_P04" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_physical"/>
+      <geom name="desk_P04" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_P04" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_P04" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_P04" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_P04" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #4 -->
+      <geom name="aruco_stand_P04" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_P04" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_P04" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_P04" contype="0" conaffinity="0"/>
+      <site name="aruco_site_P04" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_P04" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_P05" pos="12.8 14.0 0.0" euler="0 0 -0.0">
+      <geom name="plinth_P05" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_P05" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_physical"/>
+      <geom name="desk_P05" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_P05" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_P05" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_P05" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_P05" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #5 -->
+      <geom name="aruco_stand_P05" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_P05" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_P05" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_P05" contype="0" conaffinity="0"/>
+      <site name="aruco_site_P05" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_P05" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_P06" pos="0.0 8.5 0.0" euler="0 0 -3.1416">
+      <geom name="plinth_P06" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_P06" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_physical"/>
+      <geom name="desk_P06" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_P06" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_P06" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_P06" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_P06" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #6 -->
+      <geom name="aruco_stand_P06" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_P06" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_P06" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_P06" contype="0" conaffinity="0"/>
+      <site name="aruco_site_P06" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_P06" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_P07" pos="21.0 14.5 0.0" euler="0 0 1.5708">
+      <geom name="plinth_P07" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_P07" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_physical"/>
+      <geom name="desk_P07" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_P07" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_P07" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_P07" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_P07" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #7 -->
+      <geom name="aruco_stand_P07" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_P07" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_P07" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_P07" contype="0" conaffinity="0"/>
+      <site name="aruco_site_P07" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_P07" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_P08" pos="21.0 12.3 0.0" euler="0 0 1.5708">
+      <geom name="plinth_P08" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_P08" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_physical"/>
+      <geom name="desk_P08" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_P08" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_P08" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_P08" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_P08" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #8 -->
+      <geom name="aruco_stand_P08" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_P08" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_P08" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_P08" contype="0" conaffinity="0"/>
+      <site name="aruco_site_P08" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_P08" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_P09" pos="21.0 10.1 0.0" euler="0 0 1.5708">
+      <geom name="plinth_P09" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_P09" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_physical"/>
+      <geom name="desk_P09" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_P09" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_P09" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_P09" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_P09" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #9 -->
+      <geom name="aruco_stand_P09" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_P09" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_P09" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_P09" contype="0" conaffinity="0"/>
+      <site name="aruco_site_P09" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_P09" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_P10" pos="21.0 7.9 0.0" euler="0 0 1.5708">
+      <geom name="plinth_P10" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_P10" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_physical"/>
+      <geom name="desk_P10" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_P10" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_P10" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_P10" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_P10" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #10 -->
+      <geom name="aruco_stand_P10" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_P10" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_P10" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_P10" contype="0" conaffinity="0"/>
+      <site name="aruco_site_P10" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_P10" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_P11" pos="3.2 8.5 0.0" euler="0 0 -3.1416">
+      <geom name="plinth_P11" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_P11" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_physical"/>
+      <geom name="desk_P11" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_P11" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_P11" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_P11" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_P11" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #11 -->
+      <geom name="aruco_stand_P11" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_P11" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_P11" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_P11" contype="0" conaffinity="0"/>
+      <site name="aruco_site_P11" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_P11" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_P12" pos="6.4 8.5 0.0" euler="0 0 -3.1416">
+      <geom name="plinth_P12" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_P12" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_physical"/>
+      <geom name="desk_P12" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_P12" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_P12" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_P12" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_P12" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #12 -->
+      <geom name="aruco_stand_P12" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_P12" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_P12" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_P12" contype="0" conaffinity="0"/>
+      <site name="aruco_site_P12" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_P12" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_D01" pos="9.6 8.5 0.0" euler="0 0 -3.1416">
+      <geom name="plinth_D01" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_D01" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_digital"/>
+      <geom name="desk_D01" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_D01" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_D01" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_D01" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_D01" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #13 -->
+      <geom name="aruco_stand_D01" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_D01" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_D01" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_D01" contype="0" conaffinity="0"/>
+      <site name="aruco_site_D01" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_D01" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_D02" pos="12.8 8.5 0.0" euler="0 0 -3.1416">
+      <geom name="plinth_D02" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_D02" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_digital"/>
+      <geom name="desk_D02" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_D02" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_D02" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_D02" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_D02" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #14 -->
+      <geom name="aruco_stand_D02" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_D02" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_D02" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_D02" contype="0" conaffinity="0"/>
+      <site name="aruco_site_D02" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_D02" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_D03" pos="0.0 3.5 0.0" euler="0 0 -0.0">
+      <geom name="plinth_D03" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_D03" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_digital"/>
+      <geom name="desk_D03" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_D03" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_D03" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_D03" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_D03" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #15 -->
+      <geom name="aruco_stand_D03" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_D03" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_D03" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_D03" contype="0" conaffinity="0"/>
+      <site name="aruco_site_D03" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_D03" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_D04" pos="3.2 3.5 0.0" euler="0 0 -0.0">
+      <geom name="plinth_D04" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_D04" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_digital"/>
+      <geom name="desk_D04" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_D04" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_D04" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_D04" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_D04" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #16 -->
+      <geom name="aruco_stand_D04" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_D04" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_D04" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_D04" contype="0" conaffinity="0"/>
+      <site name="aruco_site_D04" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_D04" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_D05" pos="6.4 3.5 0.0" euler="0 0 -0.0">
+      <geom name="plinth_D05" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_D05" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_digital"/>
+      <geom name="desk_D05" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_D05" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_D05" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_D05" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_D05" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #17 -->
+      <geom name="aruco_stand_D05" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_D05" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_D05" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_D05" contype="0" conaffinity="0"/>
+      <site name="aruco_site_D05" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_D05" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_D06" pos="9.6 3.5 0.0" euler="0 0 -0.0">
+      <geom name="plinth_D06" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_D06" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_digital"/>
+      <geom name="desk_D06" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_D06" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_D06" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_D06" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_D06" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #18 -->
+      <geom name="aruco_stand_D06" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_D06" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_D06" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_D06" contype="0" conaffinity="0"/>
+      <site name="aruco_site_D06" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_D06" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_D07" pos="12.8 3.5 0.0" euler="0 0 -0.0">
+      <geom name="plinth_D07" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_D07" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_digital"/>
+      <geom name="desk_D07" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_D07" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_D07" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_D07" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_D07" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #19 -->
+      <geom name="aruco_stand_D07" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_D07" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_D07" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_D07" contype="0" conaffinity="0"/>
+      <site name="aruco_site_D07" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_D07" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_D08" pos="0.0 -2.0 0.0" euler="0 0 -3.1416">
+      <geom name="plinth_D08" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_D08" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_digital"/>
+      <geom name="desk_D08" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_D08" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_D08" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_D08" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_D08" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #20 -->
+      <geom name="aruco_stand_D08" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_D08" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_D08" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_D08" contype="0" conaffinity="0"/>
+      <site name="aruco_site_D08" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_D08" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_D09" pos="3.2 -2.0 0.0" euler="0 0 -3.1416">
+      <geom name="plinth_D09" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_D09" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_digital"/>
+      <geom name="desk_D09" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_D09" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_D09" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_D09" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_D09" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #21 -->
+      <geom name="aruco_stand_D09" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_D09" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_D09" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_D09" contype="0" conaffinity="0"/>
+      <site name="aruco_site_D09" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_D09" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_D10" pos="6.4 -2.0 0.0" euler="0 0 -3.1416">
+      <geom name="plinth_D10" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_D10" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_digital"/>
+      <geom name="desk_D10" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_D10" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_D10" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_D10" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_D10" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #22 -->
+      <geom name="aruco_stand_D10" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_D10" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_D10" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_D10" contype="0" conaffinity="0"/>
+      <site name="aruco_site_D10" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_D10" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_D11" pos="21.0 5.7 0.0" euler="0 0 1.5708">
+      <geom name="plinth_D11" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_D11" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_digital"/>
+      <geom name="desk_D11" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_D11" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_D11" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_D11" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_D11" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #23 -->
+      <geom name="aruco_stand_D11" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_D11" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_D11" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_D11" contype="0" conaffinity="0"/>
+      <site name="aruco_site_D11" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_D11" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_D12" pos="21.0 3.5 0.0" euler="0 0 1.5708">
+      <geom name="plinth_D12" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_D12" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_digital"/>
+      <geom name="desk_D12" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_D12" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_D12" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_D12" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_D12" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #24 -->
+      <geom name="aruco_stand_D12" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_D12" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_D12" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_D12" contype="0" conaffinity="0"/>
+      <site name="aruco_site_D12" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_D12" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_B01" pos="21.0 1.3 0.0" euler="0 0 1.5708">
+      <geom name="plinth_B01" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_B01" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_business"/>
+      <geom name="desk_B01" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_B01" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_B01" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_B01" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_B01" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #25 -->
+      <geom name="aruco_stand_B01" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_B01" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_B01" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_B01" contype="0" conaffinity="0"/>
+      <site name="aruco_site_B01" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_B01" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_B02" pos="21.0 -0.9 0.0" euler="0 0 1.5708">
+      <geom name="plinth_B02" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_B02" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_business"/>
+      <geom name="desk_B02" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_B02" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_B02" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_B02" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_B02" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #26 -->
+      <geom name="aruco_stand_B02" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_B02" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_B02" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_B02" contype="0" conaffinity="0"/>
+      <site name="aruco_site_B02" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_B02" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_B03" pos="21.0 -3.1 0.0" euler="0 0 1.5708">
+      <geom name="plinth_B03" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_B03" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_business"/>
+      <geom name="desk_B03" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_B03" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_B03" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_B03" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_B03" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #27 -->
+      <geom name="aruco_stand_B03" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_B03" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_B03" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_B03" contype="0" conaffinity="0"/>
+      <site name="aruco_site_B03" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_B03" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_B04" pos="21.0 -5.3 0.0" euler="0 0 1.5708">
+      <geom name="plinth_B04" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_B04" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_business"/>
+      <geom name="desk_B04" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_B04" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_B04" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_B04" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_B04" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #28 -->
+      <geom name="aruco_stand_B04" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_B04" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_B04" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_B04" contype="0" conaffinity="0"/>
+      <site name="aruco_site_B04" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_B04" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_B05" pos="21.0 -7.5 0.0" euler="0 0 1.5708">
+      <geom name="plinth_B05" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_B05" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_business"/>
+      <geom name="desk_B05" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_B05" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_B05" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_B05" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_B05" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #29 -->
+      <geom name="aruco_stand_B05" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_B05" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_B05" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_B05" contype="0" conaffinity="0"/>
+      <site name="aruco_site_B05" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_B05" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_B06" pos="9.6 -2.0 0.0" euler="0 0 -3.1416">
+      <geom name="plinth_B06" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_B06" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_business"/>
+      <geom name="desk_B06" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_B06" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_B06" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_B06" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_B06" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #30 -->
+      <geom name="aruco_stand_B06" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_B06" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_B06" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_B06" contype="0" conaffinity="0"/>
+      <site name="aruco_site_B06" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_B06" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_B07" pos="12.8 -2.0 0.0" euler="0 0 -3.1416">
+      <geom name="plinth_B07" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_B07" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_business"/>
+      <geom name="desk_B07" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_B07" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_B07" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_B07" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_B07" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #31 -->
+      <geom name="aruco_stand_B07" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_B07" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_B07" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_B07" contype="0" conaffinity="0"/>
+      <site name="aruco_site_B07" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_B07" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_B08" pos="21.0 -9.7 0.0" euler="0 0 1.5708">
+      <geom name="plinth_B08" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_B08" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_business"/>
+      <geom name="desk_B08" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_B08" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_B08" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_B08" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_B08" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #32 -->
+      <geom name="aruco_stand_B08" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_B08" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_B08" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_B08" contype="0" conaffinity="0"/>
+      <site name="aruco_site_B08" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_B08" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_ST01" pos="-21.96 7.83 0.0" euler="0 0 0.38">
+      <geom name="plinth_ST01" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_ST01" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_showntell"/>
+      <geom name="desk_ST01" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_ST01" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_ST01" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_ST01" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_ST01" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #33 -->
+      <geom name="aruco_stand_ST01" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_ST01" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_ST01" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_ST01" contype="0" conaffinity="0"/>
+      <site name="aruco_site_ST01" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_ST01" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_ST02" pos="-18.89 6.6 0.0" euler="0 0 0.38">
+      <geom name="plinth_ST02" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_ST02" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_showntell"/>
+      <geom name="desk_ST02" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_ST02" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_ST02" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_ST02" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_ST02" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #34 -->
+      <geom name="aruco_stand_ST02" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_ST02" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_ST02" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_ST02" contype="0" conaffinity="0"/>
+      <site name="aruco_site_ST02" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_ST02" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_ST03" pos="-15.73 5.34 0.0" euler="0 0 0.38">
+      <geom name="plinth_ST03" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_ST03" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_showntell"/>
+      <geom name="desk_ST03" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_ST03" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_ST03" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_ST03" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_ST03" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #35 -->
+      <geom name="aruco_stand_ST03" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_ST03" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_ST03" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_ST03" contype="0" conaffinity="0"/>
+      <site name="aruco_site_ST03" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_ST03" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_ST04" pos="-12.67 4.12 0.0" euler="0 0 0.38">
+      <geom name="plinth_ST04" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_ST04" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_showntell"/>
+      <geom name="desk_ST04" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_ST04" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_ST04" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_ST04" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_ST04" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #36 -->
+      <geom name="aruco_stand_ST04" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_ST04" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_ST04" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_ST04" contype="0" conaffinity="0"/>
+      <site name="aruco_site_ST04" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_ST04" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_ST05" pos="-24.33 1.88 0.0" euler="0 0 -2.76">
+      <geom name="plinth_ST05" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_ST05" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_showntell"/>
+      <geom name="desk_ST05" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_ST05" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_ST05" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_ST05" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_ST05" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #37 -->
+      <geom name="aruco_stand_ST05" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_ST05" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_ST05" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_ST05" contype="0" conaffinity="0"/>
+      <site name="aruco_site_ST05" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_ST05" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_ST06" pos="-21.27 0.66 0.0" euler="0 0 -2.76">
+      <geom name="plinth_ST06" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_ST06" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_showntell"/>
+      <geom name="desk_ST06" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_ST06" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_ST06" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_ST06" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_ST06" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #38 -->
+      <geom name="aruco_stand_ST06" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_ST06" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_ST06" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_ST06" contype="0" conaffinity="0"/>
+      <site name="aruco_site_ST06" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_ST06" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_ST07" pos="-18.11 -0.6 0.0" euler="0 0 -2.76">
+      <geom name="plinth_ST07" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_ST07" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_showntell"/>
+      <geom name="desk_ST07" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_ST07" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_ST07" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_ST07" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_ST07" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #39 -->
+      <geom name="aruco_stand_ST07" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_ST07" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_ST07" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_ST07" contype="0" conaffinity="0"/>
+      <site name="aruco_site_ST07" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_ST07" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_ST08" pos="-15.04 -1.83 0.0" euler="0 0 -2.76">
+      <geom name="plinth_ST08" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_ST08" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_showntell"/>
+      <geom name="desk_ST08" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_ST08" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_ST08" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_ST08" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_ST08" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #40 -->
+      <geom name="aruco_stand_ST08" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_ST08" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_ST08" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_ST08" contype="0" conaffinity="0"/>
+      <site name="aruco_site_ST08" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_ST08" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_R01" pos="-5.5 18.4 0.0" euler="0 0 -0.0">
+      <geom name="plinth_R01" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_R01" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_robotics"/>
+      <geom name="desk_R01" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_R01" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_R01" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_R01" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_R01" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #41 -->
+      <geom name="aruco_stand_R01" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_R01" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_R01" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_R01" contype="0" conaffinity="0"/>
+      <site name="aruco_site_R01" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_R01" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_R02" pos="-2.9 18.4 0.0" euler="0 0 -0.0">
+      <geom name="plinth_R02" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_R02" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_robotics"/>
+      <geom name="desk_R02" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_R02" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_R02" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_R02" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_R02" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #42 -->
+      <geom name="aruco_stand_R02" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_R02" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_R02" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_R02" contype="0" conaffinity="0"/>
+      <site name="aruco_site_R02" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_R02" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_S01" pos="23.6 18.4 0.0" euler="0 0 -0.0">
+      <geom name="plinth_S01" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_S01" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_robotics"/>
+      <geom name="desk_S01" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_S01" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_S01" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_S01" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_S01" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #43 -->
+      <geom name="aruco_stand_S01" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_S01" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_S01" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_S01" contype="0" conaffinity="0"/>
+      <site name="aruco_site_S01" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_S01" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+    <body name="stall_S02" pos="26.2 18.4 0.0" euler="0 0 -0.0">
+      <geom name="plinth_S02" type="box" pos="0 0 0.03" size="1.15 0.85 0.03" material="plinth_mat" contype="1" conaffinity="1"/>
+      <geom name="accent_S02" type="box" pos="0 0 0.065" size="1.11 0.81 0.008" material="mat_robotics"/>
+      <geom name="desk_S02" type="box" pos="0 0 0.72" size="1.0 0.4 0.025" material="desk_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_l_S02" type="box" pos="-0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="leg_r_S02" type="box" pos="0.92 0 0.36" size="0.02 0.36 0.34" material="portal_mat" contype="1" conaffinity="1"/>
+      <geom name="glass_S02" type="box" pos="-1.12 0 0.75" size="0.01 0.77 0.67" material="glass_mat" contype="1" conaffinity="1"/>
+      <geom name="monitor_S02" type="box" pos="0 -0.15 1.15" size="0.6 0.03 0.35" material="screen_mat" contype="1" conaffinity="1"/>
+      <!-- Tabletop ArUco Marker #44 -->
+      <geom name="aruco_stand_S02" type="box" pos="0.50 -0.20 0.755" size="0.10 0.03 0.01" material="marker_stand_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_back_S02" type="box" pos="0.50 -0.20 0.855" size="0.09 0.006 0.09" material="white_mat" contype="0" conaffinity="0"/>
+      <geom name="aruco_face_S02" type="box" pos="0.50 -0.207 0.855" size="0.08 0.001 0.08" material="mat_aruco_S02" contype="0" conaffinity="0"/>
+      <site name="aruco_site_S02" pos="0.50 -0.210 0.855" size="0.015" rgba="0 1 0 0.5"/>
+      <site name="waypoint_S02" pos="0 -1.2 0.2" size="0.1" rgba="0 1 0 0.4"/>
+    </body>
+
+    <!-- Cameras -->
+    <!-- Default 3rd Person Follow Camera tracking Go2 base -->
+    <camera name="cam_go2_third_person" mode="targetbody" target="base"/>
+    <camera name="entrance_gate_overview" pos="6.4 -14.0 6.5" euler="0.55 0 0"/>
+    <camera name="isometric_overview" pos="18.0 -22.0 28.0" euler="0.75 0 0.65"/>
+    <camera name="show_and_tell_cam" pos="-18.0 -12.0 12.0" euler="0.65 0 0"/>
+    <camera name="robotics_arena_cam" pos="10.0 10.0 15.0" euler="0.70 0 0"/>
+  </worldbody>
+
+  <!-- Spawn Keyframes: Starting from South Entrance Gate facing North -->
+  <keyframe>
+    <key name="gate_spawn_right" qpos="6.4 -7.5 0.35 0.7071068 0 0 0.7071068 0 0.9 -1.8 0 0.9 -1.8 0 0.9 -1.8 0 0.9 -1.8"/>
+    <key name="gate_spawn_center" qpos="0.0 -7.5 0.35 0.7071068 0 0 0.7071068 0 0.9 -1.8 0 0.9 -1.8 0 0.9 -1.8 0 0.9 -1.8"/>
+  </keyframe>
+</mujoco>
