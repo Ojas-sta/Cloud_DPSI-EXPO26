@@ -1,5 +1,14 @@
 <?xml version='1.0' encoding='utf-8'?>
 <robot name="go2_description">
+  <!-- Canonical Root Frame without inertia (REP-120 compliant, KDL clean) -->
+  <link name="base_link" />
+
+  <joint name="base_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="base" />
+  </joint>
+
   <link name="base">
     <inertial>
       <origin xyz="0.021112 0 -0.005366" rpy="0 0 0" />
