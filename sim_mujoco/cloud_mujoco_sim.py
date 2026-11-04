@@ -122,34 +122,34 @@ class CloudMuJoCoSimulator:
                 "id": 2,
                 "name": "SCENE 2: ARGUS PATROL",
                 "fsm": "STATE_ARGUS_PATROL",
-                "target_x": 3.5, "target_y": 0.0, "target_yaw": 0.0,
+                "target_x": 2.5, "target_y": 0.0, "target_yaw": 0.0,
                 "camera": "cam_patrol_corridor",
-                "transit_time": 4.5, "station_time": 4.5,
-                "desc": "Trotting along the main pavilion avenue (x=3.5m) with simulated 4D LiDAR."
+                "transit_time": 4.0, "station_time": 4.5,
+                "desc": "Trotting along the main pavilion avenue (x=2.5m) with simulated 4D LiDAR."
             },
             {
                 "id": 3,
                 "name": "SCENE 3: SPILL HAZARD E-STOP",
                 "fsm": "STATE_HAZARD_ALERT",
-                "target_x": 4.75, "target_y": 0.0, "target_yaw": 0.0,
+                "target_x": 3.8, "target_y": 0.0, "target_yaw": 0.0,
                 "camera": "cam_hazard_stop",
-                "transit_time": 3.5, "station_time": 5.5,
-                "desc": "Emergency E-stop right before the blue spill puddle & caution cones at x=5.0m."
+                "transit_time": 3.0, "station_time": 5.5,
+                "desc": "Emergency E-stop safely halting 0.75m BEFORE the spill puddle & caution cones."
             },
             {
                 "id": 4,
                 "name": "SCENE 4: ARUCO STANDOFF DOCK",
                 "fsm": "STATE_DOCENT_CRUISE",
-                "target_x": 8.6, "target_y": 0.0, "target_yaw": 0.0,
+                "target_x": 8.2, "target_y": 0.0, "target_yaw": 0.0,
                 "camera": "cam_booth_standoff",
-                "transit_time": 5.5, "station_time": 5.0,
-                "desc": "Docked at Booth 1 at 1.4m standoff, aligning with ArUco ID 10 board (x=10.0m)."
+                "transit_time": 6.0, "station_time": 5.0,
+                "desc": "Docked at Booth 1 at 1.2m standoff, aligning with ArUco ID 10 board (x=10.0m)."
             },
             {
                 "id": 5,
                 "name": "SCENE 5: 180° PRESENTER PIVOT",
                 "fsm": "STATE_DOCENT_NARRATE",
-                "target_x": 8.6, "target_y": 0.0, "target_yaw": math.pi,
+                "target_x": 8.2, "target_y": 0.0, "target_yaw": math.pi,
                 "camera": "cam_presenter_audience",
                 "transit_time": 4.0, "station_time": 5.5,
                 "desc": "Stepping 180° in place to face audience. Docent presentation mode with +8° eye contact."
