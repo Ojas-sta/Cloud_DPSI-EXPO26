@@ -231,18 +231,6 @@
   </actuator>
 
   <sensor>
-    <!-- Unitree Go2 4D LiDAR Rangefinder Channels -->
-    <rangefinder name="rf_front" site="rf_site_fwd"/>
-    <rangefinder name="rf_front_l30" site="rf_site_fwd_left_30"/>
-    <rangefinder name="rf_front_r30" site="rf_site_fwd_right_30"/>
-    <rangefinder name="rf_front_l60" site="rf_site_fwd_left_60"/>
-    <rangefinder name="rf_front_r60" site="rf_site_fwd_right_60"/>
-    <rangefinder name="rf_left" site="rf_site_left_90"/>
-    <rangefinder name="rf_right" site="rf_site_right_90"/>
-    <rangefinder name="rf_rear_l135" site="rf_site_rear_left_135"/>
-    <rangefinder name="rf_rear_r135" site="rf_site_rear_right_135"/>
-    <rangefinder name="rf_rear" site="rf_site_rear_180"/>
-    <rangefinder name="rf_ground_puddle" site="rf_site_down_slope"/>
     <!-- Internal 6-DOF IMU -->
     <accelerometer name="imu_acc" site="imu"/>
     <gyro name="imu_gyro" site="imu"/>

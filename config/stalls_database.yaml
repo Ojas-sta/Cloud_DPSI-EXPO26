@@ -1,0 +1,616 @@
+# ==============================================================================
+# Project Cloud: Master 40+ Exhibition Stalls Database & Topological Map Schema
+# Platform: Unitree Go2 Edu Quadruped | Venue: DPSI EXPO-2026 School Auditorium
+# Standardized Optical Fiducials: AprilTag tag36h11 (IDs 10-49 for stalls, 99 for dock)
+# ==============================================================================
+
+venue:
+  name: "DPSI EXPO 2026 - Engineering & Robotics Pavilion"
+  dimensions_meters: [30.0, 20.0]
+  origin_offset: [-5.0, -10.0] # Bounds: x in [-5.0, 25.0], y in [-10.0, 10.0]
+  global_frame: "map"
+  aisle_width_meters: 2.40
+  default_terminal_standoff_meters: 0.95
+  default_presentation_pitch_rad: -0.14 # +8 deg nose-up eye contact
+  max_deferrals_per_stall: 2
+  crowd_clearance_threshold_meters: 0.75
+  clearance_warning_timeout_sec: 5.0
+  clearance_defer_timeout_sec: 15.0
+  edge_weight_inflation_penalty: 50.0
+  edge_weight_inflation_duration_sec: 180.0
+
+recharge_dock:
+  node_id: "DOCK_STAGE_99"
+  marker_id: 99
+  apriltag_family: "tag36h11"
+  label: "Central Stage Autonomous Recharge Dock & Prone Resting Bay"
+  pose: {x: -2.00, y: 0.00, z: 0.32, yaw: 0.0}
+  staging_pose: {x: -0.80, y: 0.00, z: 0.32, yaw: 3.14159}
+  standoff_m: 0.50
+
+cohorts:
+  - id: 1
+    name: "Cohort 1: Sustainable Tech & Autonomous Mechatronics (Stalls 01-10)"
+    stall_ids: ["STALL_01", "STALL_02", "STALL_03", "STALL_04", "STALL_05", "STALL_06", "STALL_07", "STALL_08", "STALL_09", "STALL_10"]
+  - id: 2
+    name: "Cohort 2: Edge-AI, Robotics & Bionics (Stalls 11-20)"
+    stall_ids: ["STALL_11", "STALL_12", "STALL_13", "STALL_14", "STALL_15", "STALL_16", "STALL_17", "STALL_18", "STALL_19", "STALL_20"]
+  - id: 3
+    name: "Cohort 3: IoT, Smart Grids & Bio-Engineering (Stalls 21-30)"
+    stall_ids: ["STALL_21", "STALL_22", "STALL_23", "STALL_24", "STALL_25", "STALL_26", "STALL_27", "STALL_28", "STALL_29", "STALL_30"]
+  - id: 4
+    name: "Cohort 4: Aerospace, Quantum Computing & Cybersecurity (Stalls 31-40)"
+    stall_ids: ["STALL_31", "STALL_32", "STALL_33", "STALL_34", "STALL_35", "STALL_36", "STALL_37", "STALL_38", "STALL_39", "STALL_40"]
+
+stalls:
+  # ============================================================================
+  # COHORT 1 (Stalls 01 to 10) - Aisle A & B
+  # ============================================================================
+  - id: "STALL_01"
+    cohort: 1
+    apriltag_id: 10
+    title: "Autonomous Solar Tracking Cart"
+    category: "Renewable Energy & Embedded Systems"
+    aisle: "AISLE_A"
+    booth_pose: {x: 4.00, y: 7.20, z: 0.0, yaw: -1.5708}
+    staging_pose: {x: 4.00, y: 6.00, z: 0.32, yaw: 1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 75.0
+    audio_pitch_id: "audio_stall_01_solar"
+    key_specs: {mcu: "STM32F401 Black Pill", gain: "+34.2% daily solar energy yield"}
+
+  - id: "STALL_02"
+    cohort: 1
+    apriltag_id: 11
+    title: "Edge-AI Agricultural Inspection Drone"
+    category: "Precision Agriculture"
+    aisle: "AISLE_A"
+    booth_pose: {x: 8.00, y: 7.20, z: 0.0, yaw: -1.5708}
+    staging_pose: {x: 8.00, y: 6.00, z: 0.32, yaw: 1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 80.0
+    audio_pitch_id: "audio_stall_02_drone"
+    key_specs: {inference: "NVIDIA Jetson Nano", fps: "32 FPS foliar classification"}
+
+  - id: "STALL_03"
+    cohort: 1
+    apriltag_id: 12
+    title: "Bionic Myoelectric Hand Prosthetic"
+    category: "Biomedical Mechatronics"
+    aisle: "AISLE_A"
+    booth_pose: {x: 12.00, y: 7.20, z: 0.0, yaw: -1.5708}
+    staging_pose: {x: 12.00, y: 6.00, z: 0.32, yaw: 1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 75.0
+    audio_pitch_id: "audio_stall_03_prosthetic"
+    key_specs: {actuation: "5x Coreless DC Micro Servos", latency: "42ms EMG response"}
+
+  - id: "STALL_04"
+    cohort: 1
+    apriltag_id: 13
+    title: "IoT Smart Microgrid Energy Hub"
+    category: "Power Systems & IoT"
+    aisle: "AISLE_A"
+    booth_pose: {x: 16.00, y: 7.20, z: 0.0, yaw: -1.5708}
+    staging_pose: {x: 16.00, y: 6.00, z: 0.32, yaw: 1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 70.0
+    audio_pitch_id: "audio_stall_04_microgrid"
+    key_specs: {battery: "48V 100Ah LiFePO4", protocol: "Modbus-TCP over LoRa"}
+
+  - id: "STALL_05"
+    cohort: 1
+    apriltag_id: 14
+    title: "High-Speed Autonomous Line-Lidar Sorter"
+    category: "Industrial Automation"
+    aisle: "AISLE_A"
+    booth_pose: {x: 20.00, y: 7.20, z: 0.0, yaw: -1.5708}
+    staging_pose: {x: 20.00, y: 6.00, z: 0.32, yaw: 1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 75.0
+    audio_pitch_id: "audio_stall_05_sorter"
+    key_specs: {belt_speed: "1.8 m/s", accuracy: "99.4% optical divert rate"}
+
+  - id: "STALL_06"
+    cohort: 1
+    apriltag_id: 15
+    title: "Dual-Axis Tidal Stream Energy Converter"
+    category: "Marine Hydrokinetics"
+    aisle: "AISLE_B"
+    booth_pose: {x: 20.00, y: 3.20, z: 0.0, yaw: -1.5708}
+    staging_pose: {x: 20.00, y: 2.00, z: 0.32, yaw: 1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 80.0
+    audio_pitch_id: "audio_stall_06_tidal"
+    key_specs: {foil_profile: "NACA 0018 Hydrofoil", efficiency: "38.6% Betz limit"}
+
+  - id: "STALL_07"
+    cohort: 1
+    apriltag_id: 16
+    title: "Automated Greenhouse Hydroponic Dosing Rig"
+    category: "Smart Agriculture"
+    aisle: "AISLE_B"
+    booth_pose: {x: 16.00, y: 3.20, z: 0.0, yaw: -1.5708}
+    staging_pose: {x: 16.00, y: 2.00, z: 0.32, yaw: 1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 75.0
+    audio_pitch_id: "audio_stall_07_hydroponics"
+    key_specs: {ph_range: "5.8 to 6.2 +-0.05", dosing_pumps: "Stepper peristaltic"}
+
+  - id: "STALL_08"
+    cohort: 1
+    apriltag_id: 17
+    title: "Carbon-Capture Direct Air Scrubbing Tower"
+    category: "Environmental Engineering"
+    aisle: "AISLE_B"
+    booth_pose: {x: 12.00, y: 3.20, z: 0.0, yaw: -1.5708}
+    staging_pose: {x: 12.00, y: 2.00, z: 0.32, yaw: 1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 85.0
+    audio_pitch_id: "audio_stall_08_carbon"
+    key_specs: {sorbent: "Solid amine-functionalized silica", capture_rate: "12kg CO2/day"}
+
+  - id: "STALL_09"
+    cohort: 1
+    apriltag_id: 18
+    title: "Solid-State Sodium-Ion Battery Cell Tester"
+    category: "Electrochemistry & Storage"
+    aisle: "AISLE_B"
+    booth_pose: {x: 8.00, y: 3.20, z: 0.0, yaw: -1.5708}
+    staging_pose: {x: 8.00, y: 2.00, z: 0.32, yaw: 1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 75.0
+    audio_pitch_id: "audio_stall_09_battery"
+    key_specs: {capacity: "160 Wh/kg", cycles: "2500 cycles @ 80% DoD"}
+
+  - id: "STALL_10"
+    cohort: 1
+    apriltag_id: 19
+    title: "Vibration-Harvesting Piezoelectric Floor Tile"
+    category: "Kinetic Energy Scavenging"
+    aisle: "AISLE_B"
+    booth_pose: {x: 4.00, y: 3.20, z: 0.0, yaw: -1.5708}
+    staging_pose: {x: 4.00, y: 2.00, z: 0.32, yaw: 1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 70.0
+    audio_pitch_id: "audio_stall_10_piezo"
+    key_specs: {yield: "4.2 mJ per footstep", integration: "Supercapacitor buffer"}
+
+  # ============================================================================
+  # COHORT 2 (Stalls 11 to 20) - Aisle B & A South Facings
+  # ============================================================================
+  - id: "STALL_11"
+    cohort: 2
+    apriltag_id: 20
+    title: "Stereo-Vision Autonomous Forklift AMR"
+    category: "Intralogistics & Robotics"
+    aisle: "AISLE_B"
+    booth_pose: {x: 4.00, y: 0.80, z: 0.0, yaw: 1.5708}
+    staging_pose: {x: 4.00, y: 2.00, z: 0.32, yaw: -1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 80.0
+    audio_pitch_id: "audio_stall_11_amr"
+    key_specs: {payload: "50 kg pallet payload", localization: "Visual SLAM RTAB-Map"}
+
+  - id: "STALL_12"
+    cohort: 2
+    apriltag_id: 21
+    title: "6-DOF Teleoperated Haptic Surgical Arm"
+    category: "Medical Robotics"
+    aisle: "AISLE_B"
+    booth_pose: {x: 8.00, y: 0.80, z: 0.0, yaw: 1.5708}
+    staging_pose: {x: 8.00, y: 2.00, z: 0.32, yaw: -1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 85.0
+    audio_pitch_id: "audio_stall_12_surgical"
+    key_specs: {force_feedback: "Sub-millinewton bilateral haptic coupling", dof: "6-DOF"}
+
+  - id: "STALL_13"
+    cohort: 2
+    apriltag_id: 22
+    title: "Soft Pneumatic Exoskeleton for Gait Rehab"
+    category: "Rehabilitation Robotics"
+    aisle: "AISLE_B"
+    booth_pose: {x: 12.00, y: 0.80, z: 0.0, yaw: 1.5708}
+    staging_pose: {x: 12.00, y: 2.00, z: 0.32, yaw: -1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 80.0
+    audio_pitch_id: "audio_stall_13_exoskeleton"
+    key_specs: {actuation: "McKibben artificial muscles", weight: "2.1 kg hip suit"}
+
+  - id: "STALL_14"
+    cohort: 2
+    apriltag_id: 23
+    title: "Swarm-Coordinated Firefighting Roombots"
+    category: "Multi-Agent Swarm Systems"
+    aisle: "AISLE_B"
+    booth_pose: {x: 16.00, y: 0.80, z: 0.0, yaw: 1.5708}
+    staging_pose: {x: 16.00, y: 2.00, z: 0.32, yaw: -1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 75.0
+    audio_pitch_id: "audio_stall_14_swarm"
+    key_specs: {swarm_size: "5 agents", mesh: "ESP-NOW synchronized consensus"}
+
+  - id: "STALL_15"
+    cohort: 2
+    apriltag_id: 24
+    title: "Bio-Inspired Snake Robot for Pipe Inspection"
+    category: "Extreme Environment Robotics"
+    aisle: "AISLE_B"
+    booth_pose: {x: 20.00, y: 0.80, z: 0.0, yaw: 1.5708}
+    staging_pose: {x: 20.00, y: 2.00, z: 0.32, yaw: -1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 80.0
+    audio_pitch_id: "audio_stall_15_snake"
+    key_specs: {modules: "12 orthogonal joint modules", rating: "IP68 submersible"}
+
+  - id: "STALL_16"
+    cohort: 2
+    apriltag_id: 25
+    title: "Ultrasonic Levitation Acoustic Gripper"
+    category: "Non-Contact Manipulation"
+    aisle: "AISLE_A"
+    booth_pose: {x: 20.00, y: 4.80, z: 0.0, yaw: 1.5708}
+    staging_pose: {x: 20.00, y: 6.00, z: 0.32, yaw: -1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 75.0
+    audio_pitch_id: "audio_stall_16_levitation"
+    key_specs: {frequency: "40 kHz phased array", precision: "0.2mm particle trapping"}
+
+  - id: "STALL_17"
+    cohort: 2
+    apriltag_id: 26
+    title: "Low-Cost Braille Tablet with Fluidic Actuation"
+    category: "Assistive Technology"
+    aisle: "AISLE_A"
+    booth_pose: {x: 16.00, y: 4.80, z: 0.0, yaw: 1.5708}
+    staging_pose: {x: 16.00, y: 6.00, z: 0.32, yaw: -1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 70.0
+    audio_pitch_id: "audio_stall_17_braille"
+    key_specs: {refresh: "30 Hz multi-line tactile matrix", cost: "Sub-$120 BOM"}
+
+  - id: "STALL_18"
+    cohort: 2
+    apriltag_id: 27
+    title: "Neuromorphic Event-Camera Collision Sensor"
+    category: "Neuromorphic Vision"
+    aisle: "AISLE_A"
+    booth_pose: {x: 12.00, y: 4.80, z: 0.0, yaw: 1.5708}
+    staging_pose: {x: 12.00, y: 6.00, z: 0.32, yaw: -1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 80.0
+    audio_pitch_id: "audio_stall_18_neuromorphic"
+    key_specs: {latency: "1.2 ms micro-second temporal resolution", dynamic_range: "120 dB"}
+
+  - id: "STALL_19"
+    cohort: 2
+    apriltag_id: 28
+    title: "Micro-Turbine Wind Profiler for Drone Ports"
+    category: "Aerodynamics & Sensors"
+    aisle: "AISLE_A"
+    booth_pose: {x: 8.00, y: 4.80, z: 0.0, yaw: 1.5708}
+    staging_pose: {x: 8.00, y: 6.00, z: 0.32, yaw: -1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 75.0
+    audio_pitch_id: "audio_stall_19_wind"
+    key_specs: {anemometry: "3D acoustic ultrasonic", accuracy: "0.05 m/s shear detection"}
+
+  - id: "STALL_20"
+    cohort: 2
+    apriltag_id: 29
+    title: "Thermochemical Energy Storage Demonstrator"
+    category: "Thermal Energy Systems"
+    aisle: "AISLE_A"
+    booth_pose: {x: 4.00, y: 4.80, z: 0.0, yaw: 1.5708}
+    staging_pose: {x: 4.00, y: 6.00, z: 0.32, yaw: -1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 80.0
+    audio_pitch_id: "audio_stall_20_thermal"
+    key_specs: {reaction: "CaO / Ca(OH)2 hydration cycle", temperature: "450 deg C output"}
+
+  # ============================================================================
+  # COHORT 3 (Stalls 21 to 30) - Aisle C & D
+  # ============================================================================
+  - id: "STALL_21"
+    cohort: 3
+    apriltag_id: 30
+    title: "Decentralized Water Filtration & UV Reactor"
+    category: "Water Purification"
+    aisle: "AISLE_C"
+    booth_pose: {x: 4.00, y: -0.80, z: 0.0, yaw: -1.5708}
+    staging_pose: {x: 4.00, y: -2.00, z: 0.32, yaw: 1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 75.0
+    audio_pitch_id: "audio_stall_21_water"
+    key_specs: {flux: "250 L/hr ceramic membrane", pathogen_kill: "99.999% UV-C log5"}
+
+  - id: "STALL_22"
+    cohort: 3
+    apriltag_id: 31
+    title: "Continuous Glucose Monitor Microneedle Patch"
+    category: "Bio-MEMS & Diagnostics"
+    aisle: "AISLE_C"
+    booth_pose: {x: 8.00, y: -0.80, z: 0.0, yaw: -1.5708}
+    staging_pose: {x: 8.00, y: -2.00, z: 0.32, yaw: 1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 80.0
+    audio_pitch_id: "audio_stall_22_microneedle"
+    key_specs: {array: "10x10 pyrazoline microneedle array", wireless: "NFC telemetry"}
+
+  - id: "STALL_23"
+    cohort: 3
+    apriltag_id: 32
+    title: "Biodegradable Mycelium Structural Packaging"
+    category: "Biomaterials Science"
+    aisle: "AISLE_C"
+    booth_pose: {x: 12.00, y: -0.80, z: 0.0, yaw: -1.5708}
+    staging_pose: {x: 12.00, y: -2.00, z: 0.32, yaw: 1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 70.0
+    audio_pitch_id: "audio_stall_23_mycelium"
+    key_specs: {compression: "2.4 MPa compressive strength", degradation: "45 days soil"}
+
+  - id: "STALL_24"
+    cohort: 3
+    apriltag_id: 33
+    title: "Closed-Loop Artificial Pancreas Simulator"
+    category: "Clinical Control Systems"
+    aisle: "AISLE_C"
+    booth_pose: {x: 16.00, y: -0.80, z: 0.0, yaw: -1.5708}
+    staging_pose: {x: 16.00, y: -2.00, z: 0.32, yaw: 1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 85.0
+    audio_pitch_id: "audio_stall_24_pancreas"
+    key_specs: {algorithm: "Model Predictive Control (MPC)", target: "euglycemia 90-120 mg/dL"}
+
+  - id: "STALL_25"
+    cohort: 3
+    apriltag_id: 34
+    title: "Plant Microbial Fuel Cell Bio-Sensor"
+    category: "Bio-Electrochemistry"
+    aisle: "AISLE_C"
+    booth_pose: {x: 20.00, y: -0.80, z: 0.0, yaw: -1.5708}
+    staging_pose: {x: 20.00, y: -2.00, z: 0.32, yaw: 1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 75.0
+    audio_pitch_id: "audio_stall_25_pmfc"
+    key_specs: {power: "18 mW/m2 living rhizosphere power", sensor: "soil moisture telemetry"}
+
+  - id: "STALL_26"
+    cohort: 3
+    apriltag_id: 35
+    title: "Autonomous Ocean Microplastic Skimmer"
+    category: "Marine Robotics"
+    aisle: "AISLE_D"
+    booth_pose: {x: 20.00, y: -4.80, z: 0.0, yaw: -1.5708}
+    staging_pose: {x: 20.00, y: -6.00, z: 0.32, yaw: 1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 80.0
+    audio_pitch_id: "audio_stall_26_ocean"
+    key_specs: {filtration: "50 micron stainless mesh", solar: "120W bifacial deck"}
+
+  - id: "STALL_27"
+    cohort: 3
+    apriltag_id: 36
+    title: "Drone-Based Forest Canopy CO2 Profiler"
+    category: "Atmospheric Sensing"
+    aisle: "AISLE_D"
+    booth_pose: {x: 16.00, y: -4.80, z: 0.0, yaw: -1.5708}
+    staging_pose: {x: 16.00, y: -6.00, z: 0.32, yaw: 1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 80.0
+    audio_pitch_id: "audio_stall_27_canopy"
+    key_specs: {precision: "+- 1 ppm NDIR optical bench", altitude: "100m vertical profile"}
+
+  - id: "STALL_28"
+    cohort: 3
+    apriltag_id: 37
+    title: "Self-Healing Conductive Elastomer Sensor"
+    category: "Smart Materials"
+    aisle: "AISLE_D"
+    booth_pose: {x: 12.00, y: -4.80, z: 0.0, yaw: -1.5708}
+    staging_pose: {x: 12.00, y: -6.00, z: 0.32, yaw: 1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 75.0
+    audio_pitch_id: "audio_stall_28_elastomer"
+    key_specs: {healing: "96% conductivity recovery in 20 min", gauge_factor: "3.8"}
+
+  - id: "STALL_29"
+    cohort: 3
+    apriltag_id: 38
+    title: "Real-Time Wastewater Heavy Metal Analyzer"
+    category: "Analytical Instrumentation"
+    aisle: "AISLE_D"
+    booth_pose: {x: 8.00, y: -4.80, z: 0.0, yaw: -1.5708}
+    staging_pose: {x: 8.00, y: -6.00, z: 0.32, yaw: 1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 80.0
+    audio_pitch_id: "audio_stall_29_wastewater"
+    key_specs: {method: "Anodic stripping voltammetry", detection_limit: "0.2 ppb Lead/Cadmium"}
+
+  - id: "STALL_30"
+    cohort: 3
+    apriltag_id: 39
+    title: "Urban Heat Island Cool-Roof Metamaterial"
+    category: "Radiative Cooling Metamaterials"
+    aisle: "AISLE_D"
+    booth_pose: {x: 4.00, y: -4.80, z: 0.0, yaw: -1.5708}
+    staging_pose: {x: 4.00, y: -6.00, z: 0.32, yaw: 1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 75.0
+    audio_pitch_id: "audio_stall_30_coolroof"
+    key_specs: {emissivity: "0.96 atmospheric transparency window", cooling: "6.8 deg C sub-ambient"}
+
+  # ============================================================================
+  # COHORT 4 (Stalls 31 to 40) - Aisle D & C South Facings
+  # ============================================================================
+  - id: "STALL_31"
+    cohort: 4
+    apriltag_id: 40
+    title: "CubeSat Reaction Wheel Attitude Testbed"
+    category: "Aerospace Dynamics"
+    aisle: "AISLE_D"
+    booth_pose: {x: 4.00, y: -7.20, z: 0.0, yaw: 1.5708}
+    staging_pose: {x: 4.00, y: -6.00, z: 0.32, yaw: -1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 85.0
+    audio_pitch_id: "audio_stall_31_cubesat"
+    key_specs: {bearing: "Air-bearing spherical table", jitter: "sub-arcsecond pointing jitter"}
+
+  - id: "STALL_32"
+    cohort: 4
+    apriltag_id: 41
+    title: "Photonic Quantum Random Number Generator"
+    category: "Quantum Hardware"
+    aisle: "AISLE_D"
+    booth_pose: {x: 8.00, y: -7.20, z: 0.0, yaw: 1.5708}
+    staging_pose: {x: 8.00, y: -6.00, z: 0.32, yaw: -1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 80.0
+    audio_pitch_id: "audio_stall_32_qrng"
+    key_specs: {entropy: "Vacuum fluctuation homodyne detection", rate: "1.2 Gbps"}
+
+  - id: "STALL_33"
+    cohort: 4
+    apriltag_id: 42
+    title: "Autonomous Sub-Orbital Parachute Steerer"
+    category: "Recovery Avionics"
+    aisle: "AISLE_D"
+    booth_pose: {x: 12.00, y: -7.20, z: 0.0, yaw: 1.5708}
+    staging_pose: {x: 12.00, y: -6.00, z: 0.32, yaw: 1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 80.0
+    audio_pitch_id: "audio_stall_33_parafoil"
+    key_specs: {guidance: "EKF wind compensation", landing_error: "<15m radius"}
+
+  - id: "STALL_34"
+    cohort: 4
+    apriltag_id: 43
+    title: "Hardware Security Module (HSM) RISC-V Core"
+    category: "Silicon Cybersecurity"
+    aisle: "AISLE_D"
+    booth_pose: {x: 16.00, y: -7.20, z: 0.0, yaw: 1.5708}
+    staging_pose: {x: 16.00, y: -6.00, z: 0.32, yaw: -1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 85.0
+    audio_pitch_id: "audio_stall_34_hsm"
+    key_specs: {isa: "RV32IMC with DPA countermeasures", throughput: "AES-256 GCM 800 MB/s"}
+
+  - id: "STALL_35"
+    cohort: 4
+    apriltag_id: 44
+    title: "Superconducting Magnetic Levitation Track"
+    category: "Applied Superconductivity"
+    aisle: "AISLE_D"
+    booth_pose: {x: 20.00, y: -7.20, z: 0.0, yaw: 1.5708}
+    staging_pose: {x: 20.00, y: -6.00, z: 0.32, yaw: -1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 80.0
+    audio_pitch_id: "audio_stall_35_maglev"
+    key_specs: {material: "YBCO high-temperature ceramic", flux_pinning: "35 N load capacity"}
+
+  - id: "STALL_36"
+    cohort: 4
+    apriltag_id: 45
+    title: "Drone Ultrasonic Acoustic Dispersal Beam"
+    category: "Acoustic Countermeasures"
+    aisle: "AISLE_C"
+    booth_pose: {x: 20.00, y: -3.20, z: 0.0, yaw: 1.5708}
+    staging_pose: {x: 20.00, y: -2.00, z: 0.32, yaw: -1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 75.0
+    audio_pitch_id: "audio_stall_36_acoustic"
+    key_specs: {sound_pressure: "135 dB @ 1m directional acoustic beam", array: "64 transducers"}
+
+  - id: "STALL_37"
+    cohort: 4
+    apriltag_id: 46
+    title: "Compact Cold-Atom Gravimeter Demonstrator"
+    category: "Quantum Metrology"
+    aisle: "AISLE_C"
+    booth_pose: {x: 16.00, y: -3.20, z: 0.0, yaw: 1.5708}
+    staging_pose: {x: 16.00, y: -2.00, z: 0.32, yaw: -1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 85.0
+    audio_pitch_id: "audio_stall_37_gravimeter"
+    key_specs: {species: "Rubidium-87 laser cooled", sensitivity: "15 microGal/sqrt(Hz)"}
+
+  - id: "STALL_38"
+    cohort: 4
+    apriltag_id: 47
+    title: "Post-Quantum Cryptography FPGA Accelerator"
+    category: "Quantum-Resistant Security"
+    aisle: "AISLE_C"
+    booth_pose: {x: 12.00, y: -3.20, z: 0.0, yaw: 1.5708}
+    staging_pose: {x: 12.00, y: -2.00, z: 0.32, yaw: -1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 80.0
+    audio_pitch_id: "audio_stall_38_pqc"
+    key_specs: {standard: "ML-KEM (Kyber-768) and ML-DSA (Dilithium)", latency: "28 us NTT"}
+
+  - id: "STALL_39"
+    cohort: 4
+    apriltag_id: 48
+    title: "Solid-State LIDAR MEMS Scanning Mirror"
+    category: "Optical Micro-Systems"
+    aisle: "AISLE_C"
+    booth_pose: {x: 8.00, y: -3.20, z: 0.0, yaw: 1.5708}
+    staging_pose: {x: 8.00, y: -2.00, z: 0.32, yaw: -1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 80.0
+    audio_pitch_id: "audio_stall_39_mems"
+    key_specs: {mirror_diameter: "2.5 mm piezoceramic mirror", scan_angle: "70 deg optical FOV"}
+
+  - id: "STALL_40"
+    cohort: 4
+    apriltag_id: 49
+    title: "Quantum Key Distribution (QKD) Simulator"
+    category: "Quantum Communications"
+    aisle: "AISLE_C"
+    booth_pose: {x: 4.00, y: -3.20, z: 0.0, yaw: 1.5708}
+    staging_pose: {x: 4.00, y: -2.00, z: 0.32, yaw: -1.5708}
+    terminal_standoff_m: 0.95
+    presentation_pitch_rad: -0.14
+    presentation_duration_s: 90.0
+    audio_pitch_id: "audio_stall_40_qkd"
+    key_specs: {protocol: "BB84 with decoy states", qber_limit: "4.8% error threshold"}

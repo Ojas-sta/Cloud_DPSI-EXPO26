@@ -57,16 +57,18 @@ try:
     from rclpy.node import Node
     from rclpy.executors import ExternalShutdownException
     from rclpy.qos import QoSProfile, DurabilityPolicy, ReliabilityPolicy, HistoryPolicy
-    from std_msgs.msg import String, Header
+    from std_msgs.msg import String, Header, Int32, Float32MultiArray
     from sensor_msgs.msg import PointCloud2, PointField, LaserScan, Imu, BatteryState, JointState
     from nav_msgs.msg import Path, Odometry
-    from geometry_msgs.msg import TransformStamped, PoseStamped, Point, Quaternion, Twist
+    from geometry_msgs.msg import TransformStamped, PoseStamped, Point, Quaternion, Twist, Vector3
     from visualization_msgs.msg import Marker, MarkerArray
     import sensor_msgs_py.point_cloud2 as pc2
     import tf2_ros
 except ImportError as e:
     print(f"[ERROR] ROS 2 import failed: {e}")
     sys.exit(1)
+
+import yaml
 
 # Unitree Go2 Mechanical Parameters
 L_THIGH = 0.213
@@ -354,17 +356,35 @@ class CloudMuJoCoTwin(Node):
         super().__init__('cloud_mujoco_ros2_twin')
 
         # Determine XML path
+        cur_dir = os.path.dirname(os.path.abspath(__file__))
+        repo_dir = os.path.dirname(cur_dir)
+        yaml_db_path = os.path.join(repo_dir, "config", "stalls_database.yaml")
+
+        if cur_dir not in sys.path:
+            sys.path.insert(0, cur_dir)
+        if repo_dir not in sys.path:
+            sys.path.insert(0, repo_dir)
+
         if xml_path is None:
-            cur_dir = os.path.dirname(os.path.abspath(__file__))
-            xml_path = os.path.join(cur_dir, "unitree_go2", "dpsi_expo_world.xml")
+            if os.path.exists(yaml_db_path):
+                try:
+                    from world_generator import generate_40_stalls_world_xml
+                    xml_path = os.path.join(cur_dir, "unitree_go2", "dpsi_expo_world_40_stalls.xml")
+                    generate_40_stalls_world_xml(yaml_db_path, xml_path)
+                except Exception as e:
+                    self.get_logger().warn(f"Failed to auto-generate 40-stall world: {e}. Using default.")
+                    xml_path = os.path.join(cur_dir, "unitree_go2", "dpsi_expo_world.xml")
+            else:
+                xml_path = os.path.join(cur_dir, "unitree_go2", "dpsi_expo_world.xml")
 
         self.get_logger().info(f"Loading MuJoCo World: {xml_path}")
         self.model = mujoco.MjModel.from_xml_path(xml_path)
         self.data = mujoco.MjData(self.model)
         self.headless = headless
 
-        # Initialize Unitree 4D LiDAR L1
-        self.lidar = Unitree4DLiDAR(self.model, self.data, num_rings=16, num_azimuth=72, max_range=16.0)
+        # Initialize Unitree 4D LiDAR L1 with Authentic High-Density Scanning
+        # 32 elevation rings (-45° to +45°) x 180 azimuth rays (360°) = 5,760 dense 3D beams
+        self.lidar = Unitree4DLiDAR(self.model, self.data, num_rings=32, num_azimuth=180, max_range=16.0)
 
         # Foot geom IDs for ground contact tracking
         self.foot_names = ["FL", "FR", "RL", "RR"]
@@ -403,6 +423,9 @@ class CloudMuJoCoTwin(Node):
         self.pub_odom = self.create_publisher(Odometry, '/cloud/odom', 10)
         self.pub_battery = self.create_publisher(BatteryState, '/cloud/telemetry/battery', 10)
         self.pub_high_state = self.create_publisher(String, '/cloud/telemetry/high_state', 10)
+        self.pub_foot_forces = self.create_publisher(Float32MultiArray, '/cloud/telemetry/foot_forces', 10)
+        self.pub_apriltag_pose = self.create_publisher(PoseStamped, '/camera/apriltag_pose', 10)
+        self.pub_apriltag_id = self.create_publisher(Int32, '/camera/apriltag_id', 10)
 
         # 3. Autonomy & Planning Publishers
         self.pub_global_path = self.create_publisher(Path, '/cloud/path', 10)
@@ -410,6 +433,20 @@ class CloudMuJoCoTwin(Node):
         self.pub_odom_path = self.create_publisher(Path, '/cloud/odom_path', 10)
         self.pub_markers = self.create_publisher(MarkerArray, '/cloud/markers', 10)
         self.pub_candidates = self.create_publisher(MarkerArray, '/cloud/planner/candidates', 10)
+
+        # 4. HAL Bridge Subscriptions (Eliminate Dual-Publisher Contention)
+        self.external_control_latched = False
+        self.ext_cmd_vx = 0.0
+        self.ext_cmd_vy = 0.0
+        self.ext_cmd_vyaw = 0.0
+        self.ext_posture = "BALANCE_STAND"
+        self.ext_euler_pitch = 0.0
+        self.last_ext_cmd_time = self.get_clock().now()
+
+        self.create_subscription(Twist, '/cmd_vel_safe', self._ext_cmd_vel_cb, 10)
+        self.create_subscription(String, '/go2_posture_cmd', self._ext_posture_cb, 10)
+        self.create_subscription(Vector3, '/go2_body_euler', self._ext_euler_cb, 10)
+        self.create_subscription(Int32, '/collision_monitor_state', self._ext_collision_cb, 10)
 
         # Instantiate Ego-Centric Model Predictive Planner (DWA)
         self.planner = EgoModelPredictivePlanner()
@@ -419,58 +456,30 @@ class CloudMuJoCoTwin(Node):
         self.tf_broadcaster = tf2_ros.TransformBroadcaster(self)
 
         # -------------------------------------------------------------
-        # 80% Preplanned Global Navigation & Mission State Machine
+        # Data-Driven 40-Stall Global Navigation & Mission State Machine
         # -------------------------------------------------------------
-        self.scenes = [
-            {
-                "id": 1,
-                "name": "SCENE 1: VIP GREETING",
-                "fsm": "STATE_DOCENT_GREET",
-                "target_x": 0.0, "target_y": 0.0, "target_yaw": 0.0,
-                "hold_time": 5.5,
-                "desc": "Standing on Central Stage welcoming VIP guests."
-            },
-            {
-                "id": 2,
-                "name": "SCENE 2: ARGUS PATROL",
-                "fsm": "STATE_ARGUS_PATROL",
-                "target_x": 2.5, "target_y": 0.0, "target_yaw": 0.0,
-                "hold_time": 4.0,
-                "desc": "Patrolling Main Avenue corridor with active 4D LiDAR."
-            },
-            {
-                "id": 3,
-                "name": "SCENE 3: HAZARD AVOIDANCE",
-                "fsm": "STATE_HAZARD_AVOID",
-                "target_x": 4.8, "target_y": 0.0, "target_yaw": 0.0,
-                "hold_time": 4.5,
-                "desc": "Reactive 20% autonomy deflecting around spill and cones."
-            },
-            {
-                "id": 4,
-                "name": "SCENE 4: ARUCO STANDOFF DOCK",
-                "fsm": "STATE_DOCENT_CRUISE",
-                "target_x": 8.2, "target_y": 0.0, "target_yaw": 0.0,
-                "hold_time": 5.0,
-                "desc": "Docked at Booth 1 at 1.20m standoff distance."
-            },
-            {
-                "id": 5,
-                "name": "SCENE 5: 180° PRESENTER PIVOT",
-                "fsm": "STATE_DOCENT_NARRATE",
-                "target_x": 8.2, "target_y": 0.0, "target_yaw": math.pi,
-                "hold_time": 5.5,
-                "desc": "Facing audience at Booth 1 with +8° eye-contact tilt."
-            },
-            {
-                "id": 6,
-                "name": "SCENE 6: STAGE & PRONE DOCK",
-                "fsm": "STATE_PRONE_REST",
-                "target_x": 0.0, "target_y": 0.0, "target_yaw": 0.0,
-                "hold_time": 6.0,
-                "desc": "Returned to Stage dais, folding into prone sleep posture."
-            }
-        ]
+        self.scenes = self._load_data_driven_scenes(yaml_db_path)
+        self.booth_fiducials = []
+        if os.path.exists(yaml_db_path):
+            try:
+                with open(yaml_db_path, "r", encoding="utf-8") as f:
+                    db_cfg = yaml.safe_load(f)
+                    rd = db_cfg.get("recharge_dock", {})
+                    if rd:
+                        self.booth_fiducials.append({
+                            "id": rd.get("marker_id", 99),
+                            "x": rd.get("pose", {}).get("x", -2.0),
+                            "y": rd.get("pose", {}).get("y", 0.0),
+                        })
+                    for st in db_cfg.get("stalls", []):
+                        bp = st.get("booth_pose", {})
+                        self.booth_fiducials.append({
+                            "id": st.get("apriltag_id", 10),
+                            "x": bp.get("x", 0.0),
+                            "y": bp.get("y", 0.0),
+                        })
+            except Exception as e:
+                self.get_logger().warn(f"Failed loading booth fiducials: {e}")
 
         # Robot Physical State
         self.pos_x = 0.0
@@ -519,20 +528,103 @@ class CloudMuJoCoTwin(Node):
         self.last_cycle_time = time.time()
         self.get_logger().info("Unified MuJoCo Physics & ROS 2 Twin running at 30 Hz.")
 
+    def _load_data_driven_scenes(self, yaml_path):
+        if not os.path.exists(yaml_path):
+            return [
+                {"id": 1, "name": "SCENE 1: VIP GREETING", "fsm": "STATE_DOCENT_GREET", "target_x": 0.0, "target_y": 0.0, "target_yaw": 0.0, "hold_time": 5.5, "desc": "Stage Greeting"},
+                {"id": 2, "name": "SCENE 2: ARGUS PATROL", "fsm": "STATE_ARGUS_PATROL", "target_x": 2.5, "target_y": 0.0, "target_yaw": 0.0, "hold_time": 4.0, "desc": "Patrol"},
+                {"id": 3, "name": "SCENE 3: HAZARD AVOIDANCE", "fsm": "STATE_HAZARD_AVOID", "target_x": 4.8, "target_y": 0.0, "target_yaw": 0.0, "hold_time": 4.5, "desc": "Hazard"},
+                {"id": 4, "name": "SCENE 4: ARUCO DOCK", "fsm": "STATE_DOCENT_CRUISE", "target_x": 8.2, "target_y": 0.0, "target_yaw": 0.0, "hold_time": 5.0, "desc": "Standoff Dock"},
+                {"id": 5, "name": "SCENE 5: PIVOT NARRATE", "fsm": "STATE_DOCENT_NARRATE", "target_x": 8.2, "target_y": 0.0, "target_yaw": math.pi, "hold_time": 5.5, "desc": "Narrate"},
+                {"id": 6, "name": "SCENE 6: PRONE REST", "fsm": "STATE_PRONE_REST", "target_x": 0.0, "target_y": 0.0, "target_yaw": 0.0, "hold_time": 6.0, "desc": "Prone Rest"}
+            ]
+
+        with open(yaml_path, "r", encoding="utf-8") as f:
+            data = yaml.safe_load(f)
+
+        scenes = []
+        dock = data.get("recharge_dock", {})
+        scenes.append({
+            "id": 0,
+            "name": "KEYNOTE STAGE WELCOME",
+            "fsm": "STATE_DOCENT_GREET",
+            "target_x": dock.get("pose", {}).get("x", -2.0),
+            "target_y": dock.get("pose", {}).get("y", 0.0),
+            "target_yaw": 0.0,
+            "hold_time": 5.0,
+            "desc": "Stage Keynote Welcome & VIP Interception"
+        })
+
+        for s in data.get("stalls", [])[:10]: # Active Cohort 1
+            stg = s.get("staging_pose", {})
+            scenes.append({
+                "id": s.get("apriltag_id", 10),
+                "name": f"{s['id']}: {s.get('title', '')[:28]}",
+                "fsm": "STATE_DOCENT_CRUISE",
+                "target_x": float(stg.get("x", 4.0)),
+                "target_y": float(stg.get("y", 6.0)),
+                "target_yaw": float(stg.get("yaw", 1.5708)),
+                "hold_time": 5.0,
+                "desc": f"Standoff Docking at {s['id']} (Tag {s.get('apriltag_id')})"
+            })
+
+        scenes.append({
+            "id": 99,
+            "name": "STAGE RECHARGE PRONE REST",
+            "fsm": "STATE_PRONE_REST",
+            "target_x": float(dock.get("staging_pose", {}).get("x", -0.8)),
+            "target_y": float(dock.get("staging_pose", {}).get("y", 0.0)),
+            "target_yaw": 3.14159,
+            "hold_time": 6.0,
+            "desc": "Returned to Stage Dock for Prone Sleep"
+        })
+        return scenes
+
+    def _ext_cmd_vel_cb(self, msg: Twist):
+        self.last_ext_cmd_time = self.get_clock().now()
+        if not self.external_control_latched:
+            self.external_control_latched = True
+            self.get_logger().info("External HAL control latched (/cmd_vel_safe received). Internal planner deactivated.")
+        self.ext_cmd_vx = float(msg.linear.x)
+        self.ext_cmd_vy = float(msg.linear.y)
+        self.ext_cmd_vyaw = float(msg.angular.z)
+
+    def _ext_posture_cb(self, msg: String):
+        if not self.external_control_latched:
+            self.external_control_latched = True
+            self.get_logger().info("External HAL control latched (/go2_posture_cmd received). Internal planner deactivated.")
+        self.ext_posture = msg.data.upper().strip()
+
+    def _ext_euler_cb(self, msg: Vector3):
+        if not self.external_control_latched:
+            self.external_control_latched = True
+            self.get_logger().info("External HAL control latched (/go2_body_euler received). Internal planner deactivated.")
+        self.ext_euler_pitch = float(msg.y)
+
+    def _ext_collision_cb(self, msg: Int32):
+        if msg.data == 1:
+            self.safety_state = "SAFETY_ESTOP"
+            self.ext_cmd_vx = 0.0
+            self.ext_cmd_vy = 0.0
+            self.ext_cmd_vyaw = 0.0
+
     def _publish_global_path(self):
-        """Constructs and publishes the 80% preplanned reference path."""
+        """Constructs and publishes the reference tour path connecting active stalls."""
         p_msg = Path()
         p_msg.header.frame_id = 'odom'
         p_msg.header.stamp = self.get_clock().now().to_msg()
 
-        # Straight nominal corridor path from stage (0,0) to booth (8.2, 0)
-        for s in np.linspace(0.0, 8.5, 80):
-            ps = PoseStamped()
-            ps.header.frame_id = 'odom'
-            ps.pose.position.x = float(s)
-            ps.pose.position.y = 0.0
-            ps.pose.position.z = 0.015
-            p_msg.poses.append(ps)
+        # Connect scenes sequentially
+        for i in range(len(self.scenes) - 1):
+            s1 = self.scenes[i]
+            s2 = self.scenes[i+1]
+            for frac in np.linspace(0.0, 1.0, 15):
+                ps = PoseStamped()
+                ps.header.frame_id = 'odom'
+                ps.pose.position.x = float(s1["target_x"] + (s2["target_x"] - s1["target_x"]) * frac)
+                ps.pose.position.y = float(s1["target_y"] + (s2["target_y"] - s1["target_y"]) * frac)
+                ps.pose.position.z = 0.015
+                p_msg.poses.append(ps)
 
         self.pub_global_path.publish(p_msg)
 
@@ -573,11 +665,39 @@ class CloudMuJoCoTwin(Node):
                 dist_to_goal = 0.05  # Arrived at standoff distance
 
         cmd_v = 0.0
+        cmd_vy = 0.0
         cmd_w = 0.0
         body_pitch_target = 0.0
         is_prone = False
 
-        if self.in_transit:
+        if self.external_control_latched:
+            # External HAL control has exclusive authority over locomotion
+            elapsed = (self.get_clock().now() - self.last_ext_cmd_time).nanoseconds * 1e-9
+            if elapsed > 0.50:
+                cmd_v = 0.0
+                cmd_vy = 0.0
+                cmd_w = 0.0
+            else:
+                cmd_v = self.ext_cmd_vx
+                cmd_vy = self.ext_cmd_vy
+                cmd_w = self.ext_cmd_vyaw
+
+            body_pitch_target = self.ext_euler_pitch
+            is_prone = (self.ext_posture in ["STAND_DOWN", "DAMP"])
+
+            if min_front <= 0.65:
+                self.safety_state = "SAFETY_ESTOP"
+                cmd_v = 0.0
+                cmd_vy = 0.0
+                cmd_w = 0.0
+            elif abs(cmd_vy) > 0.10:
+                self.safety_state = "SAFETY_STRAFING"
+            elif min_front < 1.4:
+                self.safety_state = "SAFETY_CAUTION"
+            else:
+                self.safety_state = "SAFETY_CLEAR"
+
+        elif self.in_transit:
             if dist_to_goal > 0.15:
                 # Plan motion purely relative to sensed obstacles via candidate rollouts
                 v_pref = 0.55 if dist_to_goal > 0.6 else min(0.35, max(0.18, dist_to_goal * 0.7))
@@ -650,12 +770,13 @@ class CloudMuJoCoTwin(Node):
                 next_s = self.scenes[self.scene_idx]
                 self.get_logger().info(f"Transiting to: {next_s['name']}")
 
-        # Integrate motion
+        # Integrate motion (Omnidirectional: supports forward vx and lateral vy)
         self.linear_vel = cmd_v
+        self.lateral_vel = cmd_vy
         self.yaw_rate = cmd_w
         self.yaw = wrap_to_pi(self.yaw + self.yaw_rate * dt)
-        self.pos_x += self.linear_vel * math.cos(self.yaw) * dt
-        self.pos_y += self.linear_vel * math.sin(self.yaw) * dt
+        self.pos_x += (self.linear_vel * math.cos(self.yaw) - self.lateral_vel * math.sin(self.yaw)) * dt
+        self.pos_y += (self.linear_vel * math.sin(self.yaw) + self.lateral_vel * math.cos(self.yaw)) * dt
 
         # Pitch & Roll Dynamics
         self.pitch += (body_pitch_target - self.pitch) * min(1.0, dt * 5.0)
@@ -904,6 +1025,7 @@ class CloudMuJoCoTwin(Node):
             "reactive_offset_y": round(self.reactive_y_offset, 3)
         }
         self.pub_high_state.publish(String(data=json.dumps(high_state)))
+        self.pub_foot_forces.publish(Float32MultiArray(data=[float(f) for f in foot_forces]))
 
         # 9. Model-Planned Ego-Centric Predictive Trajectory
         r_path = Path()
@@ -940,6 +1062,55 @@ class CloudMuJoCoTwin(Node):
 
         # 11. 3D Obstacle & Exhibition Markers
         self._publish_visual_markers(stamp, scene, scan_res)
+
+        # 12. Synthetic RealSense D435i AprilTag Detection Stream
+        self._publish_camera_apriltags(stamp)
+
+    def _publish_camera_apriltags(self, stamp):
+        """Simulates onboard RealSense D435i optical detection of tag36h11 fiducials."""
+        if not hasattr(self, 'booth_fiducials') or not self.booth_fiducials:
+            return
+
+        cos_yaw = math.cos(self.yaw)
+        sin_yaw = math.sin(self.yaw)
+
+        best_fid = None
+        min_dist = float('inf')
+        best_xc = 0.0
+        best_zc = 0.0
+
+        for fid in self.booth_fiducials:
+            dx = fid["x"] - self.pos_x
+            dy = fid["y"] - self.pos_y
+            # Body frame (x forward, y left)
+            x_b = cos_yaw * dx + sin_yaw * dy
+            y_b = -sin_yaw * dx + cos_yaw * dy
+
+            # Camera optical frame (Z forward, X right, Y down)
+            z_c = x_b
+            x_c = -y_b
+
+            # D435i horizontal FOV is ~69 deg -> |x_c / z_c| < tan(35 deg) ~ 0.70
+            if 0.20 <= z_c <= 3.20 and abs(x_c / max(0.01, z_c)) <= 0.75:
+                dist = math.hypot(x_c, z_c)
+                if dist < min_dist:
+                    min_dist = dist
+                    best_fid = fid
+                    best_xc = x_c
+                    best_zc = z_c
+
+        if best_fid is not None:
+            id_msg = Int32(data=int(best_fid["id"]))
+            self.pub_apriltag_id.publish(id_msg)
+
+            p_msg = PoseStamped()
+            p_msg.header.stamp = stamp
+            p_msg.header.frame_id = 'camera_color_optical_frame'
+            p_msg.pose.position.x = float(best_xc)
+            p_msg.pose.position.y = 0.0
+            p_msg.pose.position.z = float(best_zc)
+            p_msg.pose.orientation.w = 1.0
+            self.pub_apriltag_pose.publish(p_msg)
 
     def _publish_visual_markers(self, stamp, scene, scan_res):
         markers = MarkerArray()
@@ -1117,6 +1288,9 @@ def main():
                 viewer.cam.elevation = -22.0
                 viewer.cam.azimuth = 45.0
                 viewer.cam.lookat[:] = [4.5, 0.0, 0.3]
+                # Ensure 2D rangefinder lines are strictly disabled in 3D viewport
+                if hasattr(viewer, "opt") and hasattr(viewer.opt, "flags"):
+                    viewer.opt.flags[mujoco.mjtVisFlag.mjVIS_RANGEFINDER] = False
                 while rclpy.ok() and viewer.is_running():
                     rclpy.spin_once(node, timeout_sec=0.01)
                     viewer.sync()

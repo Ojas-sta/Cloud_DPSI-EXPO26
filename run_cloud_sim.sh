@@ -56,7 +56,13 @@ sleep 1
 
 # 4. Start Unified MuJoCo Physics & ROS 2 Twin Node
 echo "[INFO] Starting Unified MuJoCo Physics & 4D LiDAR Twin Node..."
-python3 "$TWIN_SCRIPT" $TWIN_ARGS &
+# On macOS, MuJoCo native GUI viewer requires mjpython for Cocoa event loop
+MJPYTHON_BIN="$PIXI_ENV/bin/mjpython"
+if [ ! -f "$MJPYTHON_BIN" ]; then
+    MJPYTHON_BIN="python3"
+fi
+
+"$MJPYTHON_BIN" "$TWIN_SCRIPT" $TWIN_ARGS &
 TWIN_PID=$!
 
 # Trap signals for clean shutdown

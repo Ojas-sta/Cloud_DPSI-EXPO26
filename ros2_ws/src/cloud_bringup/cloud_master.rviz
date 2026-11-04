@@ -80,9 +80,9 @@ Visualization Manager:
       Position Transformer: XYZ
       Queue Size: 10
       Selectable: false
-      Size (Pixels): 4
-      Size (m): 0.045
-      Style: Flat Squares
+      Size (Pixels): 3
+      Size (m): 0.025
+      Style: Points
       Topic:
         Depth: 5
         Durability Policy: Volatile

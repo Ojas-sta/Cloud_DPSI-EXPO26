@@ -1,0 +1,55 @@
+# ==============================================================================
+# Project Cloud: State Estimation & Odometry Configuration
+# Platform: Unitree Go2 Edu | Venue: 30m x 20m School Auditorium
+# Tier 1: Point-LIO (200 Hz LiDAR-Inertial Odometry, odom -> base_link)
+# Tier 2: NDT-OMP Map Prior Localization (10 Hz, map -> odom, scan_min_range 1.80m)
+# ==============================================================================
+
+point_lio_unilidar:
+  ros__parameters:
+    use_sim_time: false
+    use_imu_as_input: true
+    prop_at_freq_of_imu: true
+    check_satu: true
+    init_map_size: 10
+    point_filter_num: 2
+    space_down_sample: true
+    filter_size_surf: 0.15
+    filter_size_map: 0.20
+    ivox_grid_resolution: 0.3
+    lidar_type: 5                  # Unitree L1 4D LiDAR (16-Ring hemispherical)
+    scan_line: 16
+    blind: 0.35                    # Mask self-hits on Go2 chassis/snout
+    imu_meas_acc_cov: 0.05
+    imu_meas_omg_cov: 0.02
+    gravity_align: true
+    publish_odometry_without_downsample: true
+
+leg_contact_slip_gate:
+  ros__parameters:
+    use_sim_time: false
+    foot_force_threshold_n: 18.0   # F_thresh = 18N minimum normal force for stance
+    alpha_slip_cov_exp: 4.5        # Exponential covariance inflation multiplier
+    beta_velocity_mismatch: 3.2    # Penalty for ||v_leg - v_LIO|| divergence
+    base_covariance_diag: [0.01, 0.01, 0.02, 0.005, 0.005, 0.01]
+
+pcl_localization_node:
+  ros__parameters:
+    use_sim_time: false
+    global_frame_id: "map"
+    odom_frame_id: "odom"
+    base_frame_id: "base_link"
+    registration_method: "NDT_OMP" # Multi-threaded Normal Distributions Transform
+    ndt_resolution: 0.80           # Coarse enough for 30x20m room, fine for booths
+    ndt_step_size: 0.10
+    trans_epsilon: 0.01
+    voxel_leaf_size: 0.15
+    scan_max_range: 25.0
+    scan_min_range: 1.80           # CRITICAL: Ignores student legs (<1.8m) to lock on walls/ceiling!
+    score_threshold: 2.20
+    map_path: "/opt/project_cloud/maps/auditorium_prior.pcd"
+    set_initial_pose: true
+    initial_pose_x: 0.0
+    initial_pose_y: 0.0
+    initial_pose_z: 0.32
+    initial_pose_yaw: 0.0
