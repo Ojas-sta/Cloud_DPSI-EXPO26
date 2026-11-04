@@ -1,0 +1,30 @@
+{
+  "system": "Cloud-Argus-Docent",
+  "active_persona": "THE_DOCENT",
+  "mission_status": "READY",
+  "current_zone": "SOUTH_GATE",
+  "current_coordinates": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.35,
+    "yaw_rad": 1.5708
+  },
+  "last_docked_stall": null,
+  "autonomy_level": "50_PERCENT_SEMI_AUTONOMOUS",
+  "safety_system": {
+    "aeb_engaged": false,
+    "forward_clearance_m": 4.5,
+    "min_allowable_clearance_m": 0.40,
+    "concourse_clearance_m": 0.70
+  },
+  "optical_tracking": {
+    "camera_pitch_bias_deg": -15.0,
+    "marker_elevation_m": 0.450,
+    "target_standoff_m": 1.000,
+    "standoff_tolerance_m": 0.050,
+    "detected_marker_id": null
+  },
+  "verified_test_count": 148,
+  "repo_root": "/Users/roopalisingh/cloud-argus-docent",
+  "active_env": "/Users/roopalisingh/robostack/.pixi/envs/jazzy"
+}

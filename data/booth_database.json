@@ -1,0 +1,1434 @@
+{
+  "stalls_schema": {
+    "venue": {
+      "name": "DPSI EXPO 2026 - Engineering & Robotics Pavilion",
+      "dimensions_meters": [
+        30.0,
+        20.0
+      ],
+      "origin_offset": [
+        -5.0,
+        -10.0
+      ],
+      "global_frame": "map",
+      "aisle_width_meters": 2.4,
+      "default_terminal_standoff_meters": 0.95,
+      "default_presentation_pitch_rad": -0.14,
+      "max_deferrals_per_stall": 2,
+      "crowd_clearance_threshold_meters": 0.75,
+      "clearance_warning_timeout_sec": 5.0,
+      "clearance_defer_timeout_sec": 15.0,
+      "edge_weight_inflation_penalty": 50.0,
+      "edge_weight_inflation_duration_sec": 180.0
+    },
+    "recharge_dock": {
+      "node_id": "DOCK_STAGE_99",
+      "marker_id": 99,
+      "apriltag_family": "tag36h11",
+      "label": "Central Stage Autonomous Recharge Dock & Prone Resting Bay",
+      "pose": {
+        "x": -2.0,
+        "y": 0.0,
+        "z": 0.32,
+        "yaw": 0.0
+      },
+      "staging_pose": {
+        "x": -0.8,
+        "y": 0.0,
+        "z": 0.32,
+        "yaw": 3.14159
+      },
+      "standoff_m": 0.5
+    },
+    "cohorts": [
+      {
+        "id": 1,
+        "name": "Cohort 1: Sustainable Tech & Autonomous Mechatronics (Stalls 01-10)",
+        "stall_ids": [
+          "STALL_01",
+          "STALL_02",
+          "STALL_03",
+          "STALL_04",
+          "STALL_05",
+          "STALL_06",
+          "STALL_07",
+          "STALL_08",
+          "STALL_09",
+          "STALL_10"
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Cohort 2: Edge-AI, Robotics & Bionics (Stalls 11-20)",
+        "stall_ids": [
+          "STALL_11",
+          "STALL_12",
+          "STALL_13",
+          "STALL_14",
+          "STALL_15",
+          "STALL_16",
+          "STALL_17",
+          "STALL_18",
+          "STALL_19",
+          "STALL_20"
+        ]
+      },
+      {
+        "id": 3,
+        "name": "Cohort 3: IoT, Smart Grids & Bio-Engineering (Stalls 21-30)",
+        "stall_ids": [
+          "STALL_21",
+          "STALL_22",
+          "STALL_23",
+          "STALL_24",
+          "STALL_25",
+          "STALL_26",
+          "STALL_27",
+          "STALL_28",
+          "STALL_29",
+          "STALL_30"
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Cohort 4: Aerospace, Quantum Computing & Cybersecurity (Stalls 31-40)",
+        "stall_ids": [
+          "STALL_31",
+          "STALL_32",
+          "STALL_33",
+          "STALL_34",
+          "STALL_35",
+          "STALL_36",
+          "STALL_37",
+          "STALL_38",
+          "STALL_39",
+          "STALL_40"
+        ]
+      }
+    ],
+    "stalls": [
+      {
+        "id": "STALL_01",
+        "cohort": 1,
+        "apriltag_id": 10,
+        "title": "Autonomous Solar Tracking Cart",
+        "category": "Renewable Energy & Embedded Systems",
+        "aisle": "AISLE_A",
+        "booth_pose": {
+          "x": 4.0,
+          "y": 7.2,
+          "z": 0.0,
+          "yaw": -1.5708
+        },
+        "staging_pose": {
+          "x": 4.0,
+          "y": 6.0,
+          "z": 0.32,
+          "yaw": 1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 75.0,
+        "audio_pitch_id": "audio_stall_01_solar",
+        "key_specs": {
+          "mcu": "STM32F401 Black Pill",
+          "gain": "+34.2% daily solar energy yield"
+        }
+      },
+      {
+        "id": "STALL_02",
+        "cohort": 1,
+        "apriltag_id": 11,
+        "title": "Edge-AI Agricultural Inspection Drone",
+        "category": "Precision Agriculture",
+        "aisle": "AISLE_A",
+        "booth_pose": {
+          "x": 8.0,
+          "y": 7.2,
+          "z": 0.0,
+          "yaw": -1.5708
+        },
+        "staging_pose": {
+          "x": 8.0,
+          "y": 6.0,
+          "z": 0.32,
+          "yaw": 1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 80.0,
+        "audio_pitch_id": "audio_stall_02_drone",
+        "key_specs": {
+          "inference": "NVIDIA Jetson Nano",
+          "fps": "32 FPS foliar classification"
+        }
+      },
+      {
+        "id": "STALL_03",
+        "cohort": 1,
+        "apriltag_id": 12,
+        "title": "Bionic Myoelectric Hand Prosthetic",
+        "category": "Biomedical Mechatronics",
+        "aisle": "AISLE_A",
+        "booth_pose": {
+          "x": 12.0,
+          "y": 7.2,
+          "z": 0.0,
+          "yaw": -1.5708
+        },
+        "staging_pose": {
+          "x": 12.0,
+          "y": 6.0,
+          "z": 0.32,
+          "yaw": 1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 75.0,
+        "audio_pitch_id": "audio_stall_03_prosthetic",
+        "key_specs": {
+          "actuation": "5x Coreless DC Micro Servos",
+          "latency": "42ms EMG response"
+        }
+      },
+      {
+        "id": "STALL_04",
+        "cohort": 1,
+        "apriltag_id": 13,
+        "title": "IoT Smart Microgrid Energy Hub",
+        "category": "Power Systems & IoT",
+        "aisle": "AISLE_A",
+        "booth_pose": {
+          "x": 16.0,
+          "y": 7.2,
+          "z": 0.0,
+          "yaw": -1.5708
+        },
+        "staging_pose": {
+          "x": 16.0,
+          "y": 6.0,
+          "z": 0.32,
+          "yaw": 1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 70.0,
+        "audio_pitch_id": "audio_stall_04_microgrid",
+        "key_specs": {
+          "battery": "48V 100Ah LiFePO4",
+          "protocol": "Modbus-TCP over LoRa"
+        }
+      },
+      {
+        "id": "STALL_05",
+        "cohort": 1,
+        "apriltag_id": 14,
+        "title": "High-Speed Autonomous Line-Lidar Sorter",
+        "category": "Industrial Automation",
+        "aisle": "AISLE_A",
+        "booth_pose": {
+          "x": 20.0,
+          "y": 7.2,
+          "z": 0.0,
+          "yaw": -1.5708
+        },
+        "staging_pose": {
+          "x": 20.0,
+          "y": 6.0,
+          "z": 0.32,
+          "yaw": 1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 75.0,
+        "audio_pitch_id": "audio_stall_05_sorter",
+        "key_specs": {
+          "belt_speed": "1.8 m/s",
+          "accuracy": "99.4% optical divert rate"
+        }
+      },
+      {
+        "id": "STALL_06",
+        "cohort": 1,
+        "apriltag_id": 15,
+        "title": "Dual-Axis Tidal Stream Energy Converter",
+        "category": "Marine Hydrokinetics",
+        "aisle": "AISLE_B",
+        "booth_pose": {
+          "x": 20.0,
+          "y": 3.2,
+          "z": 0.0,
+          "yaw": -1.5708
+        },
+        "staging_pose": {
+          "x": 20.0,
+          "y": 2.0,
+          "z": 0.32,
+          "yaw": 1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 80.0,
+        "audio_pitch_id": "audio_stall_06_tidal",
+        "key_specs": {
+          "foil_profile": "NACA 0018 Hydrofoil",
+          "efficiency": "38.6% Betz limit"
+        }
+      },
+      {
+        "id": "STALL_07",
+        "cohort": 1,
+        "apriltag_id": 16,
+        "title": "Automated Greenhouse Hydroponic Dosing Rig",
+        "category": "Smart Agriculture",
+        "aisle": "AISLE_B",
+        "booth_pose": {
+          "x": 16.0,
+          "y": 3.2,
+          "z": 0.0,
+          "yaw": -1.5708
+        },
+        "staging_pose": {
+          "x": 16.0,
+          "y": 2.0,
+          "z": 0.32,
+          "yaw": 1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 75.0,
+        "audio_pitch_id": "audio_stall_07_hydroponics",
+        "key_specs": {
+          "ph_range": "5.8 to 6.2 +-0.05",
+          "dosing_pumps": "Stepper peristaltic"
+        }
+      },
+      {
+        "id": "STALL_08",
+        "cohort": 1,
+        "apriltag_id": 17,
+        "title": "Carbon-Capture Direct Air Scrubbing Tower",
+        "category": "Environmental Engineering",
+        "aisle": "AISLE_B",
+        "booth_pose": {
+          "x": 12.0,
+          "y": 3.2,
+          "z": 0.0,
+          "yaw": -1.5708
+        },
+        "staging_pose": {
+          "x": 12.0,
+          "y": 2.0,
+          "z": 0.32,
+          "yaw": 1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 85.0,
+        "audio_pitch_id": "audio_stall_08_carbon",
+        "key_specs": {
+          "sorbent": "Solid amine-functionalized silica",
+          "capture_rate": "12kg CO2/day"
+        }
+      },
+      {
+        "id": "STALL_09",
+        "cohort": 1,
+        "apriltag_id": 18,
+        "title": "Solid-State Sodium-Ion Battery Cell Tester",
+        "category": "Electrochemistry & Storage",
+        "aisle": "AISLE_B",
+        "booth_pose": {
+          "x": 8.0,
+          "y": 3.2,
+          "z": 0.0,
+          "yaw": -1.5708
+        },
+        "staging_pose": {
+          "x": 8.0,
+          "y": 2.0,
+          "z": 0.32,
+          "yaw": 1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 75.0,
+        "audio_pitch_id": "audio_stall_09_battery",
+        "key_specs": {
+          "capacity": "160 Wh/kg",
+          "cycles": "2500 cycles @ 80% DoD"
+        }
+      },
+      {
+        "id": "STALL_10",
+        "cohort": 1,
+        "apriltag_id": 19,
+        "title": "Vibration-Harvesting Piezoelectric Floor Tile",
+        "category": "Kinetic Energy Scavenging",
+        "aisle": "AISLE_B",
+        "booth_pose": {
+          "x": 4.0,
+          "y": 3.2,
+          "z": 0.0,
+          "yaw": -1.5708
+        },
+        "staging_pose": {
+          "x": 4.0,
+          "y": 2.0,
+          "z": 0.32,
+          "yaw": 1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 70.0,
+        "audio_pitch_id": "audio_stall_10_piezo",
+        "key_specs": {
+          "yield": "4.2 mJ per footstep",
+          "integration": "Supercapacitor buffer"
+        }
+      },
+      {
+        "id": "STALL_11",
+        "cohort": 2,
+        "apriltag_id": 20,
+        "title": "Stereo-Vision Autonomous Forklift AMR",
+        "category": "Intralogistics & Robotics",
+        "aisle": "AISLE_B",
+        "booth_pose": {
+          "x": 4.0,
+          "y": 0.8,
+          "z": 0.0,
+          "yaw": 1.5708
+        },
+        "staging_pose": {
+          "x": 4.0,
+          "y": 2.0,
+          "z": 0.32,
+          "yaw": -1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 80.0,
+        "audio_pitch_id": "audio_stall_11_amr",
+        "key_specs": {
+          "payload": "50 kg pallet payload",
+          "localization": "Visual SLAM RTAB-Map"
+        }
+      },
+      {
+        "id": "STALL_12",
+        "cohort": 2,
+        "apriltag_id": 21,
+        "title": "6-DOF Teleoperated Haptic Surgical Arm",
+        "category": "Medical Robotics",
+        "aisle": "AISLE_B",
+        "booth_pose": {
+          "x": 8.0,
+          "y": 0.8,
+          "z": 0.0,
+          "yaw": 1.5708
+        },
+        "staging_pose": {
+          "x": 8.0,
+          "y": 2.0,
+          "z": 0.32,
+          "yaw": -1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 85.0,
+        "audio_pitch_id": "audio_stall_12_surgical",
+        "key_specs": {
+          "force_feedback": "Sub-millinewton bilateral haptic coupling",
+          "dof": "6-DOF"
+        }
+      },
+      {
+        "id": "STALL_13",
+        "cohort": 2,
+        "apriltag_id": 22,
+        "title": "Soft Pneumatic Exoskeleton for Gait Rehab",
+        "category": "Rehabilitation Robotics",
+        "aisle": "AISLE_B",
+        "booth_pose": {
+          "x": 12.0,
+          "y": 0.8,
+          "z": 0.0,
+          "yaw": 1.5708
+        },
+        "staging_pose": {
+          "x": 12.0,
+          "y": 2.0,
+          "z": 0.32,
+          "yaw": -1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 80.0,
+        "audio_pitch_id": "audio_stall_13_exoskeleton",
+        "key_specs": {
+          "actuation": "McKibben artificial muscles",
+          "weight": "2.1 kg hip suit"
+        }
+      },
+      {
+        "id": "STALL_14",
+        "cohort": 2,
+        "apriltag_id": 23,
+        "title": "Swarm-Coordinated Firefighting Roombots",
+        "category": "Multi-Agent Swarm Systems",
+        "aisle": "AISLE_B",
+        "booth_pose": {
+          "x": 16.0,
+          "y": 0.8,
+          "z": 0.0,
+          "yaw": 1.5708
+        },
+        "staging_pose": {
+          "x": 16.0,
+          "y": 2.0,
+          "z": 0.32,
+          "yaw": -1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 75.0,
+        "audio_pitch_id": "audio_stall_14_swarm",
+        "key_specs": {
+          "swarm_size": "5 agents",
+          "mesh": "ESP-NOW synchronized consensus"
+        }
+      },
+      {
+        "id": "STALL_15",
+        "cohort": 2,
+        "apriltag_id": 24,
+        "title": "Bio-Inspired Snake Robot for Pipe Inspection",
+        "category": "Extreme Environment Robotics",
+        "aisle": "AISLE_B",
+        "booth_pose": {
+          "x": 20.0,
+          "y": 0.8,
+          "z": 0.0,
+          "yaw": 1.5708
+        },
+        "staging_pose": {
+          "x": 20.0,
+          "y": 2.0,
+          "z": 0.32,
+          "yaw": -1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 80.0,
+        "audio_pitch_id": "audio_stall_15_snake",
+        "key_specs": {
+          "modules": "12 orthogonal joint modules",
+          "rating": "IP68 submersible"
+        }
+      },
+      {
+        "id": "STALL_16",
+        "cohort": 2,
+        "apriltag_id": 25,
+        "title": "Ultrasonic Levitation Acoustic Gripper",
+        "category": "Non-Contact Manipulation",
+        "aisle": "AISLE_A",
+        "booth_pose": {
+          "x": 20.0,
+          "y": 4.8,
+          "z": 0.0,
+          "yaw": 1.5708
+        },
+        "staging_pose": {
+          "x": 20.0,
+          "y": 6.0,
+          "z": 0.32,
+          "yaw": -1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 75.0,
+        "audio_pitch_id": "audio_stall_16_levitation",
+        "key_specs": {
+          "frequency": "40 kHz phased array",
+          "precision": "0.2mm particle trapping"
+        }
+      },
+      {
+        "id": "STALL_17",
+        "cohort": 2,
+        "apriltag_id": 26,
+        "title": "Low-Cost Braille Tablet with Fluidic Actuation",
+        "category": "Assistive Technology",
+        "aisle": "AISLE_A",
+        "booth_pose": {
+          "x": 16.0,
+          "y": 4.8,
+          "z": 0.0,
+          "yaw": 1.5708
+        },
+        "staging_pose": {
+          "x": 16.0,
+          "y": 6.0,
+          "z": 0.32,
+          "yaw": -1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 70.0,
+        "audio_pitch_id": "audio_stall_17_braille",
+        "key_specs": {
+          "refresh": "30 Hz multi-line tactile matrix",
+          "cost": "Sub-$120 BOM"
+        }
+      },
+      {
+        "id": "STALL_18",
+        "cohort": 2,
+        "apriltag_id": 27,
+        "title": "Neuromorphic Event-Camera Collision Sensor",
+        "category": "Neuromorphic Vision",
+        "aisle": "AISLE_A",
+        "booth_pose": {
+          "x": 12.0,
+          "y": 4.8,
+          "z": 0.0,
+          "yaw": 1.5708
+        },
+        "staging_pose": {
+          "x": 12.0,
+          "y": 6.0,
+          "z": 0.32,
+          "yaw": -1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 80.0,
+        "audio_pitch_id": "audio_stall_18_neuromorphic",
+        "key_specs": {
+          "latency": "1.2 ms micro-second temporal resolution",
+          "dynamic_range": "120 dB"
+        }
+      },
+      {
+        "id": "STALL_19",
+        "cohort": 2,
+        "apriltag_id": 28,
+        "title": "Micro-Turbine Wind Profiler for Drone Ports",
+        "category": "Aerodynamics & Sensors",
+        "aisle": "AISLE_A",
+        "booth_pose": {
+          "x": 8.0,
+          "y": 4.8,
+          "z": 0.0,
+          "yaw": 1.5708
+        },
+        "staging_pose": {
+          "x": 8.0,
+          "y": 6.0,
+          "z": 0.32,
+          "yaw": -1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 75.0,
+        "audio_pitch_id": "audio_stall_19_wind",
+        "key_specs": {
+          "anemometry": "3D acoustic ultrasonic",
+          "accuracy": "0.05 m/s shear detection"
+        }
+      },
+      {
+        "id": "STALL_20",
+        "cohort": 2,
+        "apriltag_id": 29,
+        "title": "Thermochemical Energy Storage Demonstrator",
+        "category": "Thermal Energy Systems",
+        "aisle": "AISLE_A",
+        "booth_pose": {
+          "x": 4.0,
+          "y": 4.8,
+          "z": 0.0,
+          "yaw": 1.5708
+        },
+        "staging_pose": {
+          "x": 4.0,
+          "y": 6.0,
+          "z": 0.32,
+          "yaw": -1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 80.0,
+        "audio_pitch_id": "audio_stall_20_thermal",
+        "key_specs": {
+          "reaction": "CaO / Ca(OH)2 hydration cycle",
+          "temperature": "450 deg C output"
+        }
+      },
+      {
+        "id": "STALL_21",
+        "cohort": 3,
+        "apriltag_id": 30,
+        "title": "Decentralized Water Filtration & UV Reactor",
+        "category": "Water Purification",
+        "aisle": "AISLE_C",
+        "booth_pose": {
+          "x": 4.0,
+          "y": -0.8,
+          "z": 0.0,
+          "yaw": -1.5708
+        },
+        "staging_pose": {
+          "x": 4.0,
+          "y": -2.0,
+          "z": 0.32,
+          "yaw": 1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 75.0,
+        "audio_pitch_id": "audio_stall_21_water",
+        "key_specs": {
+          "flux": "250 L/hr ceramic membrane",
+          "pathogen_kill": "99.999% UV-C log5"
+        }
+      },
+      {
+        "id": "STALL_22",
+        "cohort": 3,
+        "apriltag_id": 31,
+        "title": "Continuous Glucose Monitor Microneedle Patch",
+        "category": "Bio-MEMS & Diagnostics",
+        "aisle": "AISLE_C",
+        "booth_pose": {
+          "x": 8.0,
+          "y": -0.8,
+          "z": 0.0,
+          "yaw": -1.5708
+        },
+        "staging_pose": {
+          "x": 8.0,
+          "y": -2.0,
+          "z": 0.32,
+          "yaw": 1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 80.0,
+        "audio_pitch_id": "audio_stall_22_microneedle",
+        "key_specs": {
+          "array": "10x10 pyrazoline microneedle array",
+          "wireless": "NFC telemetry"
+        }
+      },
+      {
+        "id": "STALL_23",
+        "cohort": 3,
+        "apriltag_id": 32,
+        "title": "Biodegradable Mycelium Structural Packaging",
+        "category": "Biomaterials Science",
+        "aisle": "AISLE_C",
+        "booth_pose": {
+          "x": 12.0,
+          "y": -0.8,
+          "z": 0.0,
+          "yaw": -1.5708
+        },
+        "staging_pose": {
+          "x": 12.0,
+          "y": -2.0,
+          "z": 0.32,
+          "yaw": 1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 70.0,
+        "audio_pitch_id": "audio_stall_23_mycelium",
+        "key_specs": {
+          "compression": "2.4 MPa compressive strength",
+          "degradation": "45 days soil"
+        }
+      },
+      {
+        "id": "STALL_24",
+        "cohort": 3,
+        "apriltag_id": 33,
+        "title": "Closed-Loop Artificial Pancreas Simulator",
+        "category": "Clinical Control Systems",
+        "aisle": "AISLE_C",
+        "booth_pose": {
+          "x": 16.0,
+          "y": -0.8,
+          "z": 0.0,
+          "yaw": -1.5708
+        },
+        "staging_pose": {
+          "x": 16.0,
+          "y": -2.0,
+          "z": 0.32,
+          "yaw": 1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 85.0,
+        "audio_pitch_id": "audio_stall_24_pancreas",
+        "key_specs": {
+          "algorithm": "Model Predictive Control (MPC)",
+          "target": "euglycemia 90-120 mg/dL"
+        }
+      },
+      {
+        "id": "STALL_25",
+        "cohort": 3,
+        "apriltag_id": 34,
+        "title": "Plant Microbial Fuel Cell Bio-Sensor",
+        "category": "Bio-Electrochemistry",
+        "aisle": "AISLE_C",
+        "booth_pose": {
+          "x": 20.0,
+          "y": -0.8,
+          "z": 0.0,
+          "yaw": -1.5708
+        },
+        "staging_pose": {
+          "x": 20.0,
+          "y": -2.0,
+          "z": 0.32,
+          "yaw": 1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 75.0,
+        "audio_pitch_id": "audio_stall_25_pmfc",
+        "key_specs": {
+          "power": "18 mW/m2 living rhizosphere power",
+          "sensor": "soil moisture telemetry"
+        }
+      },
+      {
+        "id": "STALL_26",
+        "cohort": 3,
+        "apriltag_id": 35,
+        "title": "Autonomous Ocean Microplastic Skimmer",
+        "category": "Marine Robotics",
+        "aisle": "AISLE_D",
+        "booth_pose": {
+          "x": 20.0,
+          "y": -4.8,
+          "z": 0.0,
+          "yaw": -1.5708
+        },
+        "staging_pose": {
+          "x": 20.0,
+          "y": -6.0,
+          "z": 0.32,
+          "yaw": 1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 80.0,
+        "audio_pitch_id": "audio_stall_26_ocean",
+        "key_specs": {
+          "filtration": "50 micron stainless mesh",
+          "solar": "120W bifacial deck"
+        }
+      },
+      {
+        "id": "STALL_27",
+        "cohort": 3,
+        "apriltag_id": 36,
+        "title": "Drone-Based Forest Canopy CO2 Profiler",
+        "category": "Atmospheric Sensing",
+        "aisle": "AISLE_D",
+        "booth_pose": {
+          "x": 16.0,
+          "y": -4.8,
+          "z": 0.0,
+          "yaw": -1.5708
+        },
+        "staging_pose": {
+          "x": 16.0,
+          "y": -6.0,
+          "z": 0.32,
+          "yaw": 1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 80.0,
+        "audio_pitch_id": "audio_stall_27_canopy",
+        "key_specs": {
+          "precision": "+- 1 ppm NDIR optical bench",
+          "altitude": "100m vertical profile"
+        }
+      },
+      {
+        "id": "STALL_28",
+        "cohort": 3,
+        "apriltag_id": 37,
+        "title": "Self-Healing Conductive Elastomer Sensor",
+        "category": "Smart Materials",
+        "aisle": "AISLE_D",
+        "booth_pose": {
+          "x": 12.0,
+          "y": -4.8,
+          "z": 0.0,
+          "yaw": -1.5708
+        },
+        "staging_pose": {
+          "x": 12.0,
+          "y": -6.0,
+          "z": 0.32,
+          "yaw": 1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 75.0,
+        "audio_pitch_id": "audio_stall_28_elastomer",
+        "key_specs": {
+          "healing": "96% conductivity recovery in 20 min",
+          "gauge_factor": "3.8"
+        }
+      },
+      {
+        "id": "STALL_29",
+        "cohort": 3,
+        "apriltag_id": 38,
+        "title": "Real-Time Wastewater Heavy Metal Analyzer",
+        "category": "Analytical Instrumentation",
+        "aisle": "AISLE_D",
+        "booth_pose": {
+          "x": 8.0,
+          "y": -4.8,
+          "z": 0.0,
+          "yaw": -1.5708
+        },
+        "staging_pose": {
+          "x": 8.0,
+          "y": -6.0,
+          "z": 0.32,
+          "yaw": 1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 80.0,
+        "audio_pitch_id": "audio_stall_29_wastewater",
+        "key_specs": {
+          "method": "Anodic stripping voltammetry",
+          "detection_limit": "0.2 ppb Lead/Cadmium"
+        }
+      },
+      {
+        "id": "STALL_30",
+        "cohort": 3,
+        "apriltag_id": 39,
+        "title": "Urban Heat Island Cool-Roof Metamaterial",
+        "category": "Radiative Cooling Metamaterials",
+        "aisle": "AISLE_D",
+        "booth_pose": {
+          "x": 4.0,
+          "y": -4.8,
+          "z": 0.0,
+          "yaw": -1.5708
+        },
+        "staging_pose": {
+          "x": 4.0,
+          "y": -6.0,
+          "z": 0.32,
+          "yaw": 1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 75.0,
+        "audio_pitch_id": "audio_stall_30_coolroof",
+        "key_specs": {
+          "emissivity": "0.96 atmospheric transparency window",
+          "cooling": "6.8 deg C sub-ambient"
+        }
+      },
+      {
+        "id": "STALL_31",
+        "cohort": 4,
+        "apriltag_id": 40,
+        "title": "CubeSat Reaction Wheel Attitude Testbed",
+        "category": "Aerospace Dynamics",
+        "aisle": "AISLE_D",
+        "booth_pose": {
+          "x": 4.0,
+          "y": -7.2,
+          "z": 0.0,
+          "yaw": 1.5708
+        },
+        "staging_pose": {
+          "x": 4.0,
+          "y": -6.0,
+          "z": 0.32,
+          "yaw": -1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 85.0,
+        "audio_pitch_id": "audio_stall_31_cubesat",
+        "key_specs": {
+          "bearing": "Air-bearing spherical table",
+          "jitter": "sub-arcsecond pointing jitter"
+        }
+      },
+      {
+        "id": "STALL_32",
+        "cohort": 4,
+        "apriltag_id": 41,
+        "title": "Photonic Quantum Random Number Generator",
+        "category": "Quantum Hardware",
+        "aisle": "AISLE_D",
+        "booth_pose": {
+          "x": 8.0,
+          "y": -7.2,
+          "z": 0.0,
+          "yaw": 1.5708
+        },
+        "staging_pose": {
+          "x": 8.0,
+          "y": -6.0,
+          "z": 0.32,
+          "yaw": -1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 80.0,
+        "audio_pitch_id": "audio_stall_32_qrng",
+        "key_specs": {
+          "entropy": "Vacuum fluctuation homodyne detection",
+          "rate": "1.2 Gbps"
+        }
+      },
+      {
+        "id": "STALL_33",
+        "cohort": 4,
+        "apriltag_id": 42,
+        "title": "Autonomous Sub-Orbital Parachute Steerer",
+        "category": "Recovery Avionics",
+        "aisle": "AISLE_D",
+        "booth_pose": {
+          "x": 12.0,
+          "y": -7.2,
+          "z": 0.0,
+          "yaw": 1.5708
+        },
+        "staging_pose": {
+          "x": 12.0,
+          "y": -6.0,
+          "z": 0.32,
+          "yaw": 1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 80.0,
+        "audio_pitch_id": "audio_stall_33_parafoil",
+        "key_specs": {
+          "guidance": "EKF wind compensation",
+          "landing_error": "<15m radius"
+        }
+      },
+      {
+        "id": "STALL_34",
+        "cohort": 4,
+        "apriltag_id": 43,
+        "title": "Hardware Security Module (HSM) RISC-V Core",
+        "category": "Silicon Cybersecurity",
+        "aisle": "AISLE_D",
+        "booth_pose": {
+          "x": 16.0,
+          "y": -7.2,
+          "z": 0.0,
+          "yaw": 1.5708
+        },
+        "staging_pose": {
+          "x": 16.0,
+          "y": -6.0,
+          "z": 0.32,
+          "yaw": -1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 85.0,
+        "audio_pitch_id": "audio_stall_34_hsm",
+        "key_specs": {
+          "isa": "RV32IMC with DPA countermeasures",
+          "throughput": "AES-256 GCM 800 MB/s"
+        }
+      },
+      {
+        "id": "STALL_35",
+        "cohort": 4,
+        "apriltag_id": 44,
+        "title": "Superconducting Magnetic Levitation Track",
+        "category": "Applied Superconductivity",
+        "aisle": "AISLE_D",
+        "booth_pose": {
+          "x": 20.0,
+          "y": -7.2,
+          "z": 0.0,
+          "yaw": 1.5708
+        },
+        "staging_pose": {
+          "x": 20.0,
+          "y": -6.0,
+          "z": 0.32,
+          "yaw": -1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 80.0,
+        "audio_pitch_id": "audio_stall_35_maglev",
+        "key_specs": {
+          "material": "YBCO high-temperature ceramic",
+          "flux_pinning": "35 N load capacity"
+        }
+      },
+      {
+        "id": "STALL_36",
+        "cohort": 4,
+        "apriltag_id": 45,
+        "title": "Drone Ultrasonic Acoustic Dispersal Beam",
+        "category": "Acoustic Countermeasures",
+        "aisle": "AISLE_C",
+        "booth_pose": {
+          "x": 20.0,
+          "y": -3.2,
+          "z": 0.0,
+          "yaw": 1.5708
+        },
+        "staging_pose": {
+          "x": 20.0,
+          "y": -2.0,
+          "z": 0.32,
+          "yaw": -1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 75.0,
+        "audio_pitch_id": "audio_stall_36_acoustic",
+        "key_specs": {
+          "sound_pressure": "135 dB @ 1m directional acoustic beam",
+          "array": "64 transducers"
+        }
+      },
+      {
+        "id": "STALL_37",
+        "cohort": 4,
+        "apriltag_id": 46,
+        "title": "Compact Cold-Atom Gravimeter Demonstrator",
+        "category": "Quantum Metrology",
+        "aisle": "AISLE_C",
+        "booth_pose": {
+          "x": 16.0,
+          "y": -3.2,
+          "z": 0.0,
+          "yaw": 1.5708
+        },
+        "staging_pose": {
+          "x": 16.0,
+          "y": -2.0,
+          "z": 0.32,
+          "yaw": -1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 85.0,
+        "audio_pitch_id": "audio_stall_37_gravimeter",
+        "key_specs": {
+          "species": "Rubidium-87 laser cooled",
+          "sensitivity": "15 microGal/sqrt(Hz)"
+        }
+      },
+      {
+        "id": "STALL_38",
+        "cohort": 4,
+        "apriltag_id": 47,
+        "title": "Post-Quantum Cryptography FPGA Accelerator",
+        "category": "Quantum-Resistant Security",
+        "aisle": "AISLE_C",
+        "booth_pose": {
+          "x": 12.0,
+          "y": -3.2,
+          "z": 0.0,
+          "yaw": 1.5708
+        },
+        "staging_pose": {
+          "x": 12.0,
+          "y": -2.0,
+          "z": 0.32,
+          "yaw": -1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 80.0,
+        "audio_pitch_id": "audio_stall_38_pqc",
+        "key_specs": {
+          "standard": "ML-KEM (Kyber-768) and ML-DSA (Dilithium)",
+          "latency": "28 us NTT"
+        }
+      },
+      {
+        "id": "STALL_39",
+        "cohort": 4,
+        "apriltag_id": 48,
+        "title": "Solid-State LIDAR MEMS Scanning Mirror",
+        "category": "Optical Micro-Systems",
+        "aisle": "AISLE_C",
+        "booth_pose": {
+          "x": 8.0,
+          "y": -3.2,
+          "z": 0.0,
+          "yaw": 1.5708
+        },
+        "staging_pose": {
+          "x": 8.0,
+          "y": -2.0,
+          "z": 0.32,
+          "yaw": -1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 80.0,
+        "audio_pitch_id": "audio_stall_39_mems",
+        "key_specs": {
+          "mirror_diameter": "2.5 mm piezoceramic mirror",
+          "scan_angle": "70 deg optical FOV"
+        }
+      },
+      {
+        "id": "STALL_40",
+        "cohort": 4,
+        "apriltag_id": 49,
+        "title": "Quantum Key Distribution (QKD) Simulator",
+        "category": "Quantum Communications",
+        "aisle": "AISLE_C",
+        "booth_pose": {
+          "x": 4.0,
+          "y": -3.2,
+          "z": 0.0,
+          "yaw": 1.5708
+        },
+        "staging_pose": {
+          "x": 4.0,
+          "y": -2.0,
+          "z": 0.32,
+          "yaw": -1.5708
+        },
+        "terminal_standoff_m": 0.95,
+        "presentation_pitch_rad": -0.14,
+        "presentation_duration_s": 90.0,
+        "audio_pitch_id": "audio_stall_40_qkd",
+        "key_specs": {
+          "protocol": "BB84 with decoy states",
+          "qber_limit": "4.8% error threshold"
+        }
+      }
+    ]
+  },
+  "curricula": {
+    "reception_welcome": {
+      "booth_id": "RECEPTION",
+      "marker_id": 0,
+      "title": "Official VIP Reception & Interception",
+      "speaker_role": "THE DOCENT",
+      "greeting_script": "Honorable evaluators and distinguished guests, welcome to the DPSI EXPO 2026. I am Cloud, your autonomous quadruped VIP tour docent and ground utility steward. Engineered on the Unitree Go2 Edu platform with dual cognitive AI personas,  active optical telemetry, and student mechatronics, I will guide you through  our premier engineering capstones. Please press my green console button whenever  you are ready to proceed.\n",
+      "qa_pairs": [
+        {
+          "q": "What is your primary purpose?",
+          "a": "I serve a dual operational role: daily makerspace logistics workhorse as ARGUS, and official autonomous exhibition ambassador as The Docent."
+        },
+        {
+          "q": "Who built your systems?",
+          "a": "I was engineered by the DPSI student robotics team, combining custom PETG mechatronics, dual cognitive AI agents, and optical sensor fusion."
+        }
+      ]
+    },
+    "booth_1_solar_cart": {
+      "booth_id": "BOOTH_01",
+      "marker_id": 10,
+      "title": "Autonomous Solar Tracking Cart",
+      "speaker_role": "THE DOCENT",
+      "narration_script": "Honorable evaluators, welcome to Booth 1: The Autonomous Solar Tracking Cart. This capstone project addresses efficiency losses in fixed photovoltaic installations. Notice the dual-axis worm gear drive 3D-printed in our makerspace with PETG-CF. By tracking peak solar vectors via four LDR sensors and an onboard MPPT algorithm, this team achieved a measured 34.2% gain in daily energy yield. The system runs on an STM32F401 microcontroller.\n",
+      "key_specs": {
+        "microcontroller": "STM32F401 Black Pill ARM Cortex-M4",
+        "actuation": "Dual-axis worm gear drive in PETG-CF",
+        "efficiency_gain": "+34.2% daily energy yield over fixed panel",
+        "tracking_sensors": "Quad-quadrant light-dependent resistor (LDR) matrix"
+      },
+      "qa_pairs": [
+        {
+          "q": "How does the tracking mechanism handle overcast skies?",
+          "a": "The firmware blends real-time LDR differential readings with a mathematical solar ephemeris calculation to maintain optimal orientation during cloud cover."
+        }
+      ]
+    },
+    "booth_2_agri_drone": {
+      "booth_id": "BOOTH_02",
+      "marker_id": 11,
+      "title": "Edge-AI Agricultural Inspection Drone",
+      "speaker_role": "THE DOCENT",
+      "narration_script": "Here at Booth 2, we present the Edge-AI Agricultural Inspection Drone. Engineered for precision viticulture, this autonomous quadrotor platform executes real-time foliar disease classification directly at the edge. Notice the custom carbon-fiber payload gimbal housing a 5-band multispectral camera. By detecting early-stage fungal blight before visible symptoms emerge, this system reduces chemical fungicide application by up to 40%.\n",
+      "key_specs": {
+        "compute": "NVIDIA Jetson Orin Nano with TensorRT quantization",
+        "payload": "5-band multispectral camera on 2-axis carbon-fiber gimbal",
+        "inference_latency": "28ms per foliar image tile",
+        "chemical_reduction": "Up to 40% reduction in chemical fungicide application"
+      },
+      "qa_pairs": [
+        {
+          "q": "What deep learning model does it run?",
+          "a": "It runs a custom pruned YOLOv8-Nano model quantized to INT8 precision, running at 35 frames per second on the Jetson Orin Nano."
+        }
+      ]
+    },
+    "booth_3_bionic_prosthetic": {
+      "booth_id": "BOOTH_03",
+      "marker_id": 12,
+      "title": "Low-Cost Bionic Myoelectric Upper-Limb Prosthetic",
+      "speaker_role": "THE DOCENT",
+      "narration_script": "Welcome to Booth 3: The Low-Cost Bionic Myoelectric Prosthetic. This project democratizes advanced prosthetic technology by replacing $20,000 clinical devices with a $350 rapid-prototyped alternative. Utilizing four non-invasive surface EMG electrode pads, the onboard dual-core microcontroller classifies five distinct finger grip patterns in under 45 milliseconds using a localized 1D-Convolutional Neural Network.\n",
+      "key_specs": {
+        "bill_of_materials": "$350 total fabrication cost vs. $20,000 commercial clinical units",
+        "actuation": "Five micro linear actuators with tendon-driven flexible TPU joints",
+        "classification_speed": "< 45ms pattern classification latency",
+        "sensing": "4-channel surface electromyography (sEMG) front-end"
+      },
+      "qa_pairs": [
+        {
+          "q": "How many grip patterns can the user execute?",
+          "a": "The neural network classifies 5 functional grips: power grasp, precision pinch, tripod grip, index point, and lateral key grip."
+        }
+      ]
+    },
+    "booth_4_smart_grid": {
+      "booth_id": "BOOTH_04",
+      "marker_id": 104,
+      "title": "Decentralized IoT Smart Microgrid Power Node",
+      "speaker_role": "THE DOCENT",
+      "narration_script": "At Booth 4, we examine the Decentralized IoT Microgrid Power Node. Designed for rural electrification resilience, this bi-directional inverter node balances localized renewable energy generation with battery storage. Using a custom frequency-droop control algorithm, adjacent nodes share load dynamically across a private mesh network without requiring a fragile central coordinator.\n",
+      "key_specs": {
+        "topology": "Decentralized peer-to-peer mesh with ESP32-S3 nodes",
+        "control_algorithm": "Frequency-droop autonomous load balancing",
+        "fault_tolerance": "Sub-10ms automatic islanding on grid disconnect"
+      }
+    },
+    "booth_5_soft_gripper": {
+      "booth_id": "BOOTH_05",
+      "marker_id": 14,
+      "title": "Biomimetic Soft Robotic Marine Gripper",
+      "speaker_role": "THE DOCENT",
+      "narration_script": "Booth 5 presents the Biomimetic Soft Robotic Marine Gripper. Engineered for delicate benthic specimen sampling, this end-effector utilizes pneumatic silicone chambers that inflate elastomeric fingers around fragile marine organisms without applying destructive crushing forces. Actuation pressure is regulated via micro-solenoid valves.\n",
+      "key_specs": {
+        "material": "Dragon Skin 30 silicone elastomeric matrix",
+        "pressure_control": "Closed-loop micro-solenoid PWM regulation (0 to 120 kPa)"
+      }
+    },
+    "booth_6_planetary_rover": {
+      "booth_id": "BOOTH_06",
+      "marker_id": 15,
+      "title": "Autonomous Planetary Exploration Rover",
+      "speaker_role": "THE DOCENT",
+      "narration_script": "Welcome to Booth 6: The Autonomous Planetary Exploration Rover. Featuring a passive rocker-bogie suspension system, this rover climbs obstacles twice the diameter of its custom TPU flexible wheels. Its visual odometry pipeline executes onboard stereo SLAM, computing safe traversability hazard maps across loose gravel and sand.\n",
+      "key_specs": {
+        "suspension": "Passive rocker-bogie mechanism with titanium pivot joints",
+        "wheels": "Parametrically gyroid-infilled flexible TPU95A"
+      }
+    },
+    "booth_7_hydroponics": {
+      "booth_id": "BOOTH_07",
+      "marker_id": 16,
+      "title": "Automated Closed-Loop Smart Hydroponic Bioreactor",
+      "speaker_role": "THE DOCENT",
+      "narration_script": "Here at Booth 7, we view the Closed-Loop Smart Hydroponic Bioreactor. This system automates vertical agriculture by continuously monitoring and balancing nutrient electrical conductivity and pH levels via peristaltic dosing pumps. Automated LED spectrum shifting accelerates photosynthetic biomass accumulation by 22%.\n",
+      "key_specs": {
+        "dosing": "Dual stepper peristaltic pumps with \u00b10.05 pH precision",
+        "biomass_gain": "+22% measured photosynthetic yield"
+      }
+    },
+    "booth_8_exoskeleton": {
+      "booth_id": "BOOTH_08",
+      "marker_id": 17,
+      "title": "Wearable Pneumatic Rehabilitation Exoskeleton",
+      "speaker_role": "THE DOCENT",
+      "narration_script": "Finally, at Booth 8, we present the Wearable Pneumatic Exoskeleton for stroke rehabilitation. Actuated by custom braided McKibben artificial muscles, this lightweight upper-limb suit provides active assistive torque to the human elbow joint, reducing muscle fatigue during repetitive physical therapy regimens.\n",
+      "key_specs": {
+        "actuator": "High-contraction braided pneumatic McKibben artificial muscles",
+        "assistive_torque": "Up to 14.5 N\u00b7m dynamic elbow joint assistance"
+      }
+    },
+    "stall_p01_gait_ai": {
+      "booth_id": "P01",
+      "marker_id": 1,
+      "title": "Stepwise AI: Biomechanical Gait Analysis",
+      "category": "Physical Computing & AI",
+      "speaker_role": "THE DOCENT",
+      "narration_script": "Distinguished Evaluators and Guests: Welcome to Stall P01, featuring Stepwise AI \u2014 an advanced biomechanical gait analysis system. Engineered by DPSI innovators, this solution deploys a matrix of high-frequency 6-axis IMUs and flexible piezoelectric plantar pressure insoles. By tracking joint kinematic trajectories in real-time edge firmware, it classifies pathological gait deviations and asymmetric loading with 98.4% diagnostic accuracy. Project Cloud proudly verifies this physical computing breakthrough!\n",
+      "key_specs": {
+        "microcontroller": "Dual-Core ESP32-S3 Edge AI Processor",
+        "sensing_matrix": "16-point piezoelectric thin-film plantar pressure array",
+        "sampling_rate": "200 Hz continuous synchronized 9-DOF IMU telemetry",
+        "diagnostic_accuracy": "98.4% clinical gait classification accuracy"
+      },
+      "qa_pairs": [
+        {
+          "q": "What is the primary clinical application of Stepwise AI?",
+          "a": "Stepwise AI provides early detection of neurological and musculoskeletal gait impairments, facilitating personalized physical rehabilitation regimens."
+        },
+        {
+          "q": "How is the data processed?",
+          "a": "Raw sensor data is filtered via an onboard Madgwick AHRS filter and processed by a quantized TensorFlow Lite micro-model directly on the ESP32-S3."
+        }
+      ]
+    },
+    "stall_p06_moving_bin": {
+      "booth_id": "P06",
+      "marker_id": 6,
+      "title": "Robotic Smart Moving Bin System",
+      "category": "Physical Computing & Robotics",
+      "speaker_role": "THE DOCENT",
+      "narration_script": "Welcome to Stall P06: The Robotic Smart Moving Bin System. This autonomous mobile platform revolutionizes indoor campus waste management by utilizing 2D planar LiDAR SLAM and ultrasonic waste fill-level telemetry. When trash capacity reaches 85%, the system disengages from its docking station and traverses designated hallway waypoints to the central processing facility, reducing custodial workload by 65%.\n",
+      "key_specs": {
+        "chassis": "Differential drive AMR with optical wheel odometry",
+        "sensing": "Ultrasonic fill-level array & planar LiDAR obstacle avoidance",
+        "payload_capacity": "Up to 35 kg internal volumetric load",
+        "efficiency_gain": "65% reduction in manual custodial retrieval routes"
+      },
+      "qa_pairs": [
+        {
+          "q": "How does the bin navigate through crowded hallways?",
+          "a": "The bin uses dynamic window local obstacle avoidance combined with a 2D occupancy costmap to navigate around pedestrians and unexpected obstacles."
+        }
+      ]
+    },
+    "stall_d01_farmer_verify": {
+      "booth_id": "D01",
+      "marker_id": 13,
+      "title": "Farm To Home: Farmer Verification System",
+      "category": "Digital Solutions & Edge AI",
+      "speaker_role": "THE DOCENT",
+      "narration_script": "Here at Stall D01, we examine Farm To Home: An AI-Driven Farmer Verification System. This software platform bridges agricultural supply chains by combining computer vision produce quality grading with cryptographic identity verification. Smallholder farmers scan harvest batches on mobile devices, generating tamper-proof quality certifications that link directly to wholesale procurement markets.\n",
+      "key_specs": {
+        "edge_model": "Quantized MobileNetV3 produce defect grading classifier",
+        "verification": "Zero-knowledge cryptographic batch provenance verification",
+        "processing_latency": "< 120ms local on-device inference without cloud dependency"
+      },
+      "qa_pairs": [
+        {
+          "q": "Does the system require continuous internet connectivity in the field?",
+          "a": "No, all defect grading models run locally on low-cost smartphones, caching verified ledger records until a cellular or Wi-Fi connection is detected."
+        }
+      ]
+    },
+    "stage_finale": {
+      "booth_id": "STAGE_FINALE",
+      "marker_id": 30,
+      "title": "Central Demonstration Stage Synthesis & Evaluator Q&A",
+      "speaker_role": "THE DOCENT",
+      "narration_script": "Distinguished evaluators, that concludes our tour of the DPSI EXPO 2026 capstones. From precision viticulture and democratized prosthetics to decentralized power and autonomous robotics, our student engineering teams have demonstrated rigorous, applied innovation. I will now open for questions, or inspect my custom mechatronics and optical systems in person. Thank you for your dedication to student engineering.\n"
+    }
+  }
+}
