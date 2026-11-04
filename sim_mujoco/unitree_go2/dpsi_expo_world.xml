@@ -1,0 +1,79 @@
+<mujoco model="Project Cloud: DPSI EXPO-2026 Exhibition World">
+  <include file="go2.xml"/>
+
+  <visual>
+    <headlight diffuse="0.5 0.5 0.55" ambient="0.25 0.25 0.3" specular="0.2 0.2 0.2"/>
+    <rgba haze="0.08 0.12 0.18 1"/>
+    <global azimuth="-120" elevation="-25" offwidth="1920" offheight="1080"/>
+  </visual>
+
+  <asset>
+    <texture type="skybox" builtin="gradient" rgb1="0.15 0.25 0.40" rgb2="0.02 0.04 0.08" width="512" height="3072"/>
+    <texture type="2d" name="ground_grid" builtin="checker" mark="edge" rgb1="0.07 0.09 0.14" rgb2="0.10 0.13 0.20"
+      markrgb="0.22 0.45 0.75" width="400" height="400"/>
+    <material name="ground_mat" texture="ground_grid" texuniform="true" texrepeat="6 6" reflectance="0.12"/>
+
+    <!-- Pavilion Materials -->
+    <material name="stage_mat" rgba="0.12 0.15 0.22 1.0" reflectance="0.25"/>
+    <material name="stage_rim_mat" rgba="0.25 0.55 0.90 1.0" emission="0.3" reflectance="0.4"/>
+    <material name="booth_table_mat" rgba="0.10 0.14 0.22 1.0" reflectance="0.15"/>
+    <material name="aruco_white_mat" rgba="0.95 0.95 0.95 1.0"/>
+    <material name="aruco_black_mat" rgba="0.02 0.02 0.02 1.0"/>
+    <material name="spill_liquid_mat" rgba="0.15 0.45 0.95 0.80" reflectance="0.90"/>
+    <material name="cone_orange_mat" rgba="1.00 0.38 0.02 1.0" emission="0.15"/>
+    <material name="cone_white_mat" rgba="0.98 0.98 0.98 1.0" emission="0.1"/>
+  </asset>
+
+  <worldbody>
+    <!-- Illumination -->
+    <light pos="0 0 7.0" dir="0 0 -1" diffuse="0.6 0.6 0.7" specular="0.3 0.3 0.3" directional="true"/>
+    <light pos="0.0 0.0 4.0" dir="0 0 -1" diffuse="0.9 0.95 1.0" cutoff="45" castshadow="true"/>
+    <light pos="5.0 0.0 4.5" dir="0 0 -1" diffuse="0.8 0.85 0.95" cutoff="50" castshadow="true"/>
+    <light pos="10.0 0.0 4.5" dir="0 0 -1" diffuse="0.95 0.9 0.85" cutoff="45" castshadow="true"/>
+
+    <!-- Main Exhibition Floor -->
+    <geom name="pavilion_floor" size="30 30 0.05" type="plane" material="ground_mat" friction="1.2 0.05 0.01"/>
+
+    <!-- 1. Central Stage Starting Platform (Origin) -->
+    <body name="central_stage" pos="0 0 0.025">
+      <geom name="stage_base" type="cylinder" size="1.8 0.025" material="stage_mat" friction="1.2 0.05 0.01"/>
+      <!-- Glowing Stage Perimeter Rim -->
+      <geom name="stage_rim" type="cylinder" size="1.83 0.005" pos="0 0 0.022" material="stage_rim_mat" contype="0" conaffinity="0"/>
+    </body>
+
+    <!-- 2. Chemical Spill Hazard at x=5.0m -->
+    <body name="hazard_zone" pos="5.0 0.0 0.003">
+      <!-- Specular Low-Friction Slick -->
+      <geom name="spill_puddle" type="cylinder" size="0.45 0.003" material="spill_liquid_mat" friction="0.05 0.01 0.005"/>
+      <!-- Safety Caution Cones -->
+      <geom name="cone_fl_body" type="cylinder" size="0.06 0.15" pos="-0.45 0.35 0.15" material="cone_orange_mat"/>
+      <geom name="cone_fl_stripe" type="cylinder" size="0.062 0.04" pos="-0.45 0.35 0.17" material="cone_white_mat" contype="0" conaffinity="0"/>
+
+      <geom name="cone_fr_body" type="cylinder" size="0.06 0.15" pos="0.45 0.35 0.15" material="cone_orange_mat"/>
+      <geom name="cone_fr_stripe" type="cylinder" size="0.062 0.04" pos="0.45 0.35 0.17" material="cone_white_mat" contype="0" conaffinity="0"/>
+
+      <geom name="cone_rl_body" type="cylinder" size="0.06 0.15" pos="-0.45 -0.35 0.15" material="cone_orange_mat"/>
+      <geom name="cone_rl_stripe" type="cylinder" size="0.062 0.04" pos="-0.45 -0.35 0.17" material="cone_white_mat" contype="0" conaffinity="0"/>
+
+      <geom name="cone_rr_body" type="cylinder" size="0.06 0.15" pos="0.45 -0.35 0.15" material="cone_orange_mat"/>
+      <geom name="cone_rr_stripe" type="cylinder" size="0.062 0.04" pos="0.45 -0.35 0.17" material="cone_white_mat" contype="0" conaffinity="0"/>
+    </body>
+
+    <!-- 3. Booth 1: Solar Cart Stand with ArUco ID 10 Plate -->
+    <body name="booth_01" pos="10.0 0.0 0.45">
+      <geom name="booth_table" type="box" size="0.6 1.0 0.45" material="booth_table_mat"/>
+      <!-- ArUco Marker ID 10 Backing Plate -->
+      <geom name="aruco_plate" type="box" size="0.008 0.18 0.18" pos="-0.61 0.0 0.20" material="aruco_white_mat"/>
+      <!-- ArUco Inner Code Matrix Pattern -->
+      <geom name="aruco_code_c" type="box" size="0.009 0.12 0.12" pos="-0.611 0.0 0.20" material="aruco_black_mat"/>
+      <geom name="aruco_code_dot1" type="box" size="0.010 0.035 0.035" pos="-0.612 -0.04 0.24" material="aruco_white_mat"/>
+      <geom name="aruco_code_dot2" type="box" size="0.010 0.035 0.035" pos="-0.612 0.04 0.16" material="aruco_white_mat"/>
+    </body>
+
+    <!-- Preset Cinematic Cameras -->
+    <camera name="cinematic_orbit" pos="-2.8 -2.4 1.7" xyaxes="0.707 -0.707 0 0.35 0.35 0.87"/>
+    <camera name="pavilion_overview" pos="5.0 -8.5 6.2" xyaxes="1 0 0 0 0.55 0.83"/>
+    <camera name="stage_close" pos="-2.2 0.0 0.9" xyaxes="0 -1 0 0.25 0 0.97"/>
+    <camera name="booth_dock_cam" pos="8.2 -2.2 1.4" xyaxes="0.75 0.66 0 -0.35 0.40 0.84"/>
+  </worldbody>
+</mujoco>
