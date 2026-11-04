@@ -28,4 +28,9 @@ if [ ! -f "$MJPYTHON" ]; then
     MJPYTHON=$(which mjpython)
 fi
 
+if [[ "$*" == *"--ros2"* ]] || [[ "$*" == *"--rviz"* ]]; then
+    echo "[INFO] Forwarding to Unified MuJoCo Physics & RViz2 Digital Twin..."
+    exec "$REPO_DIR/run_cloud_sim.sh" --gui
+fi
+
 exec "$MJPYTHON" "$SCRIPT_DIR/cloud_mujoco_sim.py" "$@"

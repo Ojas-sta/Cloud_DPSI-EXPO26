@@ -760,6 +760,13 @@
     <child link="radar" />
     <axis xyz="0 0 0" />
   </joint>
+  <!-- Unitree 4D LiDAR L1 frame matching MuJoCo lidar_origin site -->
+  <link name="lidar" />
+  <joint name="lidar_joint" type="fixed">
+    <origin xyz="0.285 0 0.050" rpy="0 0 0" />
+    <parent link="base" />
+    <child link="lidar" />
+  </joint>
   <joint name="front_camera_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0.32715 -0.00003 0.04297" />
       <parent link="base" />

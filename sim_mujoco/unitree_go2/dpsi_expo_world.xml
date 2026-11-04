@@ -2,76 +2,82 @@
   <include file="go2.xml"/>
 
   <visual>
-    <headlight diffuse="0.55 0.55 0.60" ambient="0.28 0.28 0.32" specular="0.25 0.25 0.25"/>
-    <rgba haze="0.08 0.12 0.18 1"/>
-    <global azimuth="-120" elevation="-25" offwidth="1920" offheight="1080"/>
+    <headlight diffuse="0.45 0.45 0.48" ambient="0.22 0.22 0.25" specular="0.08 0.08 0.08"/>
+    <rgba haze="0.04 0.06 0.08 1"/>
+    <global azimuth="-120" elevation="-22" offwidth="1920" offheight="1080"/>
+    <quality shadowsize="4096"/>
   </visual>
 
   <asset>
-    <texture type="skybox" builtin="gradient" rgb1="0.15 0.25 0.40" rgb2="0.02 0.04 0.08" width="512" height="3072"/>
-    <texture type="2d" name="ground_grid" builtin="checker" mark="edge" rgb1="0.07 0.09 0.14" rgb2="0.10 0.13 0.20"
-      markrgb="0.22 0.45 0.75" width="400" height="400"/>
-    <material name="ground_mat" texture="ground_grid" texuniform="true" texrepeat="6 6" reflectance="0.12"/>
+    <!-- Skybox & Studio Atmosphere -->
+    <texture type="skybox" builtin="gradient" rgb1="0.10 0.13 0.18" rgb2="0.01 0.02 0.04" width="512" height="3072"/>
 
-    <!-- Pavilion Architectural Materials -->
-    <material name="wall_mat" rgba="0.91 0.93 0.95 1.0" reflectance="0.15"/>
-    <material name="wall_slate_mat" rgba="0.14 0.17 0.23 1.0" reflectance="0.25"/>
-    <material name="glass_panel_mat" rgba="0.25 0.55 0.85 0.35"/>
-    <material name="chrome_mat" rgba="0.82 0.85 0.88 1.0" reflectance="0.6"/>
-    <material name="led_cyan_strip" rgba="0.0 0.88 1.0 1.0" emission="0.85"/>
-    <material name="led_amber_strip" rgba="1.0 0.65 0.0 1.0" emission="0.8"/>
-    <material name="banner_logo_mat" rgba="0.08 0.12 0.20 1.0" reflectance="0.3"/>
+    <!-- High-End Dark Polished Terrazzo Exhibition Floor -->
+    <texture type="2d" name="floor_tex" builtin="checker" mark="none" rgb1="0.10 0.11 0.14" rgb2="0.13 0.15 0.18"
+      width="512" height="512"/>
+    <material name="floor_mat" texture="floor_tex" texuniform="true" texrepeat="12 12" reflectance="0.18"/>
 
-    <!-- Station Features & Hazard Materials -->
-    <material name="stage_mat" rgba="0.12 0.15 0.22 1.0" reflectance="0.25"/>
-    <material name="stage_rim_mat" rgba="0.25 0.55 0.90 1.0" emission="0.4" reflectance="0.4"/>
-    <material name="booth_table_mat" rgba="0.10 0.14 0.22 1.0" reflectance="0.15"/>
-    <material name="aruco_white_mat" rgba="0.95 0.95 0.95 1.0"/>
-    <material name="aruco_black_mat" rgba="0.02 0.02 0.02 1.0"/>
-    <material name="spill_liquid_mat" rgba="0.15 0.45 0.95 0.80" reflectance="0.90"/>
-    <material name="cone_orange_mat" rgba="1.00 0.38 0.02 1.0" emission="0.15"/>
-    <material name="cone_white_mat" rgba="0.98 0.98 0.98 1.0" emission="0.1"/>
+    <!-- Architectural Wall Materials -->
+    <material name="wall_satin_mat" rgba="0.88 0.90 0.92 1.0" reflectance="0.08"/>
+    <material name="wall_acoustic_mat" rgba="0.13 0.15 0.18 1.0" reflectance="0.12"/>
+    <material name="glass_structural_mat" rgba="0.22 0.48 0.72 0.28" reflectance="0.40"/>
+    <material name="brushed_chrome_mat" rgba="0.78 0.80 0.84 1.0" reflectance="0.65"/>
+    <material name="led_cyan_accent" rgba="0.0 0.80 0.95 1.0" emission="0.75"/>
+    <material name="led_amber_accent" rgba="1.0 0.55 0.0 1.0" emission="0.80"/>
+    <material name="booth_fascia_mat" rgba="0.08 0.10 0.14 1.0" reflectance="0.20"/>
+
+    <!-- Keynote Stage Materials -->
+    <material name="stage_slate_mat" rgba="0.16 0.18 0.22 1.0" reflectance="0.12"/>
+    <material name="stage_cove_rim_mat" rgba="0.0 0.75 0.95 0.85" emission="0.55"/>
+
+    <!-- Exhibition Booth Materials -->
+    <material name="booth_plinth_mat" rgba="0.12 0.14 0.18 1.0" reflectance="0.15"/>
+    <material name="aruco_board_white_mat" rgba="0.95 0.95 0.95 1.0" reflectance="0.08"/>
+    <material name="aruco_board_black_mat" rgba="0.02 0.02 0.02 1.0" reflectance="0.02"/>
+
+    <!-- Industrial Fluid Hazard Materials -->
+    <material name="spill_slick_mat" rgba="0.22 0.36 0.52 0.70" reflectance="0.65"/>
+    <material name="cone_safety_orange_mat" rgba="1.00 0.34 0.02 1.0" emission="0.18"/>
+    <material name="cone_prismatic_white_mat" rgba="0.96 0.96 0.96 1.0" reflectance="0.45"/>
   </asset>
 
   <worldbody>
-    <!-- Illumination & Studio Lighting Grid -->
-    <light pos="0 0 7.0" dir="0 0 -1" diffuse="0.6 0.6 0.7" specular="0.3 0.3 0.3" directional="true"/>
-    <light pos="0.0 0.0 4.5" dir="0 0 -1" diffuse="0.95 0.95 1.0" cutoff="45" castshadow="true"/>
-    <light pos="5.0 0.0 4.5" dir="0 0 -1" diffuse="0.85 0.88 0.95" cutoff="50" castshadow="true"/>
-    <light pos="10.0 0.0 4.5" dir="0 0 -1" diffuse="0.95 0.90 0.85" cutoff="45" castshadow="true"/>
+    <!-- Studio Lighting Grid -->
+    <light pos="4.5 0.0 7.5" dir="0 0 -1" diffuse="0.45 0.45 0.48" specular="0.05 0.05 0.05" directional="true"/>
+    <light pos="0.0 0.0 4.2" dir="0 0 -1" diffuse="0.70 0.72 0.76" cutoff="48" castshadow="true"/>
+    <light pos="2.5 0.0 4.2" dir="0 0 -1" diffuse="0.65 0.68 0.74" cutoff="52" castshadow="true"/>
+    <light pos="5.0 0.0 4.2" dir="0 0 -1" diffuse="0.68 0.65 0.60" cutoff="48" castshadow="true"/>
+    <light pos="9.5 0.0 4.2" dir="0 0 -1" diffuse="0.72 0.72 0.75" cutoff="48" castshadow="true"/>
 
-    <!-- Main Exhibition Floor -->
-    <geom name="pavilion_floor" size="30 30 0.05" type="plane" material="ground_mat" friction="1.2 0.05 0.01"/>
+    <!-- Polished Exhibition Terrazzo Floor -->
+    <geom name="pavilion_floor" size="30 30 0.05" type="plane" material="floor_mat" friction="1.2 0.05 0.01"/>
 
     <!-- ============================================================= -->
     <!-- 1. PERIMETER ARCHITECTURAL WALLS                              -->
     <!-- ============================================================= -->
     <!-- West Wall (Stage Backdrop Wall at x = -4.0m) -->
     <body name="wall_west_boundary" pos="-4.0 0.0 1.2">
-      <geom name="geom_wall_west" type="box" size="0.08 5.5 1.2" material="wall_mat"/>
-      <geom name="geom_west_backdrop" type="box" size="0.02 2.5 1.1" pos="0.09 0.0 0.0" material="wall_slate_mat"/>
-      <!-- DPSI EXPO-2026 Illuminated Header -->
-      <geom name="geom_west_header_banner" type="box" size="0.02 2.2 0.15" pos="0.11 0.0 0.95" material="led_cyan_strip"/>
+      <geom name="geom_wall_west" type="box" size="0.08 5.5 1.2" material="wall_satin_mat"/>
+      <geom name="geom_west_backdrop" type="box" size="0.02 2.5 1.1" pos="0.09 0.0 0.0" material="wall_acoustic_mat"/>
+      <geom name="geom_west_header_banner" type="box" size="0.02 2.2 0.15" pos="0.11 0.0 0.95" material="led_cyan_accent"/>
     </body>
 
     <!-- East Wall (Behind Exhibition Booths at x = 13.0m) -->
     <body name="wall_east_boundary" pos="13.0 0.0 1.2">
-      <geom name="geom_wall_east" type="box" size="0.08 5.5 1.2" material="wall_mat"/>
-      <geom name="geom_east_accent" type="box" size="0.02 3.0 1.0" pos="-0.09 0.0 0.0" material="wall_slate_mat"/>
+      <geom name="geom_wall_east" type="box" size="0.08 5.5 1.2" material="wall_satin_mat"/>
+      <geom name="geom_east_accent" type="box" size="0.02 3.0 1.0" pos="-0.09 0.0 0.0" material="wall_acoustic_mat"/>
     </body>
 
     <!-- North Wall (Side Boundary at y = 5.5m) -->
     <body name="wall_north_boundary" pos="4.5 5.5 1.2">
-      <geom name="geom_wall_north" type="box" size="8.5 0.08 1.2" material="wall_mat"/>
-      <!-- LED Baseboard Trim -->
-      <geom name="geom_north_trim" type="box" size="8.5 0.015 0.03" pos="0.0 -0.09 -1.17" material="led_cyan_strip" contype="0" conaffinity="0"/>
+      <geom name="geom_wall_north" type="box" size="8.5 0.08 1.2" material="wall_satin_mat"/>
+      <geom name="geom_north_trim" type="box" size="8.5 0.015 0.025" pos="0.0 -0.09 -1.17" material="led_cyan_accent" contype="0" conaffinity="0"/>
     </body>
 
     <!-- South Wall (Side Boundary at y = -5.5m) -->
     <body name="wall_south_boundary" pos="4.5 -5.5 1.2">
-      <geom name="geom_wall_south" type="box" size="8.5 0.08 1.2" material="wall_mat"/>
-      <!-- LED Baseboard Trim -->
-      <geom name="geom_south_trim" type="box" size="8.5 0.015 0.03" pos="0.0 0.09 -1.17" material="led_cyan_strip" contype="0" conaffinity="0"/>
+      <geom name="geom_wall_south" type="box" size="8.5 0.08 1.2" material="wall_satin_mat"/>
+      <geom name="geom_south_trim" type="box" size="8.5 0.015 0.025" pos="0.0 0.09 -1.17" material="led_cyan_accent" contype="0" conaffinity="0"/>
     </body>
 
     <!-- ============================================================= -->
@@ -79,89 +85,85 @@
     <!-- ============================================================= -->
     <!-- North Corridor Glass Partition (y = 2.2m, x from 1.2m to 4.2m) -->
     <body name="partition_corridor_north" pos="2.7 2.2 0.45">
-      <geom name="geom_north_glass" type="box" size="1.5 0.02 0.45" material="glass_panel_mat"/>
-      <geom name="geom_north_handrail" type="box" size="1.52 0.03 0.02" pos="0.0 0.0 0.47" material="chrome_mat"/>
-      <geom name="geom_north_post1" type="cylinder" size="0.025 0.45" pos="-1.5 0.0 0.0" material="chrome_mat"/>
-      <geom name="geom_north_post2" type="cylinder" size="0.025 0.45" pos="0.0 0.0 0.0" material="chrome_mat"/>
-      <geom name="geom_north_post3" type="cylinder" size="0.025 0.45" pos="1.5 0.0 0.0" material="chrome_mat"/>
+      <geom name="geom_north_glass" type="box" size="1.5 0.02 0.45" material="glass_structural_mat"/>
+      <geom name="geom_north_handrail" type="box" size="1.52 0.03 0.02" pos="0.0 0.0 0.47" material="brushed_chrome_mat"/>
+      <geom name="geom_north_post1" type="cylinder" size="0.025 0.45" pos="-1.5 0.0 0.0" material="brushed_chrome_mat"/>
+      <geom name="geom_north_post2" type="cylinder" size="0.025 0.45" pos="0.0 0.0 0.0" material="brushed_chrome_mat"/>
+      <geom name="geom_north_post3" type="cylinder" size="0.025 0.45" pos="1.5 0.0 0.0" material="brushed_chrome_mat"/>
     </body>
 
     <!-- South Corridor Glass Partition (y = -2.2m, x from 1.2m to 4.2m) -->
     <body name="partition_corridor_south" pos="2.7 -2.2 0.45">
-      <geom name="geom_south_glass" type="box" size="1.5 0.02 0.45" material="glass_panel_mat"/>
-      <geom name="geom_south_handrail" type="box" size="1.52 0.03 0.02" pos="0.0 0.0 0.47" material="chrome_mat"/>
-      <geom name="geom_south_post1" type="cylinder" size="0.025 0.45" pos="-1.5 0.0 0.0" material="chrome_mat"/>
-      <geom name="geom_south_post2" type="cylinder" size="0.025 0.45" pos="0.0 0.0 0.0" material="chrome_mat"/>
-      <geom name="geom_south_post3" type="cylinder" size="0.025 0.45" pos="1.5 0.0 0.0" material="chrome_mat"/>
+      <geom name="geom_south_glass" type="box" size="1.5 0.02 0.45" material="glass_structural_mat"/>
+      <geom name="geom_south_handrail" type="box" size="1.52 0.03 0.02" pos="0.0 0.0 0.47" material="brushed_chrome_mat"/>
+      <geom name="geom_south_post1" type="cylinder" size="0.025 0.45" pos="-1.5 0.0 0.0" material="brushed_chrome_mat"/>
+      <geom name="geom_south_post2" type="cylinder" size="0.025 0.45" pos="0.0 0.0 0.0" material="brushed_chrome_mat"/>
+      <geom name="geom_south_post3" type="cylinder" size="0.025 0.45" pos="1.5 0.0 0.0" material="brushed_chrome_mat"/>
     </body>
 
     <!-- ============================================================= -->
     <!-- 3. EXHIBITION BOOTHS & STATIONS                               -->
     <!-- ============================================================= -->
-    <!-- Station 1: Central Stage Starting Platform (Origin x=0, y=0) -->
-    <body name="central_stage" pos="0 0 0.025">
-      <geom name="stage_base" type="cylinder" size="1.8 0.025" material="stage_mat" friction="1.2 0.05 0.01"/>
-      <!-- Glowing Stage Perimeter Rim -->
-      <geom name="stage_rim" type="cylinder" size="1.83 0.005" pos="0 0 0.022" material="stage_rim_mat" contype="0" conaffinity="0"/>
+    <!-- Station 1: Central Keynote Stage Dais (Origin x=0, y=0) -->
+    <body name="central_stage" pos="0 0 0.020">
+      <!-- Dark Slate Stage Base -->
+      <geom name="stage_base" type="cylinder" size="1.8 0.020" material="stage_slate_mat" friction="1.2 0.05 0.01"/>
+      <!-- Soft Cyan Base Edge Ring -->
+      <geom name="stage_ring" type="cylinder" size="1.83 0.004" pos="0 0 -0.015" material="stage_cove_rim_mat" contype="0" conaffinity="0"/>
     </body>
 
     <!-- Station 2: Chemical Spill Hazard Zone at x=5.0m -->
     <body name="hazard_zone" pos="5.0 0.0 0.003">
-      <!-- Specular Low-Friction Slick -->
-      <geom name="spill_puddle" type="cylinder" size="0.45 0.003" material="spill_liquid_mat" friction="0.05 0.01 0.005"/>
-      <!-- Safety Caution Cones -->
-      <geom name="cone_fl_body" type="cylinder" size="0.06 0.15" pos="-0.45 0.35 0.15" material="cone_orange_mat"/>
-      <geom name="cone_fl_stripe" type="cylinder" size="0.062 0.04" pos="-0.45 0.35 0.17" material="cone_white_mat" contype="0" conaffinity="0"/>
+      <!-- Iridescent Fluid Hazard Slick -->
+      <geom name="spill_puddle" type="cylinder" size="0.45 0.003" material="spill_slick_mat" friction="0.05 0.01 0.005"/>
+      <!-- Prismatic Caution Cones -->
+      <geom name="cone_fl_body" type="cylinder" size="0.06 0.15" pos="-0.45 0.35 0.15" material="cone_safety_orange_mat"/>
+      <geom name="cone_fl_stripe" type="cylinder" size="0.062 0.04" pos="-0.45 0.35 0.17" material="cone_prismatic_white_mat" contype="0" conaffinity="0"/>
 
-      <geom name="cone_fr_body" type="cylinder" size="0.06 0.15" pos="0.45 0.35 0.15" material="cone_orange_mat"/>
-      <geom name="cone_fr_stripe" type="cylinder" size="0.062 0.04" pos="0.45 0.35 0.17" material="cone_white_mat" contype="0" conaffinity="0"/>
+      <geom name="cone_fr_body" type="cylinder" size="0.06 0.15" pos="0.45 0.35 0.15" material="cone_safety_orange_mat"/>
+      <geom name="cone_fr_stripe" type="cylinder" size="0.062 0.04" pos="0.45 0.35 0.17" material="cone_prismatic_white_mat" contype="0" conaffinity="0"/>
 
-      <geom name="cone_rl_body" type="cylinder" size="0.06 0.15" pos="-0.45 -0.35 0.15" material="cone_orange_mat"/>
-      <geom name="cone_rl_stripe" type="cylinder" size="0.062 0.04" pos="-0.45 -0.35 0.17" material="cone_white_mat" contype="0" conaffinity="0"/>
+      <geom name="cone_rl_body" type="cylinder" size="0.06 0.15" pos="-0.45 -0.35 0.15" material="cone_safety_orange_mat"/>
+      <geom name="cone_rl_stripe" type="cylinder" size="0.062 0.04" pos="-0.45 -0.35 0.17" material="cone_prismatic_white_mat" contype="0" conaffinity="0"/>
 
-      <geom name="cone_rr_body" type="cylinder" size="0.06 0.15" pos="0.45 -0.35 0.15" material="cone_orange_mat"/>
-      <geom name="cone_rr_stripe" type="cylinder" size="0.062 0.04" pos="0.45 -0.35 0.17" material="cone_white_mat" contype="0" conaffinity="0"/>
+      <geom name="cone_rr_body" type="cylinder" size="0.06 0.15" pos="0.45 -0.35 0.15" material="cone_safety_orange_mat"/>
+      <geom name="cone_rr_stripe" type="cylinder" size="0.062 0.04" pos="0.45 -0.35 0.17" material="cone_prismatic_white_mat" contype="0" conaffinity="0"/>
 
-      <!-- Flanking Hazard Caution Stanchions -->
-      <geom name="cone_flank_n" type="cylinder" size="0.035 0.45" pos="0.0 1.20 0.45" material="chrome_mat"/>
-      <geom name="cone_flank_n_beacon" type="sphere" size="0.040" pos="0.0 1.20 0.92" material="led_amber_strip"/>
-      <geom name="cone_flank_s" type="cylinder" size="0.035 0.45" pos="0.0 -1.20 0.45" material="chrome_mat"/>
-      <geom name="cone_flank_s_beacon" type="sphere" size="0.040" pos="0.0 -1.20 0.92" material="led_amber_strip"/>
+      <!-- Caution Warning Stanchions -->
+      <geom name="cone_flank_n" type="cylinder" size="0.035 0.45" pos="0.0 1.20 0.45" material="brushed_chrome_mat"/>
+      <geom name="cone_flank_n_beacon" type="sphere" size="0.040" pos="0.0 1.20 0.92" material="led_amber_accent"/>
+      <geom name="cone_flank_s" type="cylinder" size="0.035 0.45" pos="0.0 -1.20 0.45" material="brushed_chrome_mat"/>
+      <geom name="cone_flank_s_beacon" type="sphere" size="0.040" pos="0.0 -1.20 0.92" material="led_amber_accent"/>
     </body>
 
     <!-- Booth 1: Solar Cart Showcase with ArUco ID 10 Plate (x=10.0m) -->
     <body name="booth_01" pos="10.0 0.0 0.45">
-      <geom name="booth_table" type="box" size="0.6 1.0 0.45" material="booth_table_mat"/>
-      <!-- ArUco Marker ID 10 Backing Plate -->
-      <geom name="aruco_plate" type="box" size="0.008 0.18 0.18" pos="-0.61 0.0 0.20" material="aruco_white_mat"/>
-      <!-- ArUco Inner Code Matrix Pattern -->
-      <geom name="aruco_code_c" type="box" size="0.009 0.12 0.12" pos="-0.611 0.0 0.20" material="aruco_black_mat"/>
-      <geom name="aruco_code_dot1" type="box" size="0.010 0.035 0.035" pos="-0.612 -0.04 0.24" material="aruco_white_mat"/>
-      <geom name="aruco_code_dot2" type="box" size="0.010 0.035 0.035" pos="-0.612 0.04 0.16" material="aruco_white_mat"/>
+      <geom name="booth_table" type="box" size="0.6 1.0 0.45" material="booth_plinth_mat"/>
+      <!-- ArUco Marker ID 10 Board -->
+      <geom name="aruco_plate" type="box" size="0.008 0.18 0.18" pos="-0.61 0.0 0.20" material="aruco_board_white_mat"/>
+      <geom name="aruco_code_c" type="box" size="0.009 0.12 0.12" pos="-0.611 0.0 0.20" material="aruco_board_black_mat"/>
+      <geom name="aruco_code_dot1" type="box" size="0.010 0.035 0.035" pos="-0.612 -0.04 0.24" material="aruco_board_white_mat"/>
+      <geom name="aruco_code_dot2" type="box" size="0.010 0.035 0.035" pos="-0.612 0.04 0.16" material="aruco_board_white_mat"/>
 
-      <!-- Booth 1 Architectural Partitions -->
-      <geom name="booth1_back_wall" type="box" size="0.06 2.0 1.2" pos="1.8 0.0 0.75" material="wall_slate_mat"/>
-      <geom name="booth1_left_wall" type="box" size="1.0 0.06 1.2" pos="0.8 2.0 0.75" material="wall_mat"/>
-      <geom name="booth1_right_wall" type="box" size="1.0 0.06 1.2" pos="0.8 -2.0 0.75" material="wall_mat"/>
-      <geom name="booth1_fascia" type="box" size="0.03 1.8 0.15" pos="-0.2 0.0 1.75" material="banner_logo_mat"/>
+      <!-- Booth 1 Architecture -->
+      <geom name="booth1_back_wall" type="box" size="0.06 2.0 1.2" pos="1.8 0.0 0.75" material="wall_acoustic_mat"/>
+      <geom name="booth1_left_wall" type="box" size="1.0 0.06 1.2" pos="0.8 2.0 0.75" material="wall_satin_mat"/>
+      <geom name="booth1_right_wall" type="box" size="1.0 0.06 1.2" pos="0.8 -2.0 0.75" material="wall_satin_mat"/>
+      <geom name="booth1_fascia" type="box" size="0.03 1.8 0.15" pos="-0.2 0.0 1.75" material="booth_fascia_mat"/>
     </body>
 
     <!-- Booth 2: Robotics & AI Systems Zone (x = 7.2m, y = 3.8m) -->
     <body name="booth_02_robotics" pos="7.2 3.8 0.0">
-      <!-- Corridor Wall Divider -->
-      <geom name="booth2_corridor_wall" type="box" size="1.4 0.06 1.2" pos="0.0 -1.6 1.2" material="wall_mat"/>
-      <!-- Interactive Display Plinth -->
-      <geom name="booth2_plinth" type="box" size="0.45 0.45 0.35" pos="0.0 0.0 0.35" material="booth_table_mat"/>
-      <geom name="booth2_display_screen" type="box" size="0.25 0.25 0.08" pos="0.0 0.0 0.78" material="led_cyan_strip"/>
+      <geom name="booth2_corridor_wall" type="box" size="1.4 0.06 1.2" pos="0.0 -1.6 1.2" material="wall_satin_mat"/>
+      <geom name="booth2_plinth" type="box" size="0.45 0.45 0.35" pos="0.0 0.0 0.35" material="booth_plinth_mat"/>
+      <geom name="booth2_display_screen" type="box" size="0.25 0.25 0.08" pos="0.0 0.0 0.78" material="led_cyan_accent"/>
     </body>
 
     <!-- Booth 3: GreenTech & VIP Lounge (x = 7.2m, y = -3.8m) -->
     <body name="booth_03_lounge" pos="7.2 -3.8 0.0">
-      <!-- Corridor Wall Divider -->
-      <geom name="booth3_corridor_wall" type="box" size="1.4 0.06 1.2" pos="0.0 1.6 1.2" material="wall_mat"/>
-      <!-- Lounge Desk & Seating Cube -->
-      <geom name="booth3_desk" type="box" size="0.35 0.8 0.45" pos="0.0 0.0 0.45" material="booth_table_mat"/>
-      <geom name="booth3_cube" type="box" size="0.3 0.3 0.22" pos="-0.9 0.0 0.22" material="wall_slate_mat"/>
+      <geom name="booth3_corridor_wall" type="box" size="1.4 0.06 1.2" pos="0.0 1.6 1.2" material="wall_satin_mat"/>
+      <geom name="booth3_desk" type="box" size="0.35 0.8 0.45" pos="0.0 0.0 0.45" material="booth_plinth_mat"/>
+      <geom name="booth3_cube" type="box" size="0.3 0.3 0.22" pos="-0.9 0.0 0.22" material="wall_acoustic_mat"/>
     </body>
 
     <!-- ============================================================= -->
@@ -170,13 +172,13 @@
     <!-- 1. Central Stage Greeting -->
     <camera name="cam_stage_greeting" pos="-2.2 -1.7 1.0" mode="targetbody" target="base"/>
 
-    <!-- 2. Corridor Patrol View (framed inside avenue looking down corridor) -->
+    <!-- 2. Corridor Patrol View -->
     <camera name="cam_patrol_corridor" pos="0.8 -1.7 1.25" mode="targetbody" target="base"/>
 
     <!-- 3. Spill Hazard Alert & Cones Framing -->
     <camera name="cam_hazard_stop" pos="2.5 -1.8 1.25" mode="targetbody" target="base"/>
 
-    <!-- 4. Booth 1 ArUco Standoff Framing (over-the-shoulder docking approach) -->
+    <!-- 4. Booth 1 ArUco Standoff Framing -->
     <camera name="cam_booth_standoff" pos="6.5 -1.5 1.10" mode="targetbody" target="base"/>
 
     <!-- 5. Presenter Pivot Facing Audience -->
