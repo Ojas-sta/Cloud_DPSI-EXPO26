@@ -602,55 +602,120 @@ class CloudMuJoCoTwin(Node):
         self.get_logger().info("Unified MuJoCo Physics & ROS 2 Twin running at 30 Hz.")
 
     def _load_data_driven_scenes(self, yaml_path):
-        if not os.path.exists(yaml_path):
+        # 1. Prefer blueprint-accurate exhibition hall scenes if world_layout is loaded
+        if hasattr(self, 'world_layout') and self.world_layout and "booths" in self.world_layout:
             return [
-                {"id": 1, "name": "SCENE 1: VIP GREETING", "fsm": "STATE_DOCENT_GREET", "target_x": 0.0, "target_y": 0.0, "target_yaw": 0.0, "hold_time": 5.5, "desc": "Stage Greeting"},
-                {"id": 2, "name": "SCENE 2: ARGUS PATROL", "fsm": "STATE_ARGUS_PATROL", "target_x": 2.5, "target_y": 0.0, "target_yaw": 0.0, "hold_time": 4.0, "desc": "Patrol"},
-                {"id": 3, "name": "SCENE 3: HAZARD AVOIDANCE", "fsm": "STATE_HAZARD_AVOID", "target_x": 4.8, "target_y": 0.0, "target_yaw": 0.0, "hold_time": 4.5, "desc": "Hazard"},
-                {"id": 4, "name": "SCENE 4: ARUCO DOCK", "fsm": "STATE_DOCENT_CRUISE", "target_x": 8.2, "target_y": 0.0, "target_yaw": 0.0, "hold_time": 5.0, "desc": "Standoff Dock"},
-                {"id": 5, "name": "SCENE 5: PIVOT NARRATE", "fsm": "STATE_DOCENT_NARRATE", "target_x": 8.2, "target_y": 0.0, "target_yaw": math.pi, "hold_time": 5.5, "desc": "Narrate"},
-                {"id": 6, "name": "SCENE 6: PRONE REST", "fsm": "STATE_PRONE_REST", "target_x": 0.0, "target_y": 0.0, "target_yaw": 0.0, "hold_time": 6.0, "desc": "Prone Rest"}
+                {
+                    "id": 0,
+                    "name": "SOUTH ENTRANCE GATE WELCOME",
+                    "fsm": "STATE_DOCENT_GREET",
+                    "target_x": 6.40,
+                    "target_y": -7.50,
+                    "target_yaw": 1.5708,
+                    "hold_time": 4.5,
+                    "desc": "South Entrance Gate Welcome & VIP Interception"
+                },
+                {
+                    "id": 101,
+                    "name": "ENTRANCE FOYER CLEARANCE",
+                    "fsm": "STATE_DOCENT_CRUISE",
+                    "target_x": 6.40,
+                    "target_y": -5.00,
+                    "target_yaw": 1.5708,
+                    "hold_time": 2.0,
+                    "desc": "Foyer Corridor Navigation"
+                },
+                {
+                    "id": 102,
+                    "name": "WESTERN CONCOURSE JUNCTION",
+                    "fsm": "STATE_DOCENT_CRUISE",
+                    "target_x": -2.50,
+                    "target_y": -5.00,
+                    "target_yaw": 3.14159,
+                    "hold_time": 2.0,
+                    "desc": "Entering Grand Western Arterial Concourse"
+                },
+                {
+                    "id": 103,
+                    "name": "GRAND ARTERIAL CRUISE",
+                    "fsm": "STATE_DOCENT_CRUISE",
+                    "target_x": -2.50,
+                    "target_y": 4.00,
+                    "target_yaw": 1.5708,
+                    "hold_time": 2.5,
+                    "desc": "Cruising North past Row D"
+                },
+                {
+                    "id": 104,
+                    "name": "ROW P JUNCTION APPROACH",
+                    "fsm": "STATE_DOCENT_CRUISE",
+                    "target_x": -2.50,
+                    "target_y": 12.80,
+                    "target_yaw": 1.5708,
+                    "hold_time": 2.0,
+                    "desc": "Zone 2 Row P Approach"
+                },
+                {
+                    "id": 1,
+                    "name": "P01: STEPWISE AI ARUCO DOCK",
+                    "fsm": "STATE_DOCENT_CRUISE",
+                    "target_x": 0.00,
+                    "target_y": 12.80,
+                    "target_yaw": 1.5708,
+                    "hold_time": 4.5,
+                    "desc": "Closed-Loop Optical ArUco Standoff Docking (Tag #1)"
+                },
+                {
+                    "id": 201,
+                    "name": "P01: 180° PRESENTER PIVOT & NARRATE",
+                    "fsm": "STATE_DOCENT_NARRATE",
+                    "target_x": 0.00,
+                    "target_y": 12.80,
+                    "target_yaw": -1.5708,
+                    "hold_time": 5.0,
+                    "desc": "Facing Audience with +8.0° Eye-Contact Pitch Tilt"
+                },
+                {
+                    "id": 6,
+                    "name": "P06: ROBOTIC SMART MOVING BIN",
+                    "fsm": "STATE_DOCENT_CRUISE",
+                    "target_x": 0.00,
+                    "target_y": 7.30,
+                    "target_yaw": 1.5708,
+                    "hold_time": 4.0,
+                    "desc": "Standoff Docking at Stall P06 (Tag #6)"
+                },
+                {
+                    "id": 206,
+                    "name": "P06: 180° PRESENTER PIVOT & NARRATE",
+                    "fsm": "STATE_DOCENT_NARRATE",
+                    "target_x": 0.00,
+                    "target_y": 7.30,
+                    "target_yaw": -1.5708,
+                    "hold_time": 4.5,
+                    "desc": "Facing Evaluators with Grounded RAG Pitch"
+                },
+                {
+                    "id": 13,
+                    "name": "D01: AI DRONE GUIDANCE",
+                    "fsm": "STATE_DOCENT_CRUISE",
+                    "target_x": 9.60,
+                    "target_y": 7.30,
+                    "target_yaw": 1.5708,
+                    "hold_time": 4.0,
+                    "desc": "Standoff Docking at Stall D01 (Tag #13)"
+                },
+                {
+                    "id": 300,
+                    "name": "GATE RETURN PRONE REST",
+                    "fsm": "STATE_PRONE_REST",
+                    "target_x": 6.40,
+                    "target_y": -7.50,
+                    "target_yaw": 3.14159,
+                    "hold_time": 6.0,
+                    "desc": "Returned to South Entrance Gate for Prone Rest"
+                }
             ]
-
-        with open(yaml_path, "r", encoding="utf-8") as f:
-            data = yaml.safe_load(f)
-
-        scenes = []
-        dock = data.get("recharge_dock", {})
-        scenes.append({
-            "id": 0,
-            "name": "KEYNOTE STAGE WELCOME",
-            "fsm": "STATE_DOCENT_GREET",
-            "target_x": dock.get("pose", {}).get("x", -2.0),
-            "target_y": dock.get("pose", {}).get("y", 0.0),
-            "target_yaw": 0.0,
-            "hold_time": 5.0,
-            "desc": "Stage Keynote Welcome & VIP Interception"
-        })
-
-        for s in data.get("stalls", [])[:10]: # Active Cohort 1
-            stg = s.get("staging_pose", {})
-            scenes.append({
-                "id": s.get("apriltag_id", 10),
-                "name": f"{s['id']}: {s.get('title', '')[:28]}",
-                "fsm": "STATE_DOCENT_CRUISE",
-                "target_x": float(stg.get("x", 4.0)),
-                "target_y": float(stg.get("y", 6.0)),
-                "target_yaw": float(stg.get("yaw", 1.5708)),
-                "hold_time": 5.0,
-                "desc": f"Standoff Docking at {s['id']} (Tag {s.get('apriltag_id')})"
-            })
-
-        scenes.append({
-            "id": 99,
-            "name": "STAGE RECHARGE PRONE REST",
-            "fsm": "STATE_PRONE_REST",
-            "target_x": float(dock.get("staging_pose", {}).get("x", -0.8)),
-            "target_y": float(dock.get("staging_pose", {}).get("y", 0.0)),
-            "target_yaw": 3.14159,
-            "hold_time": 6.0,
-            "desc": "Returned to Stage Dock for Prone Sleep"
-        })
         return scenes
 
     def _ext_cmd_vel_cb(self, msg: Twist):
