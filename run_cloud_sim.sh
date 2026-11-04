@@ -39,13 +39,22 @@ pkill -f "robot_state_publisher" 2>/dev/null || true
 pkill -f "rviz2" 2>/dev/null || true
 
 # Check arguments
-TWIN_ARGS=""
+typeset -a TWIN_ARGS
+TWIN_ARGS=()
 if [[ "$*" == *"--gui"* ]] || [[ "$*" == *"--twin-gui"* ]]; then
-    TWIN_ARGS="--gui"
+    TWIN_ARGS+=(--gui)
     echo "[INFO] Running MuJoCo in interactive passive GUI mode alongside RViz2."
 else
     echo "[INFO] Running MuJoCo physics engine in headless background mode."
 fi
+
+# Forward any --spawn-stall argument
+for arg in "$@"; do
+    if [[ "$prev_arg" == "--spawn-stall" ]]; then
+        TWIN_ARGS+=(--spawn-stall "$arg")
+    fi
+    prev_arg="$arg"
+done
 
 # 3. Start robot_state_publisher with the official Go2 URDF
 echo "[INFO] Starting robot_state_publisher..."
@@ -62,7 +71,7 @@ if [ ! -f "$MJPYTHON_BIN" ]; then
     MJPYTHON_BIN="python3"
 fi
 
-"$MJPYTHON_BIN" "$TWIN_SCRIPT" $TWIN_ARGS &
+"$MJPYTHON_BIN" "$TWIN_SCRIPT" "${TWIN_ARGS[@]}" &
 TWIN_PID=$!
 
 # Trap signals for clean shutdown

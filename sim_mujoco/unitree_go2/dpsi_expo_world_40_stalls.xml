@@ -68,402 +68,402 @@
     <!-- STALL_01: Autonomous Solar Tracking Cart (AprilTag 10) -->
     <body name="body_STALL_01" pos="4.0 7.2 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_01" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_01" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 10) -->
-      <geom name="geom_tag_bg_STALL_01" type="box" size="0.008 0.16 0.16" pos="0.000 0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_01" type="box" size="0.010 0.11 0.11" pos="0.000 0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_01" type="box" size="0.16 0.008 0.16" pos="0.000 -0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_01" type="box" size="0.11 0.010 0.11" pos="0.000 -0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_01" type="box" size="0.06 0.95 0.75" pos="-0.000 -0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_01" type="box" size="0.95 0.05 0.75" pos="0.000 0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_02: Edge-AI Agricultural Inspection Drone (AprilTag 11) -->
     <body name="body_STALL_02" pos="8.0 7.2 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_02" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_02" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 11) -->
-      <geom name="geom_tag_bg_STALL_02" type="box" size="0.008 0.16 0.16" pos="0.000 0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_02" type="box" size="0.010 0.11 0.11" pos="0.000 0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_02" type="box" size="0.16 0.008 0.16" pos="0.000 -0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_02" type="box" size="0.11 0.010 0.11" pos="0.000 -0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_02" type="box" size="0.06 0.95 0.75" pos="-0.000 -0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_02" type="box" size="0.95 0.05 0.75" pos="0.000 0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_03: Bionic Myoelectric Hand Prosthetic (AprilTag 12) -->
     <body name="body_STALL_03" pos="12.0 7.2 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_03" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_03" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 12) -->
-      <geom name="geom_tag_bg_STALL_03" type="box" size="0.008 0.16 0.16" pos="0.000 0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_03" type="box" size="0.010 0.11 0.11" pos="0.000 0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_03" type="box" size="0.16 0.008 0.16" pos="0.000 -0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_03" type="box" size="0.11 0.010 0.11" pos="0.000 -0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_03" type="box" size="0.06 0.95 0.75" pos="-0.000 -0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_03" type="box" size="0.95 0.05 0.75" pos="0.000 0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_04: IoT Smart Microgrid Energy Hub (AprilTag 13) -->
     <body name="body_STALL_04" pos="16.0 7.2 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_04" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_04" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 13) -->
-      <geom name="geom_tag_bg_STALL_04" type="box" size="0.008 0.16 0.16" pos="0.000 0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_04" type="box" size="0.010 0.11 0.11" pos="0.000 0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_04" type="box" size="0.16 0.008 0.16" pos="0.000 -0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_04" type="box" size="0.11 0.010 0.11" pos="0.000 -0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_04" type="box" size="0.06 0.95 0.75" pos="-0.000 -0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_04" type="box" size="0.95 0.05 0.75" pos="0.000 0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_05: High-Speed Autonomous Line-Lidar Sorter (AprilTag 14) -->
     <body name="body_STALL_05" pos="20.0 7.2 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_05" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_05" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 14) -->
-      <geom name="geom_tag_bg_STALL_05" type="box" size="0.008 0.16 0.16" pos="0.000 0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_05" type="box" size="0.010 0.11 0.11" pos="0.000 0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_05" type="box" size="0.16 0.008 0.16" pos="0.000 -0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_05" type="box" size="0.11 0.010 0.11" pos="0.000 -0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_05" type="box" size="0.06 0.95 0.75" pos="-0.000 -0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_05" type="box" size="0.95 0.05 0.75" pos="0.000 0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_06: Dual-Axis Tidal Stream Energy Converter (AprilTag 15) -->
     <body name="body_STALL_06" pos="20.0 3.2 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_06" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_06" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 15) -->
-      <geom name="geom_tag_bg_STALL_06" type="box" size="0.008 0.16 0.16" pos="0.000 0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_06" type="box" size="0.010 0.11 0.11" pos="0.000 0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_06" type="box" size="0.16 0.008 0.16" pos="0.000 -0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_06" type="box" size="0.11 0.010 0.11" pos="0.000 -0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_06" type="box" size="0.06 0.95 0.75" pos="-0.000 -0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_06" type="box" size="0.95 0.05 0.75" pos="0.000 0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_07: Automated Greenhouse Hydroponic Dosing Rig (AprilTag 16) -->
     <body name="body_STALL_07" pos="16.0 3.2 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_07" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_07" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 16) -->
-      <geom name="geom_tag_bg_STALL_07" type="box" size="0.008 0.16 0.16" pos="0.000 0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_07" type="box" size="0.010 0.11 0.11" pos="0.000 0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_07" type="box" size="0.16 0.008 0.16" pos="0.000 -0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_07" type="box" size="0.11 0.010 0.11" pos="0.000 -0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_07" type="box" size="0.06 0.95 0.75" pos="-0.000 -0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_07" type="box" size="0.95 0.05 0.75" pos="0.000 0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_08: Carbon-Capture Direct Air Scrubbing Tower (AprilTag 17) -->
     <body name="body_STALL_08" pos="12.0 3.2 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_08" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_08" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 17) -->
-      <geom name="geom_tag_bg_STALL_08" type="box" size="0.008 0.16 0.16" pos="0.000 0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_08" type="box" size="0.010 0.11 0.11" pos="0.000 0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_08" type="box" size="0.16 0.008 0.16" pos="0.000 -0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_08" type="box" size="0.11 0.010 0.11" pos="0.000 -0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_08" type="box" size="0.06 0.95 0.75" pos="-0.000 -0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_08" type="box" size="0.95 0.05 0.75" pos="0.000 0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_09: Solid-State Sodium-Ion Battery Cell Tester (AprilTag 18) -->
     <body name="body_STALL_09" pos="8.0 3.2 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_09" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_09" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 18) -->
-      <geom name="geom_tag_bg_STALL_09" type="box" size="0.008 0.16 0.16" pos="0.000 0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_09" type="box" size="0.010 0.11 0.11" pos="0.000 0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_09" type="box" size="0.16 0.008 0.16" pos="0.000 -0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_09" type="box" size="0.11 0.010 0.11" pos="0.000 -0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_09" type="box" size="0.06 0.95 0.75" pos="-0.000 -0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_09" type="box" size="0.95 0.05 0.75" pos="0.000 0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_10: Vibration-Harvesting Piezoelectric Floor Tile (AprilTag 19) -->
     <body name="body_STALL_10" pos="4.0 3.2 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_10" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_10" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 19) -->
-      <geom name="geom_tag_bg_STALL_10" type="box" size="0.008 0.16 0.16" pos="0.000 0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_10" type="box" size="0.010 0.11 0.11" pos="0.000 0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_10" type="box" size="0.16 0.008 0.16" pos="0.000 -0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_10" type="box" size="0.11 0.010 0.11" pos="0.000 -0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_10" type="box" size="0.06 0.95 0.75" pos="-0.000 -0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_10" type="box" size="0.95 0.05 0.75" pos="0.000 0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_11: Stereo-Vision Autonomous Forklift AMR (AprilTag 20) -->
     <body name="body_STALL_11" pos="4.0 0.8 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_11" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_11" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 20) -->
-      <geom name="geom_tag_bg_STALL_11" type="box" size="0.008 0.16 0.16" pos="0.000 -0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_11" type="box" size="0.010 0.11 0.11" pos="0.000 -0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_11" type="box" size="0.16 0.008 0.16" pos="0.000 0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_11" type="box" size="0.11 0.010 0.11" pos="0.000 0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_11" type="box" size="0.06 0.95 0.75" pos="-0.000 0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_11" type="box" size="0.95 0.05 0.75" pos="0.000 -0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_12: 6-DOF Teleoperated Haptic Surgical Arm (AprilTag 21) -->
     <body name="body_STALL_12" pos="8.0 0.8 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_12" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_12" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 21) -->
-      <geom name="geom_tag_bg_STALL_12" type="box" size="0.008 0.16 0.16" pos="0.000 -0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_12" type="box" size="0.010 0.11 0.11" pos="0.000 -0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_12" type="box" size="0.16 0.008 0.16" pos="0.000 0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_12" type="box" size="0.11 0.010 0.11" pos="0.000 0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_12" type="box" size="0.06 0.95 0.75" pos="-0.000 0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_12" type="box" size="0.95 0.05 0.75" pos="0.000 -0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_13: Soft Pneumatic Exoskeleton for Gait Rehab (AprilTag 22) -->
     <body name="body_STALL_13" pos="12.0 0.8 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_13" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_13" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 22) -->
-      <geom name="geom_tag_bg_STALL_13" type="box" size="0.008 0.16 0.16" pos="0.000 -0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_13" type="box" size="0.010 0.11 0.11" pos="0.000 -0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_13" type="box" size="0.16 0.008 0.16" pos="0.000 0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_13" type="box" size="0.11 0.010 0.11" pos="0.000 0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_13" type="box" size="0.06 0.95 0.75" pos="-0.000 0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_13" type="box" size="0.95 0.05 0.75" pos="0.000 -0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_14: Swarm-Coordinated Firefighting Roombots (AprilTag 23) -->
     <body name="body_STALL_14" pos="16.0 0.8 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_14" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_14" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 23) -->
-      <geom name="geom_tag_bg_STALL_14" type="box" size="0.008 0.16 0.16" pos="0.000 -0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_14" type="box" size="0.010 0.11 0.11" pos="0.000 -0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_14" type="box" size="0.16 0.008 0.16" pos="0.000 0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_14" type="box" size="0.11 0.010 0.11" pos="0.000 0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_14" type="box" size="0.06 0.95 0.75" pos="-0.000 0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_14" type="box" size="0.95 0.05 0.75" pos="0.000 -0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_15: Bio-Inspired Snake Robot for Pipe Inspection (AprilTag 24) -->
     <body name="body_STALL_15" pos="20.0 0.8 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_15" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_15" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 24) -->
-      <geom name="geom_tag_bg_STALL_15" type="box" size="0.008 0.16 0.16" pos="0.000 -0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_15" type="box" size="0.010 0.11 0.11" pos="0.000 -0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_15" type="box" size="0.16 0.008 0.16" pos="0.000 0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_15" type="box" size="0.11 0.010 0.11" pos="0.000 0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_15" type="box" size="0.06 0.95 0.75" pos="-0.000 0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_15" type="box" size="0.95 0.05 0.75" pos="0.000 -0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_16: Ultrasonic Levitation Acoustic Gripper (AprilTag 25) -->
     <body name="body_STALL_16" pos="20.0 4.8 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_16" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_16" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 25) -->
-      <geom name="geom_tag_bg_STALL_16" type="box" size="0.008 0.16 0.16" pos="0.000 -0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_16" type="box" size="0.010 0.11 0.11" pos="0.000 -0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_16" type="box" size="0.16 0.008 0.16" pos="0.000 0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_16" type="box" size="0.11 0.010 0.11" pos="0.000 0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_16" type="box" size="0.06 0.95 0.75" pos="-0.000 0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_16" type="box" size="0.95 0.05 0.75" pos="0.000 -0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_17: Low-Cost Braille Tablet with Fluidic Actuation (AprilTag 26) -->
     <body name="body_STALL_17" pos="16.0 4.8 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_17" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_17" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 26) -->
-      <geom name="geom_tag_bg_STALL_17" type="box" size="0.008 0.16 0.16" pos="0.000 -0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_17" type="box" size="0.010 0.11 0.11" pos="0.000 -0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_17" type="box" size="0.16 0.008 0.16" pos="0.000 0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_17" type="box" size="0.11 0.010 0.11" pos="0.000 0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_17" type="box" size="0.06 0.95 0.75" pos="-0.000 0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_17" type="box" size="0.95 0.05 0.75" pos="0.000 -0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_18: Neuromorphic Event-Camera Collision Sensor (AprilTag 27) -->
     <body name="body_STALL_18" pos="12.0 4.8 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_18" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_18" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 27) -->
-      <geom name="geom_tag_bg_STALL_18" type="box" size="0.008 0.16 0.16" pos="0.000 -0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_18" type="box" size="0.010 0.11 0.11" pos="0.000 -0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_18" type="box" size="0.16 0.008 0.16" pos="0.000 0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_18" type="box" size="0.11 0.010 0.11" pos="0.000 0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_18" type="box" size="0.06 0.95 0.75" pos="-0.000 0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_18" type="box" size="0.95 0.05 0.75" pos="0.000 -0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_19: Micro-Turbine Wind Profiler for Drone Ports (AprilTag 28) -->
     <body name="body_STALL_19" pos="8.0 4.8 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_19" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_19" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 28) -->
-      <geom name="geom_tag_bg_STALL_19" type="box" size="0.008 0.16 0.16" pos="0.000 -0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_19" type="box" size="0.010 0.11 0.11" pos="0.000 -0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_19" type="box" size="0.16 0.008 0.16" pos="0.000 0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_19" type="box" size="0.11 0.010 0.11" pos="0.000 0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_19" type="box" size="0.06 0.95 0.75" pos="-0.000 0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_19" type="box" size="0.95 0.05 0.75" pos="0.000 -0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_20: Thermochemical Energy Storage Demonstrator (AprilTag 29) -->
     <body name="body_STALL_20" pos="4.0 4.8 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_20" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_20" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 29) -->
-      <geom name="geom_tag_bg_STALL_20" type="box" size="0.008 0.16 0.16" pos="0.000 -0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_20" type="box" size="0.010 0.11 0.11" pos="0.000 -0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_20" type="box" size="0.16 0.008 0.16" pos="0.000 0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_20" type="box" size="0.11 0.010 0.11" pos="0.000 0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_20" type="box" size="0.06 0.95 0.75" pos="-0.000 0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_20" type="box" size="0.95 0.05 0.75" pos="0.000 -0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_21: Decentralized Water Filtration & UV Reactor (AprilTag 30) -->
     <body name="body_STALL_21" pos="4.0 -0.8 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_21" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_21" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 30) -->
-      <geom name="geom_tag_bg_STALL_21" type="box" size="0.008 0.16 0.16" pos="0.000 0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_21" type="box" size="0.010 0.11 0.11" pos="0.000 0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_21" type="box" size="0.16 0.008 0.16" pos="0.000 -0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_21" type="box" size="0.11 0.010 0.11" pos="0.000 -0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_21" type="box" size="0.06 0.95 0.75" pos="-0.000 -0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_21" type="box" size="0.95 0.05 0.75" pos="0.000 0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_22: Continuous Glucose Monitor Microneedle Patch (AprilTag 31) -->
     <body name="body_STALL_22" pos="8.0 -0.8 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_22" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_22" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 31) -->
-      <geom name="geom_tag_bg_STALL_22" type="box" size="0.008 0.16 0.16" pos="0.000 0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_22" type="box" size="0.010 0.11 0.11" pos="0.000 0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_22" type="box" size="0.16 0.008 0.16" pos="0.000 -0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_22" type="box" size="0.11 0.010 0.11" pos="0.000 -0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_22" type="box" size="0.06 0.95 0.75" pos="-0.000 -0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_22" type="box" size="0.95 0.05 0.75" pos="0.000 0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_23: Biodegradable Mycelium Structural Packaging (AprilTag 32) -->
     <body name="body_STALL_23" pos="12.0 -0.8 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_23" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_23" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 32) -->
-      <geom name="geom_tag_bg_STALL_23" type="box" size="0.008 0.16 0.16" pos="0.000 0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_23" type="box" size="0.010 0.11 0.11" pos="0.000 0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_23" type="box" size="0.16 0.008 0.16" pos="0.000 -0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_23" type="box" size="0.11 0.010 0.11" pos="0.000 -0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_23" type="box" size="0.06 0.95 0.75" pos="-0.000 -0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_23" type="box" size="0.95 0.05 0.75" pos="0.000 0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_24: Closed-Loop Artificial Pancreas Simulator (AprilTag 33) -->
     <body name="body_STALL_24" pos="16.0 -0.8 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_24" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_24" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 33) -->
-      <geom name="geom_tag_bg_STALL_24" type="box" size="0.008 0.16 0.16" pos="0.000 0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_24" type="box" size="0.010 0.11 0.11" pos="0.000 0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_24" type="box" size="0.16 0.008 0.16" pos="0.000 -0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_24" type="box" size="0.11 0.010 0.11" pos="0.000 -0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_24" type="box" size="0.06 0.95 0.75" pos="-0.000 -0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_24" type="box" size="0.95 0.05 0.75" pos="0.000 0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_25: Plant Microbial Fuel Cell Bio-Sensor (AprilTag 34) -->
     <body name="body_STALL_25" pos="20.0 -0.8 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_25" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_25" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 34) -->
-      <geom name="geom_tag_bg_STALL_25" type="box" size="0.008 0.16 0.16" pos="0.000 0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_25" type="box" size="0.010 0.11 0.11" pos="0.000 0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_25" type="box" size="0.16 0.008 0.16" pos="0.000 -0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_25" type="box" size="0.11 0.010 0.11" pos="0.000 -0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_25" type="box" size="0.06 0.95 0.75" pos="-0.000 -0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_25" type="box" size="0.95 0.05 0.75" pos="0.000 0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_26: Autonomous Ocean Microplastic Skimmer (AprilTag 35) -->
     <body name="body_STALL_26" pos="20.0 -4.8 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_26" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_26" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 35) -->
-      <geom name="geom_tag_bg_STALL_26" type="box" size="0.008 0.16 0.16" pos="0.000 0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_26" type="box" size="0.010 0.11 0.11" pos="0.000 0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_26" type="box" size="0.16 0.008 0.16" pos="0.000 -0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_26" type="box" size="0.11 0.010 0.11" pos="0.000 -0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_26" type="box" size="0.06 0.95 0.75" pos="-0.000 -0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_26" type="box" size="0.95 0.05 0.75" pos="0.000 0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_27: Drone-Based Forest Canopy CO2 Profiler (AprilTag 36) -->
     <body name="body_STALL_27" pos="16.0 -4.8 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_27" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_27" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 36) -->
-      <geom name="geom_tag_bg_STALL_27" type="box" size="0.008 0.16 0.16" pos="0.000 0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_27" type="box" size="0.010 0.11 0.11" pos="0.000 0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_27" type="box" size="0.16 0.008 0.16" pos="0.000 -0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_27" type="box" size="0.11 0.010 0.11" pos="0.000 -0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_27" type="box" size="0.06 0.95 0.75" pos="-0.000 -0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_27" type="box" size="0.95 0.05 0.75" pos="0.000 0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_28: Self-Healing Conductive Elastomer Sensor (AprilTag 37) -->
     <body name="body_STALL_28" pos="12.0 -4.8 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_28" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_28" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 37) -->
-      <geom name="geom_tag_bg_STALL_28" type="box" size="0.008 0.16 0.16" pos="0.000 0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_28" type="box" size="0.010 0.11 0.11" pos="0.000 0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_28" type="box" size="0.16 0.008 0.16" pos="0.000 -0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_28" type="box" size="0.11 0.010 0.11" pos="0.000 -0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_28" type="box" size="0.06 0.95 0.75" pos="-0.000 -0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_28" type="box" size="0.95 0.05 0.75" pos="0.000 0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_29: Real-Time Wastewater Heavy Metal Analyzer (AprilTag 38) -->
     <body name="body_STALL_29" pos="8.0 -4.8 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_29" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_29" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 38) -->
-      <geom name="geom_tag_bg_STALL_29" type="box" size="0.008 0.16 0.16" pos="0.000 0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_29" type="box" size="0.010 0.11 0.11" pos="0.000 0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_29" type="box" size="0.16 0.008 0.16" pos="0.000 -0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_29" type="box" size="0.11 0.010 0.11" pos="0.000 -0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_29" type="box" size="0.06 0.95 0.75" pos="-0.000 -0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_29" type="box" size="0.95 0.05 0.75" pos="0.000 0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_30: Urban Heat Island Cool-Roof Metamaterial (AprilTag 39) -->
     <body name="body_STALL_30" pos="4.0 -4.8 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_30" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_30" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 39) -->
-      <geom name="geom_tag_bg_STALL_30" type="box" size="0.008 0.16 0.16" pos="0.000 0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_30" type="box" size="0.010 0.11 0.11" pos="0.000 0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_30" type="box" size="0.16 0.008 0.16" pos="0.000 -0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_30" type="box" size="0.11 0.010 0.11" pos="0.000 -0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_30" type="box" size="0.06 0.95 0.75" pos="-0.000 -0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_30" type="box" size="0.95 0.05 0.75" pos="0.000 0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_31: CubeSat Reaction Wheel Attitude Testbed (AprilTag 40) -->
     <body name="body_STALL_31" pos="4.0 -7.2 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_31" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_31" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 40) -->
-      <geom name="geom_tag_bg_STALL_31" type="box" size="0.008 0.16 0.16" pos="0.000 -0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_31" type="box" size="0.010 0.11 0.11" pos="0.000 -0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_31" type="box" size="0.16 0.008 0.16" pos="0.000 0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_31" type="box" size="0.11 0.010 0.11" pos="0.000 0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_31" type="box" size="0.06 0.95 0.75" pos="-0.000 0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_31" type="box" size="0.95 0.05 0.75" pos="0.000 -0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_32: Photonic Quantum Random Number Generator (AprilTag 41) -->
     <body name="body_STALL_32" pos="8.0 -7.2 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_32" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_32" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 41) -->
-      <geom name="geom_tag_bg_STALL_32" type="box" size="0.008 0.16 0.16" pos="0.000 -0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_32" type="box" size="0.010 0.11 0.11" pos="0.000 -0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_32" type="box" size="0.16 0.008 0.16" pos="0.000 0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_32" type="box" size="0.11 0.010 0.11" pos="0.000 0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_32" type="box" size="0.06 0.95 0.75" pos="-0.000 0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_32" type="box" size="0.95 0.05 0.75" pos="0.000 -0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_33: Autonomous Sub-Orbital Parachute Steerer (AprilTag 42) -->
     <body name="body_STALL_33" pos="12.0 -7.2 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_33" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_33" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 42) -->
-      <geom name="geom_tag_bg_STALL_33" type="box" size="0.008 0.16 0.16" pos="0.000 -0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_33" type="box" size="0.010 0.11 0.11" pos="0.000 -0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_33" type="box" size="0.16 0.008 0.16" pos="0.000 0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_33" type="box" size="0.11 0.010 0.11" pos="0.000 0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_33" type="box" size="0.06 0.95 0.75" pos="-0.000 0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_33" type="box" size="0.95 0.05 0.75" pos="0.000 -0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_34: Hardware Security Module (HSM) RISC-V Core (AprilTag 43) -->
     <body name="body_STALL_34" pos="16.0 -7.2 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_34" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_34" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 43) -->
-      <geom name="geom_tag_bg_STALL_34" type="box" size="0.008 0.16 0.16" pos="0.000 -0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_34" type="box" size="0.010 0.11 0.11" pos="0.000 -0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_34" type="box" size="0.16 0.008 0.16" pos="0.000 0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_34" type="box" size="0.11 0.010 0.11" pos="0.000 0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_34" type="box" size="0.06 0.95 0.75" pos="-0.000 0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_34" type="box" size="0.95 0.05 0.75" pos="0.000 -0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_35: Superconducting Magnetic Levitation Track (AprilTag 44) -->
     <body name="body_STALL_35" pos="20.0 -7.2 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_35" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_35" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 44) -->
-      <geom name="geom_tag_bg_STALL_35" type="box" size="0.008 0.16 0.16" pos="0.000 -0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_35" type="box" size="0.010 0.11 0.11" pos="0.000 -0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_35" type="box" size="0.16 0.008 0.16" pos="0.000 0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_35" type="box" size="0.11 0.010 0.11" pos="0.000 0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_35" type="box" size="0.06 0.95 0.75" pos="-0.000 0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_35" type="box" size="0.95 0.05 0.75" pos="0.000 -0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_36: Drone Ultrasonic Acoustic Dispersal Beam (AprilTag 45) -->
     <body name="body_STALL_36" pos="20.0 -3.2 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_36" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_36" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 45) -->
-      <geom name="geom_tag_bg_STALL_36" type="box" size="0.008 0.16 0.16" pos="0.000 -0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_36" type="box" size="0.010 0.11 0.11" pos="0.000 -0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_36" type="box" size="0.16 0.008 0.16" pos="0.000 0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_36" type="box" size="0.11 0.010 0.11" pos="0.000 0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_36" type="box" size="0.06 0.95 0.75" pos="-0.000 0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_36" type="box" size="0.95 0.05 0.75" pos="0.000 -0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_37: Compact Cold-Atom Gravimeter Demonstrator (AprilTag 46) -->
     <body name="body_STALL_37" pos="16.0 -3.2 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_37" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_37" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 46) -->
-      <geom name="geom_tag_bg_STALL_37" type="box" size="0.008 0.16 0.16" pos="0.000 -0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_37" type="box" size="0.010 0.11 0.11" pos="0.000 -0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_37" type="box" size="0.16 0.008 0.16" pos="0.000 0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_37" type="box" size="0.11 0.010 0.11" pos="0.000 0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_37" type="box" size="0.06 0.95 0.75" pos="-0.000 0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_37" type="box" size="0.95 0.05 0.75" pos="0.000 -0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_38: Post-Quantum Cryptography FPGA Accelerator (AprilTag 47) -->
     <body name="body_STALL_38" pos="12.0 -3.2 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_38" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_38" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 47) -->
-      <geom name="geom_tag_bg_STALL_38" type="box" size="0.008 0.16 0.16" pos="0.000 -0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_38" type="box" size="0.010 0.11 0.11" pos="0.000 -0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_38" type="box" size="0.16 0.008 0.16" pos="0.000 0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_38" type="box" size="0.11 0.010 0.11" pos="0.000 0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_38" type="box" size="0.06 0.95 0.75" pos="-0.000 0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_38" type="box" size="0.95 0.05 0.75" pos="0.000 -0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_39: Solid-State LIDAR MEMS Scanning Mirror (AprilTag 48) -->
     <body name="body_STALL_39" pos="8.0 -3.2 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_39" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_39" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 48) -->
-      <geom name="geom_tag_bg_STALL_39" type="box" size="0.008 0.16 0.16" pos="0.000 -0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_39" type="box" size="0.010 0.11 0.11" pos="0.000 -0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_39" type="box" size="0.16 0.008 0.16" pos="0.000 0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_39" type="box" size="0.11 0.010 0.11" pos="0.000 0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_39" type="box" size="0.06 0.95 0.75" pos="-0.000 0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_39" type="box" size="0.95 0.05 0.75" pos="0.000 -0.550 0.75" material="wall_acoustic_mat"/>
     </body>
     <!-- STALL_40: Quantum Key Distribution (QKD) Simulator (AprilTag 49) -->
     <body name="body_STALL_40" pos="4.0 -3.2 0.45">
       <!-- Carpeted Booth Base (Friction: 0.75) -->
-      <geom name="geom_table_STALL_40" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
+      <geom name="geom_table_STALL_40" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>
       <!-- AprilTag tag36h11 Plate (ID 49) -->
-      <geom name="geom_tag_bg_STALL_40" type="box" size="0.008 0.16 0.16" pos="0.000 -0.610 0.20" material="tag_board_white_mat"/>
-      <geom name="geom_tag_fg_STALL_40" type="box" size="0.010 0.11 0.11" pos="0.000 -0.622 0.20" material="tag_board_black_mat"/>
+      <geom name="geom_tag_bg_STALL_40" type="box" size="0.16 0.008 0.16" pos="0.000 0.460 0.20" material="tag_board_white_mat"/>
+      <geom name="geom_tag_fg_STALL_40" type="box" size="0.11 0.010 0.11" pos="0.000 0.469 0.20" material="tag_board_black_mat"/>
       <!-- Acoustic Back Partition -->
-      <geom name="geom_back_STALL_40" type="box" size="0.06 0.95 0.75" pos="-0.000 0.700 0.75" material="wall_acoustic_mat"/>
+      <geom name="geom_back_STALL_40" type="box" size="0.95 0.05 0.75" pos="0.000 -0.550 0.75" material="wall_acoustic_mat"/>
     </body>
 
     <!-- 5. Dynamic Student Crowds & Evaluators (Moving Obstacles) -->
@@ -501,6 +501,7 @@
     </body>
 
     <!-- Dedicated Cameras -->
+    <camera name="cam_go2_third_person" pos="-2.2 0.0 1.1" mode="targetbody" target="base"/>
     <camera name="cam_stage_greeting" pos="-4.0 0.0 1.2" mode="targetbody" target="base"/>
     <camera name="cam_aisle_a_overview" pos="2.0 6.0 1.5" mode="targetbody" target="base"/>
     <camera name="cam_pavilion_overview" pos="10.0 -14.0 12.0" xyaxes="1 0 0 0 0.55 0.83"/>

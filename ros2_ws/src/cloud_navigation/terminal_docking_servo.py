@@ -418,12 +418,14 @@ class TerminalDockingServoNode(Node):
         }
 
         if self.state in (DockingState.IDLE, DockingState.PRESENTATION_LOCKED, DockingState.ABORTED):
+            self.latest_telemetry = result
             return result
 
         # Check occlusion timeout
         if (now - self.last_tag_seen_time) > 3.0 and self.last_tag_seen_time > 0:
             self.abort("AprilTag tracking lost for > 3.0s")
             result["state"] = self.state.value
+            self.latest_telemetry = result
             return result
 
         estimate = self.estimate_relative_booth_pose()
@@ -432,6 +434,7 @@ class TerminalDockingServoNode(Node):
             self.state = DockingState.ACQUIRING
             self._publish_cmd_vel(0.0, 0.0, 0.0)
             result["state"] = "ACQUIRING"
+            self.latest_telemetry = result
             return result
 
         d_meas, y_meas, th_meas, mode = estimate
@@ -466,26 +469,27 @@ class TerminalDockingServoNode(Node):
         raw_wz = -(self.kp_th * e_th + self.kd_th * de_th) # counteract yaw misalignment
 
         # Clamp raw velocities
-        cmd_vx = max(self.max_vx_rev, min(self.max_vx_fwd, raw_vx))
-        cmd_vy = max(-self.max_vy, min(self.max_vy, raw_vy))
-        cmd_wz = max(-self.max_wz, min(self.max_wz, raw_wz))
+        target_vx = max(self.max_vx_rev, min(self.max_vx_fwd, raw_vx))
+        target_vy = max(-self.max_vy, min(self.max_vy, raw_vy))
+        target_wz = max(-self.max_wz, min(self.max_wz, raw_wz))
 
-        # Apply Slew / Acceleration Limits (traction preservation on slick floors)
+        # Slip Gating: In quadruped locomotion, 2 legs are in swing (F_z ~ 0N).
+        # Check total ground reaction force. If total normal force drops below 35 N, scale target.
+        total_fz = sum(self.latest_foot_forces) if self.latest_foot_forces else 60.0
+        if total_fz < 35.0:
+            slip_scale = max(0.2, total_fz / 60.0)
+            target_vx *= slip_scale
+            target_vy *= slip_scale
+            target_wz *= slip_scale
+
+        # Apply Slew / Acceleration Limits toward target
         max_dvx = self.max_accel_x * dt
         max_dvy = self.max_accel_y * dt
         max_dwz = self.max_accel_wz * dt
 
-        cmd_vx = max(self.last_cmd_vx - max_dvx, min(self.last_cmd_vx + max_dvx, cmd_vx))
-        cmd_vy = max(self.last_cmd_vy - max_dvy, min(self.last_cmd_vy + max_dvy, cmd_vy))
-        cmd_wz = max(self.last_cmd_wz - max_dwz, min(self.last_cmd_wz + max_dwz, cmd_wz))
-
-        # Slip Gating: If normal force F_z on feet drops below 10 N, scale back velocity
-        min_fz = min(self.latest_foot_forces) if self.latest_foot_forces else 18.0
-        if min_fz < 10.0:
-            scale = max(0.2, min_fz / 18.0)
-            cmd_vx *= scale
-            cmd_vy *= scale
-            cmd_wz *= scale
+        cmd_vx = max(self.last_cmd_vx - max_dvx, min(self.last_cmd_vx + max_dvx, target_vx))
+        cmd_vy = max(self.last_cmd_vy - max_dvy, min(self.last_cmd_vy + max_dvy, target_vy))
+        cmd_wz = max(self.last_cmd_wz - max_dwz, min(self.last_cmd_wz + max_dwz, target_wz))
 
         self.last_cmd_vx = cmd_vx
         self.last_cmd_vy = cmd_vy
@@ -522,6 +526,7 @@ class TerminalDockingServoNode(Node):
         result["vy"] = round(cmd_vy, 3)
         result["wz"] = round(cmd_wz, 3)
         result["state"] = self.state.value
+        self.latest_telemetry = result
         return result
 
     def _execute_presentation_latch(self, final_dist: float, final_lat: float, final_yaw: float):

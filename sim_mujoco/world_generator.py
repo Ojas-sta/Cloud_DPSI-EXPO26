@@ -97,25 +97,25 @@ def generate_40_stalls_world_xml(yaml_path: str, out_xml_path: str) -> str:
         by = b_pose.get("y", 0.0)
         byaw = b_pose.get("yaw", 0.0)
 
-        # Marker normal faces opposite of booth wall towards aisle centerline
-        # Booth table box
-        tag_offset_x = -0.61 * math.cos(byaw)
-        tag_offset_y = -0.61 * math.sin(byaw)
+        # All stalls face the aisle centerlines along the Y axis (byaw = +/- pi/2)
+        # Front of booth (AprilTag) faces towards the aisle:
+        tag_offset_y = 0.46 * math.sin(byaw)
+        tag_offset_x = 0.0
         
-        # Back wall offset
-        back_wall_x = 0.70 * math.cos(byaw)
-        back_wall_y = 0.70 * math.sin(byaw)
+        # Acoustic Back Partition sits behind the table, opposite the aisle:
+        back_wall_y = -0.55 * math.sin(byaw)
+        back_wall_x = 0.0
 
         xml_lines.extend([
             f'    <!-- {s_id}: {s.get("title", "")} (AprilTag {tag_id}) -->',
             f'    <body name="body_{s_id}" pos="{bx} {by} 0.45">',
             f'      <!-- Carpeted Booth Base (Friction: 0.75) -->',
-            f'      <geom name="geom_table_{s_id}" type="box" size="0.55 0.75 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>',
+            f'      <geom name="geom_table_{s_id}" type="box" size="0.85 0.45 0.45" material="booth_plinth_mat" friction="0.75 0.05 0.01"/>',
             f'      <!-- AprilTag tag36h11 Plate (ID {tag_id}) -->',
-            f'      <geom name="geom_tag_bg_{s_id}" type="box" size="0.008 0.16 0.16" pos="{tag_offset_x:.3f} {tag_offset_y:.3f} 0.20" material="tag_board_white_mat"/>',
-            f'      <geom name="geom_tag_fg_{s_id}" type="box" size="0.010 0.11 0.11" pos="{tag_offset_x*1.02:.3f} {tag_offset_y*1.02:.3f} 0.20" material="tag_board_black_mat"/>',
+            f'      <geom name="geom_tag_bg_{s_id}" type="box" size="0.16 0.008 0.16" pos="{tag_offset_x:.3f} {tag_offset_y:.3f} 0.20" material="tag_board_white_mat"/>',
+            f'      <geom name="geom_tag_fg_{s_id}" type="box" size="0.11 0.010 0.11" pos="{tag_offset_x:.3f} {tag_offset_y*1.02:.3f} 0.20" material="tag_board_black_mat"/>',
             f'      <!-- Acoustic Back Partition -->',
-            f'      <geom name="geom_back_{s_id}" type="box" size="0.06 0.95 0.75" pos="{back_wall_x:.3f} {back_wall_y:.3f} 0.75" material="wall_acoustic_mat"/>',
+            f'      <geom name="geom_back_{s_id}" type="box" size="0.95 0.05 0.75" pos="{back_wall_x:.3f} {back_wall_y:.3f} 0.75" material="wall_acoustic_mat"/>',
             f'    </body>'
         ])
 
@@ -143,6 +143,7 @@ def generate_40_stalls_world_xml(yaml_path: str, out_xml_path: str) -> str:
     xml_lines.extend([
         '',
         '    <!-- Dedicated Cameras -->',
+        '    <camera name="cam_go2_third_person" pos="-2.2 0.0 1.1" mode="targetbody" target="base"/>',
         '    <camera name="cam_stage_greeting" pos="-4.0 0.0 1.2" mode="targetbody" target="base"/>',
         '    <camera name="cam_aisle_a_overview" pos="2.0 6.0 1.5" mode="targetbody" target="base"/>',
         '    <camera name="cam_pavilion_overview" pos="10.0 -14.0 12.0" xyaxes="1 0 0 0 0.55 0.83"/>',

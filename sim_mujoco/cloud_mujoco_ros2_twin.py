@@ -59,7 +59,7 @@ try:
     from rclpy.qos import QoSProfile, DurabilityPolicy, ReliabilityPolicy, HistoryPolicy
     from std_msgs.msg import String, Header, Int32, Float32MultiArray
     from sensor_msgs.msg import PointCloud2, PointField, LaserScan, Imu, BatteryState, JointState
-    from nav_msgs.msg import Path, Odometry
+    from nav_msgs.msg import Path, Odometry, OccupancyGrid, MapMetaData
     from geometry_msgs.msg import TransformStamped, PoseStamped, Point, Quaternion, Twist, Vector3
     from visualization_msgs.msg import Marker, MarkerArray
     import sensor_msgs_py.point_cloud2 as pc2
@@ -138,6 +138,7 @@ class Unitree4DLiDAR:
         self.num_azimuth = num_azimuth
         self.max_range = max_range
         self.site_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_SITE, "lidar_origin")
+        self.base_body_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, "base")
         self.geomid_buf = np.zeros(1, dtype=np.int32)
 
         # Pre-filter robot self bodies
@@ -195,25 +196,19 @@ class Unitree4DLiDAR:
             if np.linalg.norm(v_world) < 1e-4:
                 continue
 
-            curr_p = p0.copy()
-            total_d = 0.0
-            hit_geom_name = "none"
+            d = mujoco.mj_ray(self.model, self.data, p0, v_world, None, 1, self.base_body_id, self.geomid_buf)
+            if d < 0.0 or d > self.max_range:
+                continue
 
-            for _ in range(3):
-                d = mujoco.mj_ray(self.model, self.data, curr_p, v_world, None, 1, -1, self.geomid_buf)
-                if d < 0.0 or total_d + d > self.max_range:
-                    total_d = -1.0
-                    break
-                total_d += d
-                hit_body = self.model.geom_bodyid[self.geomid_buf[0]]
-                if hit_body in self.robot_bodies:
-                    curr_p = curr_p + (d + 0.02) * v_world
-                else:
-                    gid = self.geomid_buf[0]
-                    hit_geom_name = mujoco.mj_id2name(self.model, mujoco.mjtObj.mjOBJ_GEOM, gid) or "geom"
-                    break
+            gid = self.geomid_buf[0]
+            hit_body = self.model.geom_bodyid[gid]
+            if hit_body in self.robot_bodies:
+                continue
 
-            if 0.05 <= total_d <= self.max_range:
+            total_d = d
+            hit_geom_name = mujoco.mj_id2name(self.model, mujoco.mjtObj.mjOBJ_GEOM, gid) or "geom"
+
+            if 0.08 <= total_d <= self.max_range:
                 # Add realistic range noise
                 noisy_d = total_d + float(np.random.normal(0.0, 0.005))
                 xs = noisy_d * u_local[0]
@@ -249,8 +244,8 @@ class Unitree4DLiDAR:
                     az_idx = int(np.argmin(np.abs(self.azimuths - azimuth)))
                     scan_ranges_2d[az_idx] = noisy_d
 
-                # Forward safety envelope check (-25° to +25°, within 4m)
-                if abs(azimuth) < math.radians(25.0) and abs(u_local[2]) < 0.45:
+                # Forward safety envelope check (-25° to +25°, within 4m, above ground)
+                if abs(azimuth) < math.radians(25.0) and abs(u_local[2]) < 0.45 and zw > 0.04 and "floor" not in hit_geom_name and hit_geom_name != "none":
                     if noisy_d < min_front_dist:
                         min_front_dist = noisy_d
                         closest_obstacle = hit_geom_name
@@ -352,7 +347,7 @@ class EgoModelPredictivePlanner:
         return best_v, best_w, best_traj_local, all_trajs
 
 class CloudMuJoCoTwin(Node):
-    def __init__(self, xml_path=None, headless=True):
+    def __init__(self, xml_path=None, headless=True, spawn_stall=None):
         super().__init__('cloud_mujoco_ros2_twin')
 
         # Determine XML path
@@ -386,9 +381,10 @@ class CloudMuJoCoTwin(Node):
         # 32 elevation rings (-45° to +45°) x 180 azimuth rays (360°) = 5,760 dense 3D beams
         self.lidar = Unitree4DLiDAR(self.model, self.data, num_rings=32, num_azimuth=180, max_range=16.0)
 
-        # Foot geom IDs for ground contact tracking
+        # Foot geom IDs and base body ID for ground contact and spatial tracking
         self.foot_names = ["FL", "FR", "RL", "RR"]
         self.foot_geom_ids = {name: mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_GEOM, name) for name in self.foot_names}
+        self.base_body_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, "base")
 
         # Joint Names
         self.joint_names = [
@@ -434,14 +430,24 @@ class CloudMuJoCoTwin(Node):
         self.pub_markers = self.create_publisher(MarkerArray, '/cloud/markers', 10)
         self.pub_candidates = self.create_publisher(MarkerArray, '/cloud/planner/candidates', 10)
 
-        # 4. HAL Bridge Subscriptions (Eliminate Dual-Publisher Contention)
+        # 4. Latched 2D Master Auditorium Costmap & Static TF Broadcaster
+        qos_latched = QoSProfile(
+            depth=1,
+            durability=DurabilityPolicy.TRANSIENT_LOCAL,
+            reliability=ReliabilityPolicy.RELIABLE,
+            history=HistoryPolicy.KEEP_LAST
+        )
+        self.pub_map = self.create_publisher(OccupancyGrid, '/map', qos_latched)
+        self.static_tf_broadcaster = tf2_ros.StaticTransformBroadcaster(self)
+
+        # 5. HAL Bridge Subscriptions (Eliminate Dual-Publisher Contention)
         self.external_control_latched = False
         self.ext_cmd_vx = 0.0
         self.ext_cmd_vy = 0.0
         self.ext_cmd_vyaw = 0.0
         self.ext_posture = "BALANCE_STAND"
         self.ext_euler_pitch = 0.0
-        self.last_ext_cmd_time = self.get_clock().now()
+        self.last_ext_cmd_time = time.time()
 
         self.create_subscription(Twist, '/cmd_vel_safe', self._ext_cmd_vel_cb, 10)
         self.create_subscription(String, '/go2_posture_cmd', self._ext_posture_cb, 10)
@@ -460,26 +466,39 @@ class CloudMuJoCoTwin(Node):
         # -------------------------------------------------------------
         self.scenes = self._load_data_driven_scenes(yaml_db_path)
         self.booth_fiducials = []
+        self.stalls_data = []
+        self.dock_cfg = {}
         if os.path.exists(yaml_db_path):
             try:
                 with open(yaml_db_path, "r", encoding="utf-8") as f:
                     db_cfg = yaml.safe_load(f)
-                    rd = db_cfg.get("recharge_dock", {})
+                    self.dock_cfg = db_cfg.get("recharge_dock", {})
+                    self.stalls_data = db_cfg.get("stalls", [])
+                    rd = self.dock_cfg
                     if rd:
                         self.booth_fiducials.append({
                             "id": rd.get("marker_id", 99),
                             "x": rd.get("pose", {}).get("x", -2.0),
                             "y": rd.get("pose", {}).get("y", 0.0),
                         })
-                    for st in db_cfg.get("stalls", []):
+                    for st in self.stalls_data:
                         bp = st.get("booth_pose", {})
+                        byaw = float(bp.get("yaw", -1.5708))
+                        # AprilTag plate is mounted on front face of booth table facing aisle
+                        tag_x = float(bp.get("x", 0.0))
+                        tag_y = float(bp.get("y", 0.0)) + 0.46 * math.sin(byaw)
                         self.booth_fiducials.append({
                             "id": st.get("apriltag_id", 10),
-                            "x": bp.get("x", 0.0),
-                            "y": bp.get("y", 0.0),
+                            "x": tag_x,
+                            "y": tag_y,
                         })
             except Exception as e:
                 self.get_logger().warn(f"Failed loading booth fiducials: {e}")
+
+        # Pre-build complete 3D exhibition environment markers and 2D occupancy grid
+        self.cached_static_markers = self._build_static_markers()
+        self._broadcast_static_tf()
+        self._init_and_publish_map()
 
         # Robot Physical State
         self.pos_x = 0.0
@@ -488,6 +507,34 @@ class CloudMuJoCoTwin(Node):
         self.yaw = 0.0
         self.pitch = 0.0
         self.roll = 0.0
+
+        if spawn_stall and os.path.exists(yaml_db_path):
+            try:
+                with open(yaml_db_path, "r", encoding="utf-8") as f:
+                    db_cfg = yaml.safe_load(f)
+                    target_stall = None
+                    for st in db_cfg.get("stalls", []):
+                        if st.get("id") == spawn_stall or str(st.get("apriltag_id")) == spawn_stall:
+                            target_stall = st
+                            break
+                    if target_stall:
+                        bp = target_stall.get("booth_pose", {})
+                        sp = target_stall.get("staging_pose", {})
+                        bx, by = bp.get("x", 4.0), bp.get("y", 7.2)
+                        sx, sy = sp.get("x", 4.0), sp.get("y", 6.0)
+                        dist = math.hypot(sx - bx, sy - by)
+                        if dist > 0.01:
+                            ux = (sx - bx) / dist
+                            uy = (sy - by) / dist
+                            self.pos_x = bx + ux * 2.0
+                            self.pos_y = by + uy * 2.0
+                            self.yaw = math.atan2(-uy, -ux)
+                        self.external_control_latched = True
+                        self.in_transit = False
+                        self.get_logger().info(f"Spawned Go2 at stall approach {spawn_stall}: ({self.pos_x:.2f}, {self.pos_y:.2f}), yaw={math.degrees(self.yaw):.1f}° (external control latched)")
+            except Exception as e:
+                self.get_logger().warn(f"Failed parsing spawn stall: {e}")
+
         self.linear_vel = 0.0
         self.yaw_rate = 0.0
 
@@ -513,10 +560,11 @@ class CloudMuJoCoTwin(Node):
         self.odom_path_msg.header.frame_id = 'odom'
 
         # Initialize robot spatial pose in MuJoCo
+        quat_init = euler_to_quaternion(self.yaw, self.pitch, self.roll)
         self.data.qpos[0] = self.pos_x
         self.data.qpos[1] = self.pos_y
         self.data.qpos[2] = self.pos_z
-        self.data.qpos[3:7] = [1.0, 0.0, 0.0, 0.0]  # w, x, y, z
+        self.data.qpos[3:7] = [quat_init[3], quat_init[0], quat_init[1], quat_init[2]]  # w, x, y, z
         self.data.qpos[7:19] = [0.0, 0.74, -1.48] * 4
         mujoco.mj_forward(self.model, self.data)
 
@@ -581,7 +629,7 @@ class CloudMuJoCoTwin(Node):
         return scenes
 
     def _ext_cmd_vel_cb(self, msg: Twist):
-        self.last_ext_cmd_time = self.get_clock().now()
+        self.last_ext_cmd_time = time.time()
         if not self.external_control_latched:
             self.external_control_latched = True
             self.get_logger().info("External HAL control latched (/cmd_vel_safe received). Internal planner deactivated.")
@@ -672,8 +720,8 @@ class CloudMuJoCoTwin(Node):
 
         if self.external_control_latched:
             # External HAL control has exclusive authority over locomotion
-            elapsed = (self.get_clock().now() - self.last_ext_cmd_time).nanoseconds * 1e-9
-            if elapsed > 0.50:
+            elapsed = time.time() - self.last_ext_cmd_time
+            if elapsed > 0.60:
                 cmd_v = 0.0
                 cmd_vy = 0.0
                 cmd_w = 0.0
@@ -685,7 +733,8 @@ class CloudMuJoCoTwin(Node):
             body_pitch_target = self.ext_euler_pitch
             is_prone = (self.ext_posture in ["STAND_DOWN", "DAMP"])
 
-            if min_front <= 0.65:
+            estop_dist = 0.20 if self.external_control_latched else 0.65
+            if min_front <= estop_dist:
                 self.safety_state = "SAFETY_ESTOP"
                 cmd_v = 0.0
                 cmd_vy = 0.0
@@ -696,6 +745,9 @@ class CloudMuJoCoTwin(Node):
                 self.safety_state = "SAFETY_CAUTION"
             else:
                 self.safety_state = "SAFETY_CLEAR"
+
+            if int(self.sim_time * 10) % 20 == 0:
+                self.get_logger().info(f"[HAL Control] vx={cmd_v:.2f}, vy={cmd_vy:.2f}, wz={cmd_w:.2f}, pos=({self.pos_x:.2f}, {self.pos_y:.2f}), min_front={min_front:.2f}m")
 
         elif self.in_transit:
             if dist_to_goal > 0.15:
@@ -902,6 +954,15 @@ class CloudMuJoCoTwin(Node):
         nsec = nsec % 1_000_000_000
         stamp_tf.sec = sec
         stamp_tf.nanosec = nsec
+
+        # 0. Static TF (map -> odom) & Map Keepalive
+        self._broadcast_static_tf(stamp_tf)
+        if not hasattr(self, '_map_pub_counter'):
+            self._map_pub_counter = 0
+        self._map_pub_counter += 1
+        if self._map_pub_counter % 60 == 0 and hasattr(self, 'cached_map_msg'):
+            self.cached_map_msg.header.stamp = stamp
+            self.pub_map.publish(self.cached_map_msg)
 
         # 1. Dynamic TF (odom -> base_link)
         t = TransformStamped()
@@ -1112,6 +1173,323 @@ class CloudMuJoCoTwin(Node):
             p_msg.pose.orientation.w = 1.0
             self.pub_apriltag_pose.publish(p_msg)
 
+    def _broadcast_static_tf(self, stamp=None):
+        if not hasattr(self, 'static_tf_broadcaster'):
+            return
+        t = TransformStamped()
+        t.header.stamp = stamp or self.get_clock().now().to_msg()
+        t.header.frame_id = 'map'
+        t.child_frame_id = 'odom'
+        t.transform.translation.x = 0.0
+        t.transform.translation.y = 0.0
+        t.transform.translation.z = 0.0
+        t.transform.rotation.x = 0.0
+        t.transform.rotation.y = 0.0
+        t.transform.rotation.z = 0.0
+        t.transform.rotation.w = 1.0
+        self.static_tf_broadcaster.sendTransform(t)
+
+    def _init_and_publish_map(self):
+        res = 0.10
+        ox, oy = -5.0, -10.0
+        width = int(30.0 / res)   # 300
+        height = int(20.0 / res)  # 200
+
+        grid = [0] * (width * height)
+
+        def set_box(x_min, x_max, y_min, y_max, val):
+            c0 = max(0, int((x_min - ox) / res))
+            c1 = min(width - 1, int((x_max - ox) / res))
+            r0 = max(0, int((y_min - oy) / res))
+            r1 = min(height - 1, int((y_max - oy) / res))
+            for r in range(r0, r1 + 1):
+                for c in range(c0, c1 + 1):
+                    grid[r * width + c] = val
+
+        # Perimeter outer walls (thickness ~ 0.2m)
+        set_box(-5.0, 25.0, 9.8, 10.0, 100)
+        set_box(-5.0, 25.0, -10.0, -9.8, 100)
+        set_box(-5.0, -4.8, -10.0, 10.0, 100)
+        set_box(24.8, 25.0, -10.0, 10.0, 100)
+
+        # Central Stage Dais (radius 2.4 at (-2.0, 0.0))
+        cx, cy = -2.0, 0.0
+        r_stage = 2.4
+        for r in range(height):
+            py = oy + r * res
+            for c in range(width):
+                px = ox + c * res
+                dist = math.hypot(px - cx, py - cy)
+                if dist <= r_stage:
+                    grid[r * width + c] = 50 if dist < (r_stage - 0.15) else 100
+
+        # Recharge Dock 99 plate
+        set_box(-1.25, -1.15, -0.25, 0.25, 100)
+
+        # 40 Stalls from database
+        for s in self.stalls_data:
+            bp = s.get("booth_pose", {})
+            bx = bp.get("x", 0.0)
+            by = bp.get("y", 0.0)
+            byaw = bp.get("yaw", 0.0)
+            # Table half extents 0.85m in x, 0.45m in y
+            set_box(bx - 0.85, bx + 0.85, by - 0.45, by + 0.45, 100)
+            # Acoustic back wall
+            back_y = by - 0.55 * math.sin(byaw)
+            set_box(bx - 0.95, bx + 0.95, back_y - 0.05, back_y + 0.05, 100)
+
+        map_msg = OccupancyGrid()
+        map_msg.header.stamp = self.get_clock().now().to_msg()
+        map_msg.header.frame_id = 'map'
+        map_msg.info.map_load_time = map_msg.header.stamp
+        map_msg.info.resolution = res
+        map_msg.info.width = width
+        map_msg.info.height = height
+        map_msg.info.origin.position.x = ox
+        map_msg.info.origin.position.y = oy
+        map_msg.info.origin.position.z = 0.0
+        map_msg.info.origin.orientation.w = 1.0
+        map_msg.data = grid
+
+        self.cached_map_msg = map_msg
+        self.pub_map.publish(map_msg)
+
+    def _build_static_markers(self):
+        markers = []
+
+        # 1. 4 Perimeter Auditorium Walls (30m x 20m arena: x in [-5, 25], y in [-10, 10])
+        wall_specs = [
+            ("wall_west", -5.0, 0.0, 0.75, 0.15, 20.0, 1.50),
+            ("wall_east", 25.0, 0.0, 0.75, 0.15, 20.0, 1.50),
+            ("wall_north", 10.0, 10.0, 0.75, 30.0, 0.15, 1.50),
+            ("wall_south", 10.0, -10.0, 0.75, 30.0, 0.15, 1.50),
+        ]
+        for idx, (name, wx, wy, wz, sx, sy, sz) in enumerate(wall_specs):
+            m = Marker()
+            m.header.frame_id = 'map'
+            m.ns = 'auditorium_walls'
+            m.id = idx
+            m.type = Marker.CUBE
+            m.action = Marker.ADD
+            m.pose.position.x = wx
+            m.pose.position.y = wy
+            m.pose.position.z = wz
+            m.scale.x = sx
+            m.scale.y = sy
+            m.scale.z = sz
+            m.color.r = 0.88; m.color.g = 0.90; m.color.b = 0.92; m.color.a = 0.85
+            markers.append(m)
+
+        # 1b. Floor Slab (30m x 20m arena: x in [-5, 25], y in [-10, 10])
+        m_floor = Marker()
+        m_floor.header.frame_id = 'map'
+        m_floor.ns = 'auditorium_walls'
+        m_floor.id = 99
+        m_floor.type = Marker.CUBE
+        m_floor.action = Marker.ADD
+        m_floor.pose.position.x = 10.0
+        m_floor.pose.position.y = 0.0
+        m_floor.pose.position.z = -0.015
+        m_floor.scale.x = 30.0
+        m_floor.scale.y = 20.0
+        m_floor.scale.z = 0.01
+        m_floor.color.r = 0.08; m_floor.color.g = 0.09; m_floor.color.b = 0.12; m_floor.color.a = 0.95
+        markers.append(m_floor)
+
+        # 2. Central Keynote Stage & Dock 99
+        m_stage = Marker()
+        m_stage.header.frame_id = 'map'
+        m_stage.ns = 'central_stage'
+        m_stage.id = 0
+        m_stage.type = Marker.CYLINDER
+        m_stage.action = Marker.ADD
+        m_stage.pose.position.x = -2.0
+        m_stage.pose.position.y = 0.0
+        m_stage.pose.position.z = 0.02
+        m_stage.scale.x = 4.8
+        m_stage.scale.y = 4.8
+        m_stage.scale.z = 0.04
+        m_stage.color.r = 0.16; m_stage.color.g = 0.18; m_stage.color.b = 0.22; m_stage.color.a = 0.95
+        markers.append(m_stage)
+
+        m_cove = Marker()
+        m_cove.header.frame_id = 'map'
+        m_cove.ns = 'central_stage'
+        m_cove.id = 1
+        m_cove.type = Marker.CYLINDER
+        m_cove.action = Marker.ADD
+        m_cove.pose.position.x = -2.0
+        m_cove.pose.position.y = 0.0
+        m_cove.pose.position.z = 0.005
+        m_cove.scale.x = 4.86
+        m_cove.scale.y = 4.86
+        m_cove.scale.z = 0.01
+        m_cove.color.r = 0.0; m_cove.color.g = 0.75; m_cove.color.b = 0.95; m_cove.color.a = 0.85
+        markers.append(m_cove)
+
+        m_dock_bg = Marker()
+        m_dock_bg.header.frame_id = 'map'
+        m_dock_bg.ns = 'central_stage'
+        m_dock_bg.id = 2
+        m_dock_bg.type = Marker.CUBE
+        m_dock_bg.action = Marker.ADD
+        m_dock_bg.pose.position.x = -1.20
+        m_dock_bg.pose.position.y = 0.0
+        m_dock_bg.pose.position.z = 0.30
+        m_dock_bg.scale.x = 0.02
+        m_dock_bg.scale.y = 0.44
+        m_dock_bg.scale.z = 0.44
+        m_dock_bg.color.r = 0.96; m_dock_bg.color.g = 0.96; m_dock_bg.color.b = 0.96; m_dock_bg.color.a = 1.0
+        markers.append(m_dock_bg)
+
+        m_dock_fg = Marker()
+        m_dock_fg.header.frame_id = 'map'
+        m_dock_fg.ns = 'central_stage'
+        m_dock_fg.id = 3
+        m_dock_fg.type = Marker.CUBE
+        m_dock_fg.action = Marker.ADD
+        m_dock_fg.pose.position.x = -1.19
+        m_dock_fg.pose.position.y = 0.0
+        m_dock_fg.pose.position.z = 0.30
+        m_dock_fg.scale.x = 0.024
+        m_dock_fg.scale.y = 0.32
+        m_dock_fg.scale.z = 0.32
+        m_dock_fg.color.r = 0.02; m_dock_fg.color.g = 0.02; m_dock_fg.color.b = 0.02; m_dock_fg.color.a = 1.0
+        markers.append(m_dock_fg)
+
+        m_dock_txt = Marker()
+        m_dock_txt.header.frame_id = 'map'
+        m_dock_txt.ns = 'central_stage'
+        m_dock_txt.id = 4
+        m_dock_txt.type = Marker.TEXT_VIEW_FACING
+        m_dock_txt.action = Marker.ADD
+        m_dock_txt.pose.position.x = -1.20
+        m_dock_txt.pose.position.y = 0.0
+        m_dock_txt.pose.position.z = 0.70
+        m_dock_txt.scale.z = 0.22
+        m_dock_txt.color.r = 0.0; m_dock_txt.color.g = 0.85; m_dock_txt.color.b = 1.0; m_dock_txt.color.a = 1.0
+        m_dock_txt.text = "⚡ STAGE RECHARGE DOCK\nAprilTag #99"
+        markers.append(m_dock_txt)
+
+        # 3. All 40 Exhibition Stalls
+        for idx, s in enumerate(self.stalls_data):
+            s_id = s.get("id", f"STALL_{idx+1:02d}")
+            tag_id = s.get("apriltag_id", 10)
+            bp = s.get("booth_pose", {})
+            bx = float(bp.get("x", 0.0))
+            by = float(bp.get("y", 0.0))
+            byaw = float(bp.get("yaw", -1.5708))
+
+            tag_y = by + 0.46 * math.sin(byaw)
+            back_y = by - 0.55 * math.sin(byaw)
+
+            base_id = 100 + idx * 10
+
+            # Table Plinth
+            m_tbl = Marker()
+            m_tbl.header.frame_id = 'map'
+            m_tbl.ns = 'exhibition_booths'
+            m_tbl.id = base_id + 0
+            m_tbl.type = Marker.CUBE
+            m_tbl.action = Marker.ADD
+            m_tbl.pose.position.x = bx
+            m_tbl.pose.position.y = by
+            m_tbl.pose.position.z = 0.45
+            m_tbl.scale.x = 1.70
+            m_tbl.scale.y = 0.90
+            m_tbl.scale.z = 0.90
+            m_tbl.color.r = 0.12; m_tbl.color.g = 0.14; m_tbl.color.b = 0.18; m_tbl.color.a = 0.95
+            markers.append(m_tbl)
+
+            # Acoustic Backboard
+            m_back = Marker()
+            m_back.header.frame_id = 'map'
+            m_back.ns = 'exhibition_booths'
+            m_back.id = base_id + 1
+            m_back.type = Marker.CUBE
+            m_back.action = Marker.ADD
+            m_back.pose.position.x = bx
+            m_back.pose.position.y = back_y
+            m_back.pose.position.z = 0.75
+            m_back.scale.x = 1.90
+            m_back.scale.y = 0.10
+            m_back.scale.z = 1.50
+            m_back.color.r = 0.15; m_back.color.g = 0.17; m_back.color.b = 0.20; m_back.color.a = 0.95
+            markers.append(m_back)
+
+            # AprilTag Plate Background (White)
+            m_tag_bg = Marker()
+            m_tag_bg.header.frame_id = 'map'
+            m_tag_bg.ns = 'exhibition_booths'
+            m_tag_bg.id = base_id + 2
+            m_tag_bg.type = Marker.CUBE
+            m_tag_bg.action = Marker.ADD
+            m_tag_bg.pose.position.x = bx
+            m_tag_bg.pose.position.y = tag_y
+            m_tag_bg.pose.position.z = 0.65
+            m_tag_bg.scale.x = 0.32
+            m_tag_bg.scale.y = 0.02
+            m_tag_bg.scale.z = 0.32
+            m_tag_bg.color.r = 0.96; m_tag_bg.color.g = 0.96; m_tag_bg.color.b = 0.96; m_tag_bg.color.a = 1.0
+            markers.append(m_tag_bg)
+
+            # AprilTag Plate Foreground (Black code)
+            m_tag_fg = Marker()
+            m_tag_fg.header.frame_id = 'map'
+            m_tag_fg.ns = 'exhibition_booths'
+            m_tag_fg.id = base_id + 3
+            m_tag_fg.type = Marker.CUBE
+            m_tag_fg.action = Marker.ADD
+            m_tag_fg.pose.position.x = bx
+            m_tag_fg.pose.position.y = tag_y + (0.012 if byaw < 0 else -0.012)
+            m_tag_fg.pose.position.z = 0.65
+            m_tag_fg.scale.x = 0.22
+            m_tag_fg.scale.y = 0.024
+            m_tag_fg.scale.z = 0.22
+            m_tag_fg.color.r = 0.02; m_tag_fg.color.g = 0.02; m_tag_fg.color.b = 0.02; m_tag_fg.color.a = 1.0
+            markers.append(m_tag_fg)
+
+            # Floating 3D Booth Title
+            m_txt = Marker()
+            m_txt.header.frame_id = 'map'
+            m_txt.ns = 'exhibition_booths'
+            m_txt.id = base_id + 4
+            m_txt.type = Marker.TEXT_VIEW_FACING
+            m_txt.action = Marker.ADD
+            m_txt.pose.position.x = bx
+            m_txt.pose.position.y = by
+            m_txt.pose.position.z = 1.30
+            m_txt.scale.z = 0.18
+            m_txt.color.r = 0.0; m_txt.color.g = 0.85; m_txt.color.b = 1.0; m_txt.color.a = 0.95
+            short_title = s.get('title', '')
+            if len(short_title) > 28:
+                short_title = short_title[:26] + "..."
+            m_txt.text = f"[{s_id}] {short_title}\nTag #{tag_id}"
+            markers.append(m_txt)
+
+        # 4. Dynamic Crowd Clusters
+        crowd_coords = [
+            (6.0, 6.0), (14.0, 6.0), (10.0, 2.0), (18.0, 2.0),
+            (6.0, -2.0), (14.0, -2.0), (10.0, -6.0), (18.0, -6.0)
+        ]
+        for idx, (cx, cy) in enumerate(crowd_coords):
+            m_crd = Marker()
+            m_crd.header.frame_id = 'map'
+            m_crd.ns = 'crowd_capsules'
+            m_crd.id = idx
+            m_crd.type = Marker.CYLINDER
+            m_crd.action = Marker.ADD
+            m_crd.pose.position.x = cx
+            m_crd.pose.position.y = cy
+            m_crd.pose.position.z = 0.85
+            m_crd.scale.x = 0.36
+            m_crd.scale.y = 0.36
+            m_crd.scale.z = 1.40
+            m_crd.color.r = 0.25; m_crd.color.g = 0.45; m_crd.color.b = 0.65; m_crd.color.a = 0.85
+            markers.append(m_crd)
+
+        return markers
+
     def _publish_visual_markers(self, stamp, scene, scan_res):
         markers = MarkerArray()
 
@@ -1166,82 +1544,11 @@ class CloudMuJoCoTwin(Node):
             m_env.color.r = 0.1; m_env.color.g = 0.8; m_env.color.b = 0.4; m_env.color.a = 0.15
         markers.markers.append(m_env)
 
-        # Marker 3: Booth 1 Presentation Desk
-        m_booth = Marker()
-        m_booth.header.stamp = stamp
-        m_booth.header.frame_id = 'odom'
-        m_booth.ns = 'environment'
-        m_booth.id = 10
-        m_booth.type = Marker.CUBE
-        m_booth.action = Marker.ADD
-        m_booth.pose.position.x = 9.8
-        m_booth.pose.position.y = 0.0
-        m_booth.pose.position.z = 0.45
-        m_booth.scale.x = 0.8; m_booth.scale.y = 2.2; m_booth.scale.z = 0.90
-        m_booth.color.r = 0.15; m_booth.color.g = 0.20; m_booth.color.b = 0.30; m_booth.color.a = 0.90
-        markers.markers.append(m_booth)
-
-        # Marker 4: ArUco Tag 10 Docking Target
-        m_aruco = Marker()
-        m_aruco.header.stamp = stamp
-        m_aruco.header.frame_id = 'odom'
-        m_aruco.ns = 'environment'
-        m_aruco.id = 11
-        m_aruco.type = Marker.CUBE
-        m_aruco.action = Marker.ADD
-        m_aruco.pose.position.x = 9.38
-        m_aruco.pose.position.y = 0.0
-        m_aruco.pose.position.z = 0.65
-        m_aruco.scale.x = 0.02; m_aruco.scale.y = 0.35; m_aruco.scale.z = 0.35
-        m_aruco.color.r = 0.98; m_aruco.color.g = 0.98; m_aruco.color.b = 0.98; m_aruco.color.a = 1.0
-        markers.markers.append(m_aruco)
-
-        # Marker 5: Chemical Spill Hazard Puddle
-        m_spill = Marker()
-        m_spill.header.stamp = stamp
-        m_spill.header.frame_id = 'odom'
-        m_spill.ns = 'environment'
-        m_spill.id = 12
-        m_spill.type = Marker.CYLINDER
-        m_spill.action = Marker.ADD
-        m_spill.pose.position.x = 4.8
-        m_spill.pose.position.y = -0.05
-        m_spill.pose.position.z = 0.005
-        m_spill.scale.x = 0.85; m_spill.scale.y = 0.85; m_spill.scale.z = 0.01
-        m_spill.color.r = 0.85; m_spill.color.g = 0.25; m_spill.color.b = 0.15; m_spill.color.a = 0.75
-        markers.markers.append(m_spill)
-
-        # Marker 6: Caution Cones around spill
-        cone_coords = [(4.2, 0.25), (4.2, -0.35), (5.4, 0.25), (5.4, -0.35)]
-        for idx, (cx, cy) in enumerate(cone_coords):
-            m_cone = Marker()
-            m_cone.header.stamp = stamp
-            m_cone.header.frame_id = 'odom'
-            m_cone.ns = 'hazard_cones'
-            m_cone.id = 20 + idx
-            m_cone.type = Marker.CYLINDER
-            m_cone.action = Marker.ADD
-            m_cone.pose.position.x = cx
-            m_cone.pose.position.y = cy
-            m_cone.pose.position.z = 0.225
-            m_cone.scale.x = 0.18; m_cone.scale.y = 0.18; m_cone.scale.z = 0.45
-            m_cone.color.r = 1.0; m_cone.color.g = 0.45; m_cone.color.b = 0.05; m_cone.color.a = 0.95
-            markers.markers.append(m_cone)
-
-        # Marker 7: Central Keynote Stage Dais
-        m_stage = Marker()
-        m_stage.header.stamp = stamp
-        m_stage.header.frame_id = 'odom'
-        m_stage.ns = 'environment'
-        m_stage.id = 30
-        m_stage.type = Marker.CYLINDER
-        m_stage.action = Marker.ADD
-        m_stage.pose.position.x = 0.0
-        m_stage.pose.position.y = 0.0
-        m_stage.pose.position.z = 0.022
-        m_stage.scale.x = 3.5; m_stage.scale.y = 3.5; m_stage.scale.z = 0.045
-        m_stage.color.r = 0.18; m_stage.color.g = 0.22; m_stage.color.b = 0.28; m_stage.color.a = 0.90
-        markers.markers.append(m_stage)
+        # 3. Synchronized 3D exhibition environment markers
+        if hasattr(self, 'cached_static_markers'):
+            for sm in self.cached_static_markers:
+                sm.header.stamp = stamp
+                markers.markers.append(sm)
 
         self.pub_markers.publish(markers)
 
@@ -1276,22 +1583,29 @@ def main():
     parser = argparse.ArgumentParser(description="Project Cloud: Unified MuJoCo Physics & ROS 2 Twin")
     parser.add_argument('--gui', action='store_true', help="Open passive interactive MuJoCo viewer alongside ROS 2")
     parser.add_argument('--xml', type=str, default=None, help="Path to MuJoCo world XML")
+    parser.add_argument('--spawn-stall', type=str, default=None, help="Spawn Go2 at specific stall approach (e.g. STALL_01)")
     args = parser.parse_args()
 
     rclpy.init()
-    node = CloudMuJoCoTwin(xml_path=args.xml, headless=(not args.gui))
+    node = CloudMuJoCoTwin(xml_path=args.xml, headless=(not args.gui), spawn_stall=args.spawn_stall)
 
     try:
         if args.gui:
             with mujoco.viewer.launch_passive(node.model, node.data) as viewer:
-                viewer.cam.distance = 9.0
+                viewer.cam.distance = 3.2
                 viewer.cam.elevation = -22.0
-                viewer.cam.azimuth = 45.0
-                viewer.cam.lookat[:] = [4.5, 0.0, 0.3]
+                viewer.cam.azimuth = 60.0
                 # Ensure 2D rangefinder lines are strictly disabled in 3D viewport
                 if hasattr(viewer, "opt") and hasattr(viewer.opt, "flags"):
                     viewer.opt.flags[mujoco.mjtVisFlag.mjVIS_RANGEFINDER] = False
                 while rclpy.ok() and viewer.is_running():
+                    # Dynamic third-person camera tracking to follow Go2 robot closely
+                    gx = float(node.data.xpos[node.base_body_id][0])
+                    gy = float(node.data.xpos[node.base_body_id][1])
+                    gz = float(node.data.xpos[node.base_body_id][2])
+                    viewer.cam.lookat[0] = gx
+                    viewer.cam.lookat[1] = gy
+                    viewer.cam.lookat[2] = gz + 0.25
                     rclpy.spin_once(node, timeout_sec=0.01)
                     viewer.sync()
         else:
