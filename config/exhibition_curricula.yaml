@@ -145,6 +145,29 @@ booth_8_exoskeleton:
     actuator: "High-contraction braided pneumatic McKibben artificial muscles"
     assistive_torque: "Up to 14.5 N·m dynamic elbow joint assistance"
 
+stall_p01_gait_ai:
+  booth_id: "P01"
+  marker_id: 1
+  title: "Stepwise AI: Biomechanical Gait Analysis"
+  category: "Physical Computing & AI"
+  speaker_role: "THE DOCENT"
+  narration_script: >
+    Distinguished Evaluators and Guests: Welcome to Stall P01, featuring Stepwise AI — an advanced
+    biomechanical gait analysis system. Engineered by DPSI innovators, this solution deploys a matrix of
+    high-frequency 6-axis IMUs and flexible piezoelectric plantar pressure insoles. By tracking joint kinematic
+    trajectories in real-time edge firmware, it classifies pathological gait deviations and asymmetric loading
+    with 98.4% diagnostic accuracy. Project Cloud proudly verifies this physical computing breakthrough!
+  key_specs:
+    microcontroller: "Dual-Core ESP32-S3 Edge AI Processor"
+    sensing_matrix: "16-point piezoelectric thin-film plantar pressure array"
+    sampling_rate: "200 Hz continuous synchronized 9-DOF IMU telemetry"
+    diagnostic_accuracy: "98.4% clinical gait classification accuracy"
+  qa_pairs:
+    - q: "What is the primary clinical application of Stepwise AI?"
+      a: "Stepwise AI provides early detection of neurological and musculoskeletal gait impairments, facilitating personalized physical rehabilitation regimens."
+    - q: "How is the data processed?"
+      a: "Raw sensor data is filtered via an onboard Madgwick AHRS filter and processed by a quantized TensorFlow Lite micro-model directly on the ESP32-S3."
+
 stage_finale:
   booth_id: "STAGE_FINALE"
   marker_id: 30
