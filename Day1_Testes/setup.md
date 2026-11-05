@@ -114,6 +114,7 @@ Expected output:
 
 ## 6. Execution Command Quick Reference
 
+### ArUco Mode (Default)
 | Mission Milestone | CLI Command |
 |---|---|
 | **M1: Teleop Discovery** | `python3 unitree_direct_sdk/main.py --milestone 1 --serve --port 8088` |
@@ -121,4 +122,26 @@ Expected output:
 | **M3: Judge Escort Pacing** | `python3 unitree_direct_sdk/main.py --milestone 3 --pacing on --serve --port 8088` |
 | **M4: Scaled Multi-Stall** | `python3 unitree_direct_sdk/main.py --milestone 4 --preset scaled_5m_2s --serve --port 8088` |
 
+### AprilTag Mode (`--apriltag`)
+| Mission Milestone | CLI Command |
+|---|---|
+| **M1: Teleop Discovery** | `python3 unitree_direct_sdk/main.py --milestone 1 --apriltag --serve --port 8088` |
+| **M2: Autonomous Docking** | `python3 unitree_direct_sdk/main.py --milestone 2 --apriltag --pacing off --serve --port 8088` |
+| **M3: Judge Escort Pacing** | `python3 unitree_direct_sdk/main.py --milestone 3 --apriltag --pacing on --serve --port 8088` |
+| **M4: Scaled Multi-Stall** | `python3 unitree_direct_sdk/main.py --milestone 4 --apriltag --preset scaled_5m_2s --serve --port 8088` |
+
 *(Add `--real` to any command when connected to physical Go2 hardware)*.
+
+---
+
+## 7. Fiducial Accuracy Comparison Benchmark
+
+To run side-by-side detection, pose jitter, and reprojection error comparisons:
+
+```bash
+# Simulation mode
+python3 Day1_Testes/compare_aruco_vs_apriltag.py
+
+# Live physical camera mode
+python3 Day1_Testes/compare_aruco_vs_apriltag.py --camera 0 --frames 60
+```

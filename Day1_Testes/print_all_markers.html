@@ -37,6 +37,28 @@
             font-size: 13px;
             color: #94a3b8;
         }
+        .btn-group {
+            display: flex;
+            gap: 12px;
+        }
+        .switch-btn {
+            background: #1e293b;
+            color: #38bdf8;
+            border: 1px solid #0284c7;
+            border-radius: 8px;
+            padding: 10px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+        .switch-btn:hover {
+            background: #0284c7;
+            color: #ffffff;
+        }
         .print-btn {
             background: linear-gradient(135deg, #0284c7, #0369a1);
             color: #ffffff;
@@ -126,10 +148,13 @@
 
     <div class="header-bar">
         <div class="header-title">
-            <h1>DPSI EXPO-2026 — Master Print Pack</h1>
+            <h1>DPSI EXPO-2026 — ArUco (DICT_4X4_250) Print Pack</h1>
             <p>10 Ready-to-Print A4 Sheets • 5 Floor Tags (100..104) • 4 Stall Tags (1..4) • 1 Docking Board</p>
         </div>
-        <button class="print-btn" onclick="window.print()">🖨️ Print All Sheets (Cmd + P)</button>
+        <div class="btn-group">
+            <a href="print_all_apriltags.html" class="switch-btn">🏷️ Switch to AprilTag Pack</a>
+            <button class="print-btn" onclick="window.print()">🖨️ Print All Sheets (Cmd + P)</button>
+        </div>
     </div>
 
     <div class="notice-banner">

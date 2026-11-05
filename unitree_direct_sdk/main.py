@@ -484,14 +484,15 @@ def main():
     parser.add_argument("--camera", type=int, default=None, help="Camera index for physical USB/RealSense camera")
     parser.add_argument("--port", type=int, default=8088, help="Web visualizer port")
     parser.add_argument("--serve", action="store_true", help="Keep Web Cockpit HTTP server active after run for interactive inspection")
+    parser.add_argument("--apriltag", action="store_true", help="Use AprilTag (DICT_APRILTAG_36h11) instead of ArUco (DICT_4X4_250)")
     args = parser.parse_args()
 
     robot = UnitreeGo2Interface(use_physical_robot=args.real)
-    vision = RealArUcoVision(camera_index=args.camera, layout_preset=args.preset)
-    visualizer = CockpitVisualizer(port=args.port)
+    vision = RealArUcoVision(camera_index=args.camera, layout_preset=args.preset, use_apriltag=args.apriltag)
+    visualizer = CockpitVisualizer(port=args.port, use_apriltag=args.apriltag)
     escort = JudgeEscortController(nominal_speed=0.35, max_speed=0.55)
-    mapper = DiscoveryMapper()
-    navigator = TopologicalArucoNavigator()
+    mapper = DiscoveryMapper(use_apriltag=args.apriltag)
+    navigator = TopologicalArucoNavigator(use_apriltag=args.apriltag)
 
     if args.milestone == 1:
         run_milestone_1(robot, vision, visualizer, mapper)

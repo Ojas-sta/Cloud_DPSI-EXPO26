@@ -29,11 +29,14 @@ class DiscoveryMapper:
         self,
         grid_resolution_m: float = 0.10,
         grid_size_cells: int = 200,
-        grid_origin_xy: Tuple[float, float] = (-5.0, 5.0)
+        grid_origin_xy: Tuple[float, float] = (-5.0, 5.0),
+        use_apriltag: bool = False
     ):
         self.resolution = grid_resolution_m
         self.grid_size = grid_size_cells
         self.origin_x, self.origin_y = grid_origin_xy
+        self.use_apriltag = use_apriltag
+        self.fiducial_family = "DICT_APRILTAG_36h11" if use_apriltag else "DICT_4X4_250"
 
         # 2D Occupancy Grid: 128 = unknown, 254 = free, 0 = occupied
         self.occupancy_grid = np.full((self.grid_size, self.grid_size), 128, dtype=np.uint8)
@@ -334,7 +337,8 @@ class DiscoveryMapper:
 
         graph_export = {
             "metadata": {
-                "system": "Project Cloud: Topological ArUco SLAM & Teach-and-Repeat Graph",
+                "system": "Project Cloud: Topological ArUco/AprilTag SLAM & Teach-and-Repeat Graph",
+                "fiducial_family": self.fiducial_family,
                 "generated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                 "num_floor_tags": num_floors,
                 "num_booth_tags": num_booths,

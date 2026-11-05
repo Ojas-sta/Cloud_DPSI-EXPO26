@@ -20,11 +20,13 @@ class RealArUcoVision:
         self,
         camera_index: Optional[int] = None,
         marker_size_meters: float = 0.20,
-        layout_preset: str = "minimal_2m_1s"
+        layout_preset: str = "minimal_2m_1s",
+        use_apriltag: bool = False
     ):
         self.marker_size = marker_size_meters
         self.camera_index = camera_index
         self.layout_preset = layout_preset
+        self.use_apriltag = use_apriltag
         self.cap = None
 
         # Camera intrinsic matrix (standard 720p FOV ~69 deg)
@@ -41,10 +43,24 @@ class RealArUcoVision:
         ], dtype=np.float32)
         self.dist_coeffs = np.zeros((5, 1), dtype=np.float32)
 
-        # Initialize OpenCV ArUco detector (DICT_4X4_250 supports both Booth tags 1..44 and Floor tags 100..249)
-        self.aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
-        self.aruco_params = cv2.aruco.DetectorParameters()
-        
+        # Initialize detector dictionary: ArUco (DICT_4X4_250) or AprilTag (DICT_APRILTAG_36h11)
+        if self.use_apriltag:
+            self.fiducial_family_name = "AprilTag (36h11)"
+            self.aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_APRILTAG_36h11)
+            self.aruco_params = cv2.aruco.DetectorParameters()
+            # AprilTag-tuned parameters: high precision corner refinement
+            if hasattr(cv2.aruco, 'CORNER_REFINE_APRILTAG'):
+                self.aruco_params.cornerRefinementMethod = cv2.aruco.CORNER_REFINE_APRILTAG
+            elif hasattr(cv2.aruco, 'CORNER_REFINE_SUBPIX'):
+                self.aruco_params.cornerRefinementMethod = cv2.aruco.CORNER_REFINE_SUBPIX
+            print("  🏷️ [RealArUcoVision]: Configured for AprilTag (tag36h11) with subpixel refinement.")
+        else:
+            self.fiducial_family_name = "ArUco (4X4_250)"
+            self.aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
+            self.aruco_params = cv2.aruco.DetectorParameters()
+            if hasattr(cv2.aruco, 'CORNER_REFINE_SUBPIX'):
+                self.aruco_params.cornerRefinementMethod = cv2.aruco.CORNER_REFINE_SUBPIX
+
         # In OpenCV 4.7+, use ArucoDetector; fallback to cv2.aruco.detectMarkers if older
         if hasattr(cv2.aruco, 'ArucoDetector'):
             self.detector = cv2.aruco.ArucoDetector(self.aruco_dict, self.aruco_params)
@@ -239,7 +255,8 @@ class RealArUcoVision:
                     # Overlay high-contrast HUD badge above tag
                     top_left = tuple(img_pts[0].astype(int))
                     badge_pos = (top_left[0] - 20, max(30, top_left[1] - 20))
-                    hud_text = f"ARUCO #{tag_id} | Dist: {dist:.2f}m | Lat: {dx:+.2f}m"
+                    tag_prefix = "APRILTAG" if self.use_apriltag else "ARUCO"
+                    hud_text = f"{tag_prefix} #{tag_id} | Dist: {dist:.2f}m | Lat: {dx:+.2f}m"
 
                     (tw, th), _ = cv2.getTextSize(hud_text, cv2.FONT_HERSHEY_SIMPLEX, 0.55, 2)
                     cv2.rectangle(

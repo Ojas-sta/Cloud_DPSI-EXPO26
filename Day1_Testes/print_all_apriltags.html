@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DPSI EXPO-2026 — Printable AprilTag (tag36h11) Markers & Board (A4 Sheets)</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: #1e293b;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 24px;
+        }
+        .header-bar {
+            width: 100%;
+            max-width: 900px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 20px 28px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+        }
+        .header-title h1 {
+            font-size: 20px;
+            color: #38bdf8;
+            margin-bottom: 4px;
+        }
+        .header-title p {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+        .btn-group {
+            display: flex;
+            gap: 12px;
+        }
+        .switch-btn {
+            background: #1e293b;
+            color: #38bdf8;
+            border: 1px solid #0284c7;
+            border-radius: 8px;
+            padding: 10px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+        .switch-btn:hover {
+            background: #0284c7;
+            color: #ffffff;
+        }
+        .print-btn {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4);
+            transition: all 0.2s ease;
+        }
+        .print-btn:hover {
+            background: linear-gradient(135deg, #0369a1, #075985);
+            transform: translateY(-1px);
+        }
+        .notice-banner {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(14, 165, 233, 0.1);
+            border-left: 4px solid #0284c7;
+            padding: 12px 18px;
+            margin-bottom: 28px;
+            border-radius: 4px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #cbd5e1;
+        }
+        .notice-banner strong { color: #38bdf8; }
+
+        /* Printable Sheet Container */
+        .sheets-container {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .sheet {
+            width: 210mm;
+            height: 297mm;
+            background: #ffffff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            page-break-after: always;
+            break-after: page;
+        }
+        .sheet img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* Print Media Settings for True 1:1 Scale A4 */
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+                margin: 0;
+            }
+            .header-bar, .notice-banner {
+                display: none !important;
+            }
+            .sheets-container {
+                gap: 0;
+            }
+            .sheet {
+                box-shadow: none;
+                margin: 0;
+                width: 100vw;
+                height: 100vh;
+                page-break-after: always;
+                break-after: page;
+            }
+            @page {
+                size: A4 portrait;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-bar">
+        <div class="header-title">
+            <h1>DPSI EXPO-2026 — AprilTag (tag36h11) Print Pack</h1>
+            <p>10 Ready-to-Print A4 Sheets • 5 Floor Tags (100..104) • 4 Stall Tags (1..4) • 1 Docking Board</p>
+        </div>
+        <div class="btn-group">
+            <a href="print_all_markers.html" class="switch-btn">⇄ Switch to ArUco Pack</a>
+            <button class="print-btn" onclick="window.print()">🖨️ Print All Sheets (Cmd + P)</button>
+        </div>
+    </div>
+
+    <div class="notice-banner">
+        <strong>🏷️ APRILTAG (tag36h11) FIDUCIAL SPECS:</strong>
+        <ul style="margin-left: 20px; margin-top: 6px;">
+            <li>High-density 36-bit payload with Hamming distance 11 for superior error detection & steep-angle tracking.</li>
+            <li>Select <strong>Paper Size: A4</strong> (210 x 297 mm).</li>
+            <li>Set <strong>Scale: 100% (Actual Size / Do Not Fit to Page)</strong> to guarantee exact 160mm & 45mm metric fiducials.</li>
+            <li>Set <strong>Margins: None</strong>.</li>
+            <li>Verify the <strong>10 cm test ruler</strong> at the bottom of the printed page with a real physical ruler.</li>
+        </ul>
+    </div>
+
+    <div class="sheets-container">
+        <!-- Floor Markers -->
+        <div class="sheet"><img src="markers_apriltag/floor_marker_100_apriltag_a4.png" alt="AprilTag Floor Marker 100"></div>
+        <div class="sheet"><img src="markers_apriltag/floor_marker_101_apriltag_a4.png" alt="AprilTag Floor Marker 101"></div>
+        <div class="sheet"><img src="markers_apriltag/floor_marker_102_apriltag_a4.png" alt="AprilTag Floor Marker 102"></div>
+        <div class="sheet"><img src="markers_apriltag/floor_marker_103_apriltag_a4.png" alt="AprilTag Floor Marker 103"></div>
+        <div class="sheet"><img src="markers_apriltag/floor_marker_104_apriltag_a4.png" alt="AprilTag Floor Marker 104"></div>
+
+        <!-- Stall Markers -->
+        <div class="sheet"><img src="markers_apriltag/stall_marker_1_apriltag_a4.png" alt="AprilTag Stall Marker 1 - Stepwise AI"></div>
+        <div class="sheet"><img src="markers_apriltag/stall_marker_2_apriltag_a4.png" alt="AprilTag Stall Marker 2 - ADAS"></div>
+        <div class="sheet"><img src="markers_apriltag/stall_marker_3_apriltag_a4.png" alt="AprilTag Stall Marker 3 - Eco Drive"></div>
+        <div class="sheet"><img src="markers_apriltag/stall_marker_4_apriltag_a4.png" alt="AprilTag Stall Marker 4 - Smart Sensors"></div>
+
+        <!-- Multi-Marker Board -->
+        <div class="sheet"><img src="boards/apriltag_precision_docking_board_a4.png" alt="AprilTag Precision Docking Board"></div>
+    </div>
+
+</body>
+</html>

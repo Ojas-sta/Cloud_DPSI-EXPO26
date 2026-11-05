@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 """
-ArUco Marker & Precision Board Generator for A4 Printouts
+ArUco & AprilTag (tag36h11) Marker & Precision Board Generator for A4 Printouts
 Venue: DPSI EXPO-2026 | Platform: Unitree Go2 Pro Quadruped Docent
-Dictionary: DICT_4X4_250
+Supported Families:
+  • ArUco:     cv2.aruco.DICT_4X4_250
+  • AprilTag:  cv2.aruco.DICT_APRILTAG_36h11
 
 Generates razor-sharp 300-DPI A4 printable sheets (2480 x 3508 px) with:
-  • Exact 1:1 metric scale (160mm x 160mm ArUco fiducials)
+  • Exact 1:1 metric scale (160mm x 160mm fiducials)
   • 100mm (10cm) physical verification calibration check ruler
   • High-contrast alignment crosshairs and corner crop marks
-  • Descriptive header and orientation indicators
+  • Descriptive header, orientation indicators, and standoff distance specs
 """
 
 import os
@@ -16,9 +18,12 @@ import cv2
 import numpy as np
 
 OUTPUT_DIR = os.path.dirname(os.path.abspath(__file__))
-MARKERS_DIR = os.path.join(OUTPUT_DIR, "markers")
+MARKERS_ARUCO_DIR = os.path.join(OUTPUT_DIR, "markers")
+MARKERS_APRILTAG_DIR = os.path.join(OUTPUT_DIR, "markers_apriltag")
 BOARDS_DIR = os.path.join(OUTPUT_DIR, "boards")
-os.makedirs(MARKERS_DIR, exist_ok=True)
+
+os.makedirs(MARKERS_ARUCO_DIR, exist_ok=True)
+os.makedirs(MARKERS_APRILTAG_DIR, exist_ok=True)
 os.makedirs(BOARDS_DIR, exist_ok=True)
 
 # A4 at 300 DPI: 210mm x 297mm
@@ -27,7 +32,8 @@ MM_TO_PX = DPI / 25.4  # ~11.811 px / mm
 A4_W_PX = 2480
 A4_H_PX = 3508
 
-ARUCO_DICT = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
+DICT_ARUCO = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
+DICT_APRILTAG = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_APRILTAG_36h11)
 
 
 def draw_metric_calibration_ruler(canvas: np.ndarray, x_start: int, y_pos: int, length_mm: int = 100):
@@ -78,10 +84,14 @@ def generate_single_marker_a4(
     title: str,
     subtitle: str,
     instructions: str,
-    marker_size_mm: float = 160.0,
-    output_filename: str = ""
+    dictionary,
+    family_name: str,
+    dict_code: str,
+    output_dir: str,
+    output_filename: str,
+    marker_size_mm: float = 160.0
 ):
-    """Generates an A4 portrait printable sheet for an individual ArUco marker."""
+    """Generates an A4 portrait printable sheet for an individual ArUco or AprilTag marker."""
     canvas = np.full((A4_H_PX, A4_W_PX, 3), 255, dtype=np.uint8)
 
     # 1. Outer Border / Margin
@@ -90,8 +100,8 @@ def generate_single_marker_a4(
 
     # 2. Header
     cv2.putText(
-        canvas, "DPSI EXPO-2026 • AUTONOMOUS DOCENT QUADRUPED",
-        (margin + 40, margin + 110), cv2.FONT_HERSHEY_SIMPLEX, 1.1, (80, 80, 80), 3, cv2.LINE_AA
+        canvas, f"DPSI EXPO-2026 • AUTONOMOUS DOCENT QUADRUPED • {family_name.upper()}",
+        (margin + 40, margin + 110), cv2.FONT_HERSHEY_SIMPLEX, 1.05, (80, 80, 80), 3, cv2.LINE_AA
     )
     cv2.putText(
         canvas, title,
@@ -116,9 +126,9 @@ def generate_single_marker_a4(
         (margin + 80, arrow_y), cv2.FONT_HERSHEY_SIMPLEX, 0.95, (160, 40, 20), 3, cv2.LINE_AA
     )
 
-    # 4. Generate ArUco Fiducial Marker Image
+    # 4. Generate Fiducial Marker Image
     marker_size_px = int(marker_size_mm * MM_TO_PX)
-    marker_img = cv2.aruco.generateImageMarker(ARUCO_DICT, tag_id, marker_size_px)
+    marker_img = cv2.aruco.generateImageMarker(dictionary, tag_id, marker_size_px)
     marker_bgr = cv2.cvtColor(marker_img, cv2.COLOR_GRAY2BGR)
 
     # Center marker on page
@@ -129,7 +139,7 @@ def generate_single_marker_a4(
     x2 = x1 + marker_size_px
     y2 = y1 + marker_size_px
 
-    # Quiet Zone (White border around ArUco marker)
+    # Quiet Zone (White border around marker)
     quiet_px = 30
     cv2.rectangle(canvas, (x1 - quiet_px, y1 - quiet_px), (x2 + quiet_px, y2 + quiet_px), (0, 0, 0), 6)
     canvas[y1:y2, x1:x2] = marker_bgr
@@ -146,20 +156,20 @@ def generate_single_marker_a4(
     # 5. Metadata Tag Box below marker
     tag_box_y = y2 + quiet_px + 120
     cv2.rectangle(
-        canvas, (cx - 480, tag_box_y), (cx + 480, tag_box_y + 160),
+        canvas, (cx - 520, tag_box_y), (cx + 520, tag_box_y + 160),
         (245, 245, 245), -1
     )
     cv2.rectangle(
-        canvas, (cx - 480, tag_box_y), (cx + 480, tag_box_y + 160),
+        canvas, (cx - 520, tag_box_y), (cx + 520, tag_box_y + 160),
         (0, 0, 0), 3
     )
     cv2.putText(
-        canvas, f"ARUCO ID: {tag_id}  |  DICT_4X4_250",
-        (cx - 380, tag_box_y + 65), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3, cv2.LINE_AA
+        canvas, f"{family_name.upper()} ID: {tag_id}  |  {dict_code}",
+        (cx - 440, tag_box_y + 65), cv2.FONT_HERSHEY_SIMPLEX, 1.25, (0, 0, 0), 3, cv2.LINE_AA
     )
     cv2.putText(
-        canvas, f"FIDUCIAL SIZE: {marker_size_mm:.0f}mm x {marker_size_mm:.0f}mm (1:1 SCALE)",
-        (cx - 410, tag_box_y + 125), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (80, 80, 80), 2, cv2.LINE_AA
+        canvas, f"FIDUCIAL SIZE: {marker_size_mm:.0f}mm x {marker_size_mm:.0f}mm (1:1 TRUE SCALE)",
+        (cx - 430, tag_box_y + 125), cv2.FONT_HERSHEY_SIMPLEX, 0.95, (80, 80, 80), 2, cv2.LINE_AA
     )
 
     # 6. Usage Instructions
@@ -175,16 +185,21 @@ def generate_single_marker_a4(
     draw_metric_calibration_ruler(canvas, cx - int(50 * MM_TO_PX), A4_H_PX - margin - 150, length_mm=100)
 
     # Save PNG
-    out_path = os.path.join(MARKERS_DIR, output_filename)
+    out_path = os.path.join(output_dir, output_filename)
     cv2.imwrite(out_path, canvas)
-    print(f"  ✓ Generated: {output_filename} ({A4_W_PX}x{A4_H_PX} @ 300 DPI)")
+    print(f"  ✓ Generated: {output_filename} ({family_name} @ 300 DPI)")
     return out_path
 
 
-def generate_aruco_precision_board_a4():
+def generate_precision_board_a4(
+    dictionary,
+    family_name: str,
+    dict_code: str,
+    output_filename: str
+):
     """
-    Generates a Multi-Marker ArUco Precision Docking & Calibration Board (A4 Landscape / Portrait)
-    using cv2.aruco.GridBoard (3x2 grid of markers with 60mm markers and 20mm separation).
+    Generates a Multi-Marker 3x2 Precision Docking & Calibration Board (A4 Portrait)
+    using cv2.aruco.GridBoard (Markers 10..15 with 45mm markers and 15mm separation).
     """
     canvas = np.full((A4_H_PX, A4_W_PX, 3), 255, dtype=np.uint8)
     margin = 80
@@ -192,22 +207,20 @@ def generate_aruco_precision_board_a4():
 
     # Header
     cv2.putText(
-        canvas, "DPSI EXPO-2026 • UNITREE GO2 PRECISION DOCKING TARGET",
-        (margin + 40, margin + 110), cv2.FONT_HERSHEY_SIMPLEX, 1.1, (80, 80, 80), 3, cv2.LINE_AA
+        canvas, f"DPSI EXPO-2026 • UNITREE GO2 PRECISION DOCKING TARGET • {family_name.upper()}",
+        (margin + 40, margin + 110), cv2.FONT_HERSHEY_SIMPLEX, 1.05, (80, 80, 80), 3, cv2.LINE_AA
     )
     cv2.putText(
-        canvas, "MULTI-MARKER ARUCO DOCKING & CALIBRATION BOARD",
-        (margin + 40, margin + 200), cv2.FONT_HERSHEY_SIMPLEX, 1.7, (10, 10, 10), 4, cv2.LINE_AA
+        canvas, f"MULTI-MARKER {family_name.upper()} DOCKING & CALIBRATION BOARD",
+        (margin + 40, margin + 200), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (10, 10, 10), 4, cv2.LINE_AA
     )
     cv2.putText(
-        canvas, "Grid: 3 x 2 Fiducials (IDs 10..15) | Marker: 45mm | Separation: 15mm | DICT_4X4_250",
-        (margin + 40, margin + 270), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 102, 204), 2, cv2.LINE_AA
+        canvas, f"Grid: 3 x 2 Fiducials (IDs 10..15) | Marker: 45mm | Separation: 15mm | {dict_code}",
+        (margin + 40, margin + 270), cv2.FONT_HERSHEY_SIMPLEX, 0.95, (0, 102, 204), 2, cv2.LINE_AA
     )
     cv2.line(canvas, (margin + 40, margin + 310), (A4_W_PX - margin - 40, margin + 310), (0, 102, 204), 4)
 
     # GridBoard generation (3 columns, 2 rows)
-    # Markers 10, 11, 12 in row 0; 13, 14, 15 in row 1
-    # Formatted to fit comfortably on A4 portrait (165mm wide x 105mm high)
     board_markers_x = 3
     board_markers_y = 2
     marker_len_mm = 45.0
@@ -239,7 +252,7 @@ def generate_aruco_precision_board_a4():
             mx = start_x + c * (marker_len_px + marker_sep_px)
             my = start_y + r * (marker_len_px + marker_sep_px)
 
-            m_img = cv2.aruco.generateImageMarker(ARUCO_DICT, tid, marker_len_px)
+            m_img = cv2.aruco.generateImageMarker(dictionary, tid, marker_len_px)
             m_bgr = cv2.cvtColor(m_img, cv2.COLOR_GRAY2BGR)
             canvas[my:my + marker_len_px, mx:mx + marker_len_px] = m_bgr
             cv2.rectangle(canvas, (mx, my), (mx + marker_len_px, my + marker_len_px), (0, 0, 0), 2)
@@ -265,7 +278,7 @@ def generate_aruco_precision_board_a4():
     # Mounting Instructions
     notes_y = start_y + total_h + pad + 150
     notes = [
-        "• PRIMARY PURPOSE: Mount at Stall Docking Station to enable multi-tag PnP pose solving.",
+        f"• PRIMARY PURPOSE: Mount at Stall Docking Station to enable multi-tag {family_name} PnP pose solving.",
         "• ADVANTAGE OVER SINGLE TAG: Provides 24 coplanar corner points, eliminating yaw/pitch flip jitter.",
         "• CAMERA CALIBRATION: Can also be used with OpenCV solvePnP / calibrateCamera for optical check.",
         "• MOUNTING SPEC: Mount vertically on stall booth table apron, centered at Go2 camera height (0.35m)."
@@ -277,18 +290,18 @@ def generate_aruco_precision_board_a4():
     # 10cm Calibration check ruler
     draw_metric_calibration_ruler(canvas, (A4_W_PX - int(100 * MM_TO_PX)) // 2, A4_H_PX - margin - 150, length_mm=100)
 
-    out_path = os.path.join(BOARDS_DIR, "aruco_precision_docking_board_a4.png")
+    out_path = os.path.join(BOARDS_DIR, output_filename)
     cv2.imwrite(out_path, canvas)
-    print(f"  ✓ Generated: aruco_precision_docking_board_a4.png ({A4_W_PX}x{A4_H_PX} @ 300 DPI)")
+    print(f"  ✓ Generated: {output_filename} ({family_name} @ 300 DPI)")
     return out_path
 
 
 def create_all_markers():
     print("\n" + "=" * 80)
-    print("  🖨️ GENERATING ALL PRINTABLE A4 ARUCO FIDUCIALS FOR DAY 1 TESTING")
+    print("  🖨️ GENERATING ALL PRINTABLE A4 FIDUCIALS FOR DAY 1 TESTING (ARUCO & APRILTAG)")
     print("=" * 80 + "\n")
 
-    # 1. Floor Markers (100..104)
+    # Specifications
     floor_specs = [
         (100, "FLOOR MARKER #100", "Concourse Entrance / Cold-Start Localization Waypoint",
          "• Position: Place flat on aisle floor at the entrance (Start Line).\n"
@@ -314,18 +327,6 @@ def create_all_markers():
          "• Action: Triggers Grand Finale salute, final bow posture, and exhibition completion.")
     ]
 
-    for fid, title, sub, inst in floor_specs:
-        generate_single_marker_a4(
-            tag_id=fid,
-            tag_type="FLOOR",
-            title=title,
-            subtitle=sub,
-            instructions=inst,
-            marker_size_mm=160.0,
-            output_filename=f"floor_marker_{fid}_a4.png"
-        )
-
-    # 2. Stall / Booth Markers (1..4)
     booth_specs = [
         (1, "STALL MARKER #1: P01 (STEPWISE AI)", "Biomechanical Gait Analysis — Capstone Project Apron Tag",
          "• Mounting: Tape to front skirt of booth desk facing the main aisle.\n"
@@ -347,22 +348,46 @@ def create_all_markers():
          "• Usage: Optional fourth stall for full auditorium loop test.")
     ]
 
+    # 1. Generate ArUco Pack
+    print("  --- 1. Generating ArUco (DICT_4X4_250) Pack ---")
+    for fid, title, sub, inst in floor_specs:
+        generate_single_marker_a4(
+            tag_id=fid, tag_type="FLOOR", title=title, subtitle=sub, instructions=inst,
+            dictionary=DICT_ARUCO, family_name="ArUco", dict_code="DICT_4X4_250",
+            output_dir=MARKERS_ARUCO_DIR, output_filename=f"floor_marker_{fid}_a4.png"
+        )
     for bid, title, sub, inst in booth_specs:
         generate_single_marker_a4(
-            tag_id=bid,
-            tag_type="BOOTH",
-            title=title,
-            subtitle=sub,
-            instructions=inst,
-            marker_size_mm=160.0,
-            output_filename=f"stall_marker_{bid}_a4.png"
+            tag_id=bid, tag_type="BOOTH", title=title, subtitle=sub, instructions=inst,
+            dictionary=DICT_ARUCO, family_name="ArUco", dict_code="DICT_4X4_250",
+            output_dir=MARKERS_ARUCO_DIR, output_filename=f"stall_marker_{bid}_a4.png"
         )
+    generate_precision_board_a4(
+        dictionary=DICT_ARUCO, family_name="ArUco", dict_code="DICT_4X4_250",
+        output_filename="aruco_precision_docking_board_a4.png"
+    )
 
-    # 3. Precision ArUco Docking & Calibration Board
-    generate_aruco_precision_board_a4()
+    # 2. Generate AprilTag Pack
+    print("\n  --- 2. Generating AprilTag (DICT_APRILTAG_36h11) Pack ---")
+    for fid, title, sub, inst in floor_specs:
+        generate_single_marker_a4(
+            tag_id=fid, tag_type="FLOOR", title=f"APRILTAG: {title}", subtitle=sub, instructions=inst,
+            dictionary=DICT_APRILTAG, family_name="AprilTag", dict_code="DICT_APRILTAG_36h11",
+            output_dir=MARKERS_APRILTAG_DIR, output_filename=f"floor_marker_{fid}_apriltag_a4.png"
+        )
+    for bid, title, sub, inst in booth_specs:
+        generate_single_marker_a4(
+            tag_id=bid, tag_type="BOOTH", title=f"APRILTAG: {title}", subtitle=sub, instructions=inst,
+            dictionary=DICT_APRILTAG, family_name="AprilTag", dict_code="DICT_APRILTAG_36h11",
+            output_dir=MARKERS_APRILTAG_DIR, output_filename=f"stall_marker_{bid}_apriltag_a4.png"
+        )
+    generate_precision_board_a4(
+        dictionary=DICT_APRILTAG, family_name="AprilTag", dict_code="DICT_APRILTAG_36h11",
+        output_filename="apriltag_precision_docking_board_a4.png"
+    )
 
     print("\n" + "=" * 80)
-    print("  🎉 ALL MARKERS & BOARDS GENERATED SUCCESSFULLY IN Day1_Testes/")
+    print("  🎉 BOTH ARUCO & APRILTAG PACKS GENERATED SUCCESSFULLY IN Day1_Testes/")
     print("=" * 80 + "\n")
 
 

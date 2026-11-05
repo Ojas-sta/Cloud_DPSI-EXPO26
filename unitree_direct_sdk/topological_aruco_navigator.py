@@ -25,8 +25,14 @@ CONFIG_DIR = os.path.join(WORKSPACE_DIR, "config")
 
 
 class TopologicalArucoNavigator:
-    def __init__(self, graph_yaml_filename: str = "discovered_aruco_graph.yaml"):
+    def __init__(
+        self,
+        graph_yaml_filename: str = "discovered_aruco_graph.yaml",
+        use_apriltag: bool = False
+    ):
         self.graph_path = os.path.join(CONFIG_DIR, graph_yaml_filename)
+        self.use_apriltag = use_apriltag
+        self.fiducial_family = "AprilTag (36h11)" if use_apriltag else "ArUco (4X4_250)"
         self.graph = nx.DiGraph()
         self.nodes_data: Dict[int, Dict[str, Any]] = {}
         self.edges_data: List[Dict[str, Any]] = []

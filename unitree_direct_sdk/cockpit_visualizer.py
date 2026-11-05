@@ -285,9 +285,17 @@ class MJPEGStreamHandler(BaseHTTPRequestHandler):
 
 
 class CockpitVisualizer:
-    def __init__(self, port: int = 8088, enable_native_window: bool = False, active_milestone: Optional[str] = "M1"):
+    def __init__(
+        self,
+        port: int = 8088,
+        enable_native_window: bool = False,
+        active_milestone: Optional[str] = "M1",
+        use_apriltag: bool = False
+    ):
         self.port = port
         self.enable_native_window = enable_native_window
+        self.use_apriltag = use_apriltag
+        self.fiducial_badge = "AprilTag (36h11)" if use_apriltag else "ArUco (4x4)"
         self.latest_frame: Optional[np.ndarray] = None
         self.latest_jpeg: Optional[bytes] = None
         self.lock = threading.Lock()
@@ -441,7 +449,7 @@ class CockpitVisualizer:
         # Logo & Platform
         cv2.putText(hud, "UNITREE GO2 PRO", (20, 26), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 229, 255), 2)
         m_tag = f" • [{self.active_milestone}]" if self.active_milestone else ""
-        cv2.putText(hud, f"DIRECT SDK2 • {mode_label}{m_tag}", (20, 46), cv2.FONT_HERSHEY_SIMPLEX, 0.40, (0, 255, 180), 1)
+        cv2.putText(hud, f"DIRECT SDK2 • {mode_label}{m_tag} • {self.fiducial_badge}", (20, 46), cv2.FONT_HERSHEY_SIMPLEX, 0.38, (0, 255, 180), 1)
 
         # Telemetry Pills
         posture = telemetry.get("posture", "STAND")
