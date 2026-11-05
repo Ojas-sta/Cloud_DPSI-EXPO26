@@ -58,7 +58,7 @@ try:
     from rclpy.executors import ExternalShutdownException
     from rclpy.qos import QoSProfile, DurabilityPolicy, ReliabilityPolicy, HistoryPolicy
     from std_msgs.msg import String, Header, Int32, Float32MultiArray
-    from sensor_msgs.msg import PointCloud2, PointField, LaserScan, Imu, BatteryState, JointState
+    from sensor_msgs.msg import PointCloud2, PointField, LaserScan, Imu, BatteryState, JointState, Image
     from nav_msgs.msg import Path, Odometry, OccupancyGrid, MapMetaData
     from geometry_msgs.msg import TransformStamped, PoseStamped, PoseWithCovarianceStamped, Point, Quaternion, Twist, Vector3
     from visualization_msgs.msg import Marker, MarkerArray
@@ -432,6 +432,17 @@ class CloudMuJoCoTwin(Node):
         self.pub_floor_aruco_pose = self.create_publisher(PoseStamped, '/cloud/aruco_floor/pose', 10)
         self.pub_floor_aruco_id = self.create_publisher(Int32, '/cloud/aruco_floor/id', 10)
         self.pub_fused_pose = self.create_publisher(PoseWithCovarianceStamped, '/cloud/localization/pose', 10)
+
+        # Dual-Camera Offscreen Renderers & Publishers
+        self.pub_front_image = self.create_publisher(Image, '/cloud/camera/unitree_front/image_raw', 10)
+        self.pub_down_image = self.create_publisher(Image, '/cloud/camera/depth_down/image_raw', 10)
+        try:
+            self.renderer_front = mujoco.Renderer(self.model, height=240, width=320)
+            self.renderer_down = mujoco.Renderer(self.model, height=240, width=320)
+            self.has_renderers = True
+        except Exception as e:
+            self.get_logger().warn(f"Offscreen camera renderer initialization: {e}")
+            self.has_renderers = False
 
         # 3. Autonomy & Planning Publishers
         self.pub_global_path = self.create_publisher(Path, '/cloud/path', 10)
@@ -1316,6 +1327,39 @@ class CloudMuJoCoTwin(Node):
 
         # 12. Synthetic RealSense D435i AprilTag Detection Stream
         self._publish_camera_apriltags(stamp)
+
+        # 13. Dual Camera Offscreen Rendering & Live Streams (@ 10 Hz)
+        if getattr(self, 'has_renderers', False):
+            if not hasattr(self, '_cam_render_counter'):
+                self._cam_render_counter = 0
+            self._cam_render_counter += 1
+            if self._cam_render_counter % 3 == 0:
+                try:
+                    self.renderer_front.update_scene(self.data, camera="cam_unitree_forward")
+                    px_f = self.renderer_front.render()
+                    msg_f = Image()
+                    msg_f.header.stamp = stamp
+                    msg_f.header.frame_id = 'camera_unitree_optical_frame'
+                    msg_f.height = 240
+                    msg_f.width = 320
+                    msg_f.encoding = 'rgb8'
+                    msg_f.step = 320 * 3
+                    msg_f.data = px_f.tobytes()
+                    self.pub_front_image.publish(msg_f)
+
+                    self.renderer_down.update_scene(self.data, camera="cam_d435i_down")
+                    px_d = self.renderer_down.render()
+                    msg_d = Image()
+                    msg_d.header.stamp = stamp
+                    msg_d.header.frame_id = 'camera_down_optical_frame'
+                    msg_d.height = 240
+                    msg_d.width = 320
+                    msg_d.encoding = 'rgb8'
+                    msg_d.step = 320 * 3
+                    msg_d.data = px_d.tobytes()
+                    self.pub_down_image.publish(msg_d)
+                except Exception:
+                    pass
 
     def _publish_camera_apriltags(self, stamp):
         """
