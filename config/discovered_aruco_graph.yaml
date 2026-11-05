@@ -1,0 +1,51 @@
+metadata:
+  system: 'Project Cloud: Topological ArUco SLAM & Teach-and-Repeat Graph'
+  generated_at: '2026-11-05T16:11:00Z'
+  num_floor_tags: 1
+  num_booth_tags: 1
+  total_nodes: 2
+  total_edges: 2
+nodes:
+  '1':
+    tag_id: 1
+    tag_type: BOOTH
+    pose:
+      x: 3.268
+      y: 13.52
+      theta: -0.2159
+    observations: 107
+    first_seen_time: 1793895048.76
+    label: P01 (Stepwise AI)
+    parent_floor_tag: 101
+    relative_to_parent:
+      dx_world: 3.27
+      dy_world: -0.717
+      distance_m: 3.348
+      target_heading_rad: -0.2159
+      heading_offset_deg: -102.4
+      local_fwd: -0.717
+      local_lat: 3.27
+    standoff_distance_m: 0.95
+  '101':
+    tag_id: 101
+    tag_type: FLOOR
+    pose:
+      x: -0.002
+      y: 14.237
+      theta: 1.5708
+    observations: 119
+    first_seen_time: 1793895048.76
+    label: Tag_101
+edges:
+- from: 101
+  to: 1
+  dx: 1.646
+  dy: 0.083
+  dtheta: -1.5204
+  distance_m: 1.648
+- from: 1
+  to: 101
+  dx: -1.646
+  dy: -0.083
+  dtheta: 1.5204
+  distance_m: 1.648

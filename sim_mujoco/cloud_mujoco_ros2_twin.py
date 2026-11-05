@@ -80,6 +80,9 @@ from cloud_navigation.tri_modal_localizer_node import TriModalEKFLocalizer
 L_THIGH = 0.213
 L_CALF = 0.213
 STANCE_HEIGHT = 0.330
+FOOT_GROUND_OFFSET = 0.024  # Foot sphere radius (0.022m) + 2mm floor clearance
+NOMINAL_BASE_Z = STANCE_HEIGHT + FOOT_GROUND_OFFSET  # 0.354m (zero floor clipping)
+PRONE_REST_BASE_Z = 0.187  # Clean prone rest height (zero floor clipping)
 STEP_CLEARANCE = 0.052
 MAX_STEP_LEN = 0.160
 ROBOT_MASS = 15.0  # kg
@@ -431,6 +434,8 @@ class CloudMuJoCoTwin(Node):
         # Floor ArUco Ground Anchors & Fused EKF Pose
         self.pub_floor_aruco_pose = self.create_publisher(PoseStamped, '/cloud/aruco_floor/pose', 10)
         self.pub_floor_aruco_id = self.create_publisher(Int32, '/cloud/aruco_floor/id', 10)
+        self.pub_floor_visual_markers = self.create_publisher(MarkerArray, '/cloud/aruco_floor/visual_markers', 10)
+        self.pub_booth_visual_markers = self.create_publisher(MarkerArray, '/cloud/aruco_booth/visual_markers', 10)
         self.pub_fused_pose = self.create_publisher(PoseWithCovarianceStamped, '/cloud/localization/pose', 10)
 
         # Dual-Camera Offscreen Renderers & Publishers
@@ -537,7 +542,7 @@ class CloudMuJoCoTwin(Node):
         # Robot Physical State (Default: South Entrance Gate facing North)
         self.pos_x = 6.40
         self.pos_y = -7.50
-        self.pos_z = STANCE_HEIGHT
+        self.pos_z = NOMINAL_BASE_Z
         self.yaw = math.pi / 2.0  # 90° facing North into the exhibition hall
         self.pitch = 0.0
         self.roll = 0.0
@@ -545,7 +550,7 @@ class CloudMuJoCoTwin(Node):
         if spawn_stall in ["STAGE", "STAGE_DOCK", "DOCK_STAGE_99", "99", "DOCK"]:
             self.pos_x = -2.00
             self.pos_y = 0.00
-            self.pos_z = STANCE_HEIGHT + 0.09
+            self.pos_z = NOMINAL_BASE_Z + 0.09
             self.yaw = 0.0
             self.external_control_latched = True
             self.in_transit = False
@@ -553,7 +558,7 @@ class CloudMuJoCoTwin(Node):
         elif spawn_stall in ["GATE_CENTER", "CENTER_GATE"]:
             self.pos_x = 0.00
             self.pos_y = -7.50
-            self.pos_z = STANCE_HEIGHT
+            self.pos_z = NOMINAL_BASE_Z
             self.yaw = math.pi / 2.0
             self.external_control_latched = True
             self.in_transit = False
@@ -561,15 +566,23 @@ class CloudMuJoCoTwin(Node):
         elif spawn_stall in ["GATE", "ENTRANCE", "GATE_RIGHT"]:
             self.pos_x = 6.40
             self.pos_y = -7.50
-            self.pos_z = STANCE_HEIGHT
+            self.pos_z = NOMINAL_BASE_Z
             self.yaw = math.pi / 2.0
             self.external_control_latched = True
             self.in_transit = False
             self.get_logger().info("Spawned Go2 at South Entrance Gate (6.40, -7.50), yaw=90.0° (facing North)")
+        elif spawn_stall in ["P01", "STALL_P01", "STALL_01", "P01_APPROACH"]:
+            self.pos_x = 0.00
+            self.pos_y = 11.50
+            self.pos_z = NOMINAL_BASE_Z
+            self.yaw = math.pi / 2.0
+            self.external_control_latched = True
+            self.in_transit = False
+            self.get_logger().info("Spawned Go2 at Stall P01 Concourse Approach (0.00, 11.50), yaw=90.0° (facing Stall P01)")
         elif spawn_stall is None:
             self.pos_x = 6.40
             self.pos_y = -7.50
-            self.pos_z = STANCE_HEIGHT
+            self.pos_z = NOMINAL_BASE_Z
             self.yaw = math.pi / 2.0
             self.external_control_latched = False
             self.in_transit = True
@@ -898,14 +911,16 @@ class CloudMuJoCoTwin(Node):
                 cmd_w = self.ext_cmd_vyaw
 
             body_pitch_target = self.ext_euler_pitch
-            is_prone = (self.ext_posture in ["STAND_DOWN", "DAMP"])
+            is_prone = (self.ext_posture in ["STAND_DOWN", "DAMP", "SIT", "PRONE"])
 
             estop_dist = 0.20 if self.external_control_latched else 0.65
             if min_front <= estop_dist:
                 self.safety_state = "SAFETY_ESTOP"
-                cmd_v = 0.0
+                cmd_v = min(0.0, cmd_v)  # Disallow forward encroachment, allow backing up
                 cmd_vy = 0.0
-                cmd_w = 0.0
+                if not self.external_control_latched:
+                    cmd_w = 0.0
+                # When external control is latched, allow in-place rotation so quadruped can turn 180° away from stalls!
             elif abs(cmd_vy) > 0.10:
                 self.safety_state = "SAFETY_STRAFING"
             elif min_front < 1.4:
@@ -1002,13 +1017,21 @@ class CloudMuJoCoTwin(Node):
 
         # Stage elevation offset
         on_stage = math.hypot(self.pos_x, self.pos_y) < 1.75
-        base_floor_z = 0.045 if on_stage else 0.0
+        base_floor_z = (0.045 if on_stage else 0.0) + FOOT_GROUND_OFFSET
 
+        if not hasattr(self, 'prone_timer'):
+            self.prone_timer = 0.0
         if is_prone:
-            fold_ratio = min(1.0, self.stage_timer / 2.5)
-            nominal_z = STANCE_HEIGHT - (STANCE_HEIGHT - 0.14) * fold_ratio + base_floor_z
+            self.prone_timer += dt
+            fold_ratio = min(1.0, self.prone_timer / 1.5)
+            nominal_z = (STANCE_HEIGHT + base_floor_z) - ((STANCE_HEIGHT + base_floor_z) - PRONE_REST_BASE_Z) * fold_ratio
         else:
-            nominal_z = STANCE_HEIGHT + base_floor_z
+            self.prone_timer = max(0.0, self.prone_timer - dt * 2.0)
+            if self.prone_timer > 0.0:
+                fold_ratio = self.prone_timer / 1.5
+                nominal_z = (STANCE_HEIGHT + base_floor_z) - ((STANCE_HEIGHT + base_floor_z) - PRONE_REST_BASE_Z) * fold_ratio
+            else:
+                nominal_z = STANCE_HEIGHT + base_floor_z
 
         # -------------------------------------------------------------
         # 4. Quadruped Trot Gait Engine
@@ -1055,12 +1078,14 @@ class CloudMuJoCoTwin(Node):
         rl_pos = calc_foot_offset(phase_B, step_L)
 
         # Joint Angles via Closed-Form Analytical IK
-        if is_prone and self.pos_z < 0.22:
-            fold_ratio = min(1.0, max(0.0, (0.22 - self.pos_z) / 0.08))
-            fl_joint = (0.0, 0.68 + fold_ratio * 0.52, -1.37 - fold_ratio * 1.03)
-            fr_joint = (0.0, 0.68 + fold_ratio * 0.52, -1.37 - fold_ratio * 1.03)
-            rl_joint = (0.0, 0.68 + fold_ratio * 0.52, -1.37 - fold_ratio * 1.03)
-            rr_joint = (0.0, 0.68 + fold_ratio * 0.52, -1.37 - fold_ratio * 1.03)
+        if is_prone and self.pos_z < (NOMINAL_BASE_Z - 0.03):
+            fold_ratio = min(1.0, max(0.0, (NOMINAL_BASE_Z - self.pos_z) / max(0.01, NOMINAL_BASE_Z - PRONE_REST_BASE_Z)))
+            thigh_q = 0.68 + fold_ratio * 0.37  # Smooth tuck to 1.05 rad
+            calf_q = -1.37 - fold_ratio * 0.98   # Smooth fold to -2.35 rad (zero floor penetration)
+            fl_joint = (0.0, thigh_q, calf_q)
+            fr_joint = (0.0, thigh_q, calf_q)
+            rl_joint = (0.0, thigh_q, calf_q)
+            rr_joint = (0.0, thigh_q, calf_q)
         else:
             fl_joint = leg_inverse_kinematics(fl_pos[0], fl_pos[1], fl_pos[2])
             fr_joint = leg_inverse_kinematics(fr_pos[0], fr_pos[1], fr_pos[2])
@@ -1410,6 +1435,42 @@ class CloudMuJoCoTwin(Node):
                 p_msg.pose.orientation.w = 1.0
                 self.pub_apriltag_pose.publish(p_msg)
 
+                # RViz Visual Fiducial Highlight on Booth
+                m_array = MarkerArray()
+                m_plate = Marker()
+                m_plate.header.stamp = stamp
+                m_plate.header.frame_id = 'map'
+                m_plate.ns = 'booth_aruco_fiducial'
+                m_plate.id = 1
+                m_plate.type = Marker.CUBE
+                m_plate.action = Marker.ADD
+                m_plate.pose.position.x = float(best_fid['x'])
+                m_plate.pose.position.y = float(best_fid['y'])
+                m_plate.pose.position.z = 0.855
+                m_plate.pose.orientation.w = 1.0
+                m_plate.scale.x = 0.22
+                m_plate.scale.y = 0.22
+                m_plate.scale.z = 0.01
+                m_plate.color.r = 0.0; m_plate.color.g = 1.0; m_plate.color.b = 0.3; m_plate.color.a = 0.95
+                m_array.markers.append(m_plate)
+
+                m_text = Marker()
+                m_text.header.stamp = stamp
+                m_text.header.frame_id = 'map'
+                m_text.ns = 'booth_aruco_fiducial'
+                m_text.id = 2
+                m_text.type = Marker.TEXT_VIEW_FACING
+                m_text.action = Marker.ADD
+                m_text.pose.position.x = float(best_fid['x'])
+                m_text.pose.position.y = float(best_fid['y'])
+                m_text.pose.position.z = 1.10
+                m_text.pose.orientation.w = 1.0
+                m_text.scale.z = 0.20
+                m_text.color.r = 1.0; m_text.color.g = 1.0; m_text.color.b = 1.0; m_text.color.a = 1.0
+                m_text.text = f"BOOTH ARUCO #{best_fid['id']} [LOCKED]\nDist: {best_zc:.2f}m"
+                m_array.markers.append(m_text)
+                self.pub_booth_visual_markers.publish(m_array)
+
         # 2. Downward Camera: Floor ArUco Ground Anchors (IDs 100-123)
         if hasattr(self, 'floor_markers') and self.floor_markers:
             best_fm = None
@@ -1455,6 +1516,93 @@ class CloudMuJoCoTwin(Node):
                         float(best_fm["pose"]["y"]),
                         float(best_fm["pose"]["yaw_rad"])
                     )
+
+            # Publish high-visibility visual highway markers on floor in RViz
+            fm_array = MarkerArray()
+            for idx, fm in enumerate(self.floor_markers):
+                fx = float(fm["pose"]["x"])
+                fy = float(fm["pose"]["y"])
+                tid = int(fm["tag_id"])
+                is_active = (best_fm is not None and int(best_fm["tag_id"]) == tid)
+
+                # 1. Base Ground Anchor Plate
+                m = Marker()
+                m.header.stamp = stamp
+                m.header.frame_id = 'map'
+                m.ns = 'floor_aruco_highway'
+                m.id = idx * 4
+                m.type = Marker.CUBE
+                m.action = Marker.ADD
+                m.pose.position.x = fx
+                m.pose.position.y = fy
+                m.pose.position.z = 0.012
+                m.pose.orientation.w = 1.0
+                m.scale.x = 0.45 if is_active else 0.30
+                m.scale.y = 0.45 if is_active else 0.30
+                m.scale.z = 0.010
+                if is_active:
+                    m.color.r = 0.0; m.color.g = 1.0; m.color.b = 1.0; m.color.a = 1.0  # Brilliant Cyan Active
+                else:
+                    m.color.r = 0.10; m.color.g = 0.60; m.color.b = 0.95; m.color.a = 0.70  # Concourse Highway Anchor
+                fm_array.markers.append(m)
+
+                if is_active:
+                    # 2. Glowing Ground Identification Ring
+                    mc = Marker()
+                    mc.header.stamp = stamp
+                    mc.header.frame_id = 'map'
+                    mc.ns = 'floor_aruco_highway'
+                    mc.id = idx * 4 + 1
+                    mc.type = Marker.CYLINDER
+                    mc.action = Marker.ADD
+                    mc.pose.position.x = fx
+                    mc.pose.position.y = fy
+                    mc.pose.position.z = 0.025
+                    mc.pose.orientation.w = 1.0
+                    mc.scale.x = 0.70
+                    mc.scale.y = 0.70
+                    mc.scale.z = 0.020
+                    mc.color.r = 0.0; mc.color.g = 1.0; mc.color.b = 0.8; mc.color.a = 0.50
+                    fm_array.markers.append(mc)
+
+                    # 3. Floating 3D Identification Text Billboard
+                    mt = Marker()
+                    mt.header.stamp = stamp
+                    mt.header.frame_id = 'map'
+                    mt.ns = 'floor_aruco_highway'
+                    mt.id = idx * 4 + 2
+                    mt.type = Marker.TEXT_VIEW_FACING
+                    mt.action = Marker.ADD
+                    mt.pose.position.x = fx
+                    mt.pose.position.y = fy
+                    mt.pose.position.z = 0.38
+                    mt.pose.orientation.w = 1.0
+                    mt.scale.z = 0.22
+                    mt.color.r = 1.0; mt.color.g = 0.95; mt.color.b = 0.2; mt.color.a = 1.0  # Gold Accent
+                    mt.text = f"🎯 FLOOR ARUCO #{tid} IDENTIFIED\n[Locked: Dist={min_f_dist:.2f}m • Datum={fx:.1f},{fy:.1f}]"
+                    fm_array.markers.append(mt)
+
+            # 4. Downward Camera Active Ground Optical Frustum
+            frust_m = Marker()
+            frust_m.header.stamp = stamp
+            frust_m.header.frame_id = 'base_link'
+            frust_m.ns = 'camera_down_frustum'
+            frust_m.id = 999
+            frust_m.type = Marker.LINE_STRIP
+            frust_m.action = Marker.ADD
+            frust_m.scale.x = 0.025  # Line width
+            frust_m.color.r = 0.0; frust_m.color.g = 1.0; frust_m.color.b = 0.9; frust_m.color.a = 0.85
+            # Camera origin at (0.32, 0.0, 0.08) in base_link
+            cam_pt = Point(x=0.32, y=0.0, z=0.08)
+            p1 = Point(x=0.45, y=-0.50, z=0.0)
+            p2 = Point(x=2.20, y=-0.65, z=0.0)
+            p3 = Point(x=2.20, y=0.65, z=0.0)
+            p4 = Point(x=0.45, y=0.50, z=0.0)
+            # Draw pyramid frustum: cam -> p1 -> p2 -> p3 -> p4 -> p1 -> cam -> p2 -> cam -> p3 -> cam -> p4
+            frust_m.points = [cam_pt, p1, p2, p3, p4, p1, cam_pt, p2, cam_pt, p3, cam_pt, p4]
+            fm_array.markers.append(frust_m)
+
+            self.pub_floor_visual_markers.publish(fm_array)
 
     def _broadcast_static_tf(self, stamp=None):
         if not hasattr(self, 'static_tf_broadcaster'):
@@ -1890,6 +2038,14 @@ def main():
     try:
         if args.gui:
             with mujoco.viewer.launch_passive(node.model, node.data) as viewer:
+                try:
+                    import glfw
+                    win = glfw.get_current_context()
+                    if win:
+                        glfw.set_window_pos(win, 0, 30)
+                        glfw.set_window_size(win, 955, 1100)
+                except Exception:
+                    pass
                 viewer.cam.distance = 3.2
                 viewer.cam.elevation = -22.0
                 viewer.cam.azimuth = 60.0
