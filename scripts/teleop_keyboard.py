@@ -21,6 +21,7 @@ import termios
 import tty
 import time
 import os
+import math
 
 cur_dir = os.path.dirname(os.path.abspath(__file__))
 base_dir = os.path.dirname(cur_dir)

@@ -31,7 +31,7 @@ if cur_dir not in sys.path:
 
 import rclpy
 from rclpy.node import Node
-from geometry_msgs.msg import Twist, Vector3
+from geometry_msgs.msg import Twist, Vector3, PoseWithCovarianceStamped
 from nav_msgs.msg import Odometry
 from std_msgs.msg import String, Bool
 from cloud_navigation.terminal_docking_servo import TerminalDockingServoNode, DockingState
@@ -69,6 +69,20 @@ class CohortTourMasterNode(Node):
         self.odom_received = False
 
         self.sub_odom = self.create_subscription(Odometry, '/cloud/odom', self._odom_cb, 10)
+        self.sub_fused = self.create_subscription(PoseWithCovarianceStamped, '/cloud/localization/pose', self._fused_loc_cb, 10)
+
+    def _fused_loc_cb(self, msg: PoseWithCovarianceStamped):
+        """High-precision tri-modal fused pose callback (overrides raw odometry)."""
+        self.cur_x = msg.pose.pose.position.x
+        self.cur_y = msg.pose.pose.position.y
+        qx = msg.pose.pose.orientation.x
+        qy = msg.pose.pose.orientation.y
+        qz = msg.pose.pose.orientation.z
+        qw = msg.pose.pose.orientation.w
+        siny_cosp = 2.0 * (qw * qz + qx * qy)
+        cosy_cosp = 1.0 - 2.0 * (qy * qy + qz * qz)
+        self.cur_yaw = math.atan2(siny_cosp, cosy_cosp)
+        self.odom_received = True
 
     def _odom_cb(self, msg: Odometry):
         self.cur_x = msg.pose.pose.position.x

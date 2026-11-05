@@ -55,10 +55,11 @@ class PresenterPivotNode(CloudNode):
 
         elapsed = time.time() - self.start_time
         if elapsed < self.turn_duration:
-            # Smooth trapezoidal or sinusoidal easing
+            # Smooth trapezoidal or sinusoidal easing (normalized so integral = pi)
             progress = elapsed / self.turn_duration
             easing = math.sin(progress * math.pi)
-            current_wz = self.nominal_wz * (0.4 + 0.6 * easing)
+            _mean = 0.4 + 0.6 * (2.0 / math.pi)
+            current_wz = self.nominal_wz * (0.4 + 0.6 * easing) / _mean
 
             cmd = Twist(
                 linear=Vector3(x=0.0, y=0.0, z=0.0),

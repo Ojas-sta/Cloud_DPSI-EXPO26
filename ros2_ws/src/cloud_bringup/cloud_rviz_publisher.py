@@ -37,9 +37,9 @@ def euler_to_quaternion(yaw, pitch=0.0, roll=0.0):
     sr = math.sin(roll * 0.5)
     return Quaternion(
         x=sr * cp * cy - cr * sp * sy,
-        y=cr * cp * cy + sr * cp * sy,
+        y=cr * sp * cy + sr * cp * sy,
         z=cr * cp * sy - sr * sp * cy,
-        w=cr * cp * cy + sr * cp * sy
+        w=cr * cp * cy + sr * sp * sy
     )
 
 def wrap_to_pi(angle):
@@ -302,7 +302,7 @@ class CloudRVizPublisher(Node):
             else:
                 # Swing Phase (Foot lifts in smooth parabolic clearance arc)
                 s = (phase - math.pi) / math.pi
-                xf = -(s_len / 2.0) * math.cos(phase)
+                xf = (s_len / 2.0) * math.cos(phase)
                 zf = -self.stance_h + self.step_clearance * math.sin(math.pi * s)
             return xf, 0.0, zf
 

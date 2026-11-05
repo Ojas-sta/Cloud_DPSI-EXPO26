@@ -86,6 +86,10 @@ class ArucoTrackerNode(CloudNode):
             return detections
 
         for i, marker_id in enumerate(ids.flatten()):
+            # SAFEGUARD 1: Reject floor markers (IDs >= 100) - booth tracker strictly handles IDs 1-44
+            if int(marker_id) >= 100:
+                continue
+
             img_corners = corners[i].reshape((4, 2))
             success, rvec, tvec = cv2.solvePnP(
                 self.obj_points,

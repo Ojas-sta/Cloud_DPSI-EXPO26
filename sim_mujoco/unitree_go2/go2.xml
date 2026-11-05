@@ -80,6 +80,10 @@
       <site name="lidar_origin" pos="0.285 0 0.050" size="0.010" rgba="0.0 0.9 1.0 0.8"/>
       <!-- First-Person Autonomous Docent / LiDAR Head Camera -->
       <camera name="cam_lidar_fpv" pos="0.32 0 0.06" xyaxes="0 -1 0 0 0 1"/>
+      <!-- Downward RealSense D435i Camera for Floor ArUco Ground Anchors & Step Hazards (Pitched -35 deg) -->
+      <camera name="cam_d435i_down" pos="0.30 0 0.02" euler="0 0.61 0"/>
+      <!-- Forward Unitree Nose Camera for Booth Signage & Human Evaluator Tracking (Pitched -5 deg) -->
+      <camera name="cam_unitree_forward" pos="0.32 0 0.05" euler="0 0.08 0"/>
       <!-- Multi-Channel LiDAR Rangefinder Beams -->
       <site name="rf_site_fwd" pos="0.285 0 0.050" zaxis="1 0 0" size="0.004" rgba="0 1 0 0.4"/>
       <site name="rf_site_fwd_left_30" pos="0.285 0 0.050" zaxis="0.8660 0.5 0" size="0.004" rgba="0 1 0 0.4"/>

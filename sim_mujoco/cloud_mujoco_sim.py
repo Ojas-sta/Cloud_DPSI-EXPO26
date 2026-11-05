@@ -272,7 +272,7 @@ class Go2LiDAR:
             if pt is None or ranges[i] <= 0:
                 continue
 
-            is_haz = hazards[i] or (ranges[i] < 1.0 and is_haz)
+            is_haz = bool(hazards[i])
 
             # Draw laser line beam
             if draw_beams and scn.ngeom < scn.maxgeom:
@@ -541,7 +541,7 @@ class CloudMuJoCoSimulator:
                 zf = -STANCE_HEIGHT
             else:
                 s = (phase - math.pi) / math.pi
-                xf = -(s_len / 2.0) * math.cos(phase)
+                xf = (s_len / 2.0) * math.cos(phase)
                 zf = -STANCE_HEIGHT + STEP_CLEARANCE * math.sin(math.pi * s)
             return xf, 0.0, zf
 

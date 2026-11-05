@@ -60,7 +60,7 @@ try:
     from std_msgs.msg import String, Header, Int32, Float32MultiArray
     from sensor_msgs.msg import PointCloud2, PointField, LaserScan, Imu, BatteryState, JointState
     from nav_msgs.msg import Path, Odometry, OccupancyGrid, MapMetaData
-    from geometry_msgs.msg import TransformStamped, PoseStamped, Point, Quaternion, Twist, Vector3
+    from geometry_msgs.msg import TransformStamped, PoseStamped, PoseWithCovarianceStamped, Point, Quaternion, Twist, Vector3
     from visualization_msgs.msg import Marker, MarkerArray
     import sensor_msgs_py.point_cloud2 as pc2
     import tf2_ros
@@ -69,6 +69,12 @@ except ImportError as e:
     sys.exit(1)
 
 import yaml
+
+# Inject ros2_ws/src for TriModalEKFLocalizer
+ws_src_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "ros2_ws", "src")
+if ws_src_dir not in sys.path:
+    sys.path.insert(0, ws_src_dir)
+from cloud_navigation.tri_modal_localizer_node import TriModalEKFLocalizer
 
 # Unitree Go2 Mechanical Parameters
 L_THIGH = 0.213
@@ -422,6 +428,10 @@ class CloudMuJoCoTwin(Node):
         self.pub_foot_forces = self.create_publisher(Float32MultiArray, '/cloud/telemetry/foot_forces', 10)
         self.pub_apriltag_pose = self.create_publisher(PoseStamped, '/camera/apriltag_pose', 10)
         self.pub_apriltag_id = self.create_publisher(Int32, '/camera/apriltag_id', 10)
+        # Floor ArUco Ground Anchors & Fused EKF Pose
+        self.pub_floor_aruco_pose = self.create_publisher(PoseStamped, '/cloud/aruco_floor/pose', 10)
+        self.pub_floor_aruco_id = self.create_publisher(Int32, '/cloud/aruco_floor/id', 10)
+        self.pub_fused_pose = self.create_publisher(PoseWithCovarianceStamped, '/cloud/localization/pose', 10)
 
         # 3. Autonomy & Planning Publishers
         self.pub_global_path = self.create_publisher(Path, '/cloud/path', 10)
@@ -494,6 +504,18 @@ class CloudMuJoCoTwin(Node):
             except Exception as e:
                 self.get_logger().warn(f"Failed loading world_layout.json: {e}")
 
+        # Load Concourse Optical Highway Floor Ground Anchors (IDs 100-123)
+        self.floor_markers = []
+        floor_reg_path = os.path.join(repo_dir, "config", "floor_aruco_registry.yaml")
+        if os.path.exists(floor_reg_path):
+            try:
+                with open(floor_reg_path, "r", encoding="utf-8") as f:
+                    f_data = yaml.safe_load(f)
+                    self.floor_markers = f_data.get("markers", [])
+                self.get_logger().info(f"Loaded {len(self.floor_markers)} floor highway ground anchors (IDs 100-123).")
+            except Exception as e:
+                self.get_logger().warn(f"Failed loading floor_aruco_registry.yaml: {e}")
+
         self.scenes = self._load_data_driven_scenes(yaml_db_path)
 
         # Pre-build complete 3D exhibition environment markers and 2D occupancy grid
@@ -563,9 +585,20 @@ class CloudMuJoCoTwin(Node):
         self.linear_vel = 0.0
         self.yaw_rate = 0.0
 
+        # Initialize Tri-Modal EKF Localizer with pre-mapped SLAM reference grid
+        premap_path = os.path.join(repo_dir, "config", "dpsi_expo_premap.yaml")
+        self.localizer = TriModalEKFLocalizer(
+            initial_pose=(self.pos_x, self.pos_y, self.yaw),
+            premap_yaml_path=premap_path
+        )
+
+        # Initialize scene tracking & transit intent
+        # scene_idx must exist before the 30Hz timer fires _simulation_cycle
         self.scene_idx = 0
-        self.in_transit = False
         self.stage_timer = 0.0
+        # spawn branches above set in_transit; only default to False when unset
+        if not hasattr(self, "in_transit"):
+            self.in_transit = False
         self.sim_time = 0.0
         self.gait_phase = 0.0
 
@@ -716,7 +749,39 @@ class CloudMuJoCoTwin(Node):
                     "desc": "Returned to South Entrance Gate for Prone Rest"
                 }
             ]
-        return scenes
+        # Fallback: minimal gate-to-finale scene list when world_layout is missing
+        return [
+            {
+                "id": 0,
+                "name": "SOUTH ENTRANCE GATE WELCOME",
+                "fsm": "STATE_DOCENT_GREET",
+                "target_x": 6.40,
+                "target_y": -7.50,
+                "target_yaw": 1.5708,
+                "hold_time": 4.5,
+                "desc": "South Entrance Gate Welcome & VIP Interception"
+            },
+            {
+                "id": 1,
+                "name": "P01: STEPWISE AI ARUCO DOCK",
+                "fsm": "STATE_DOCENT_CRUISE",
+                "target_x": 0.00,
+                "target_y": 12.80,
+                "target_yaw": 1.5708,
+                "hold_time": 4.5,
+                "desc": "Closed-Loop Optical ArUco Standoff Docking (Tag #1)"
+            },
+            {
+                "id": 300,
+                "name": "GATE RETURN PRONE REST",
+                "fsm": "STATE_PRONE_REST",
+                "target_x": 6.40,
+                "target_y": -7.50,
+                "target_yaw": 3.14159,
+                "hold_time": 6.0,
+                "desc": "Returned to South Entrance Gate for Prone Rest"
+            }
+        ]
 
     def _ext_cmd_vel_cb(self, msg: Twist):
         self.last_ext_cmd_time = time.time()
@@ -772,6 +837,7 @@ class CloudMuJoCoTwin(Node):
         now = time.time()
         dt = max(0.001, min(0.1, now - self.last_cycle_time))
         self.last_cycle_time = now
+        self.last_dt = dt
         self.sim_time += dt
 
         scene = self.scenes[self.scene_idx]
@@ -968,7 +1034,7 @@ class CloudMuJoCoTwin(Node):
             else:
                 # Swing Phase
                 s = (phase - math.pi) / math.pi
-                xf = -(s_len / 2.0) * math.cos(phase)
+                xf = (s_len / 2.0) * math.cos(phase)
                 zf = -STANCE_HEIGHT + STEP_CLEARANCE * math.sin(math.pi * s)
             return xf, 0.0, zf
 
@@ -1045,8 +1111,42 @@ class CloudMuJoCoTwin(Node):
         stamp_tf.sec = sec
         stamp_tf.nanosec = nsec
 
-        # 0. Static TF (map -> odom) & Map Keepalive
-        self._broadcast_static_tf(stamp_tf)
+        # 0. Fused Tri-Modal EKF Pose & Smooth (map -> odom) TF (Safeguards 3 & 4)
+        if hasattr(self, 'localizer'):
+            dt_step = getattr(self, 'last_dt', 1.0 / 30.0)
+            self.localizer.predict(dt_step, self.linear_vel, getattr(self, 'lateral_vel', 0.0), self.yaw_rate)
+            cov_msg = PoseWithCovarianceStamped()
+            cov_msg.header.stamp = stamp
+            cov_msg.header.frame_id = 'map'
+            cov_msg.pose.pose.position.x = float(self.localizer.x[0])
+            cov_msg.pose.pose.position.y = float(self.localizer.x[1])
+            cov_msg.pose.pose.position.z = float(self.pos_z)
+            q_loc = euler_to_quaternion(self.localizer.x[2], 0.0, 0.0)
+            cov_msg.pose.pose.orientation = Quaternion(
+                x=float(q_loc[0]), y=float(q_loc[1]), z=float(q_loc[2]), w=float(q_loc[3])
+            )
+            cov_msg.pose.covariance[0] = float(self.localizer.P[0, 0])
+            cov_msg.pose.covariance[7] = float(self.localizer.P[1, 1])
+            cov_msg.pose.covariance[35] = float(self.localizer.P[2, 2])
+            self.pub_fused_pose.publish(cov_msg)
+
+            (tf_x, tf_y), tf_yaw = self.localizer.compute_smooth_map_to_odom_tf(self.pos_x, self.pos_y, self.yaw)
+            t_mo = TransformStamped()
+            t_mo.header.stamp = stamp_tf
+            t_mo.header.frame_id = 'map'
+            t_mo.child_frame_id = 'odom'
+            t_mo.transform.translation.x = float(tf_x)
+            t_mo.transform.translation.y = float(tf_y)
+            t_mo.transform.translation.z = 0.0
+            q_mo = euler_to_quaternion(tf_yaw, 0.0, 0.0)
+            t_mo.transform.rotation.x = float(q_mo[0])
+            t_mo.transform.rotation.y = float(q_mo[1])
+            t_mo.transform.rotation.z = float(q_mo[2])
+            t_mo.transform.rotation.w = float(q_mo[3])
+            self.tf_broadcaster.sendTransform(t_mo)
+        else:
+            self._broadcast_static_tf(stamp_tf)
+
         if not hasattr(self, '_map_pub_counter'):
             self._map_pub_counter = 0
         self._map_pub_counter += 1
@@ -1218,50 +1318,99 @@ class CloudMuJoCoTwin(Node):
         self._publish_camera_apriltags(stamp)
 
     def _publish_camera_apriltags(self, stamp):
-        """Simulates onboard RealSense D435i optical detection of tag36h11 fiducials."""
-        if not hasattr(self, 'booth_fiducials') or not self.booth_fiducials:
-            return
-
+        """
+        Simulates:
+          1. Forward Unitree / D435i Camera: Booth ArUco Markers (IDs 1-44).
+          2. Downward RealSense D435i Camera (-35° pitch): Floor ArUco Ground Anchors (IDs 100-123).
+        """
         cos_yaw = math.cos(self.yaw)
         sin_yaw = math.sin(self.yaw)
 
-        best_fid = None
-        min_dist = float('inf')
-        best_xc = 0.0
-        best_zc = 0.0
+        # 1. Forward Camera: Booth Table & Apron Markers (IDs 1-44)
+        if hasattr(self, 'booth_fiducials') and self.booth_fiducials:
+            best_fid = None
+            min_dist = float('inf')
+            best_xc = 0.0
+            best_zc = 0.0
 
-        for fid in self.booth_fiducials:
-            dx = fid["x"] - self.pos_x
-            dy = fid["y"] - self.pos_y
-            # Body frame (x forward, y left)
-            x_b = cos_yaw * dx + sin_yaw * dy
-            y_b = -sin_yaw * dx + cos_yaw * dy
+            for fid in self.booth_fiducials:
+                dx = fid["x"] - self.pos_x
+                dy = fid["y"] - self.pos_y
+                # Body frame (x forward, y left)
+                x_b = cos_yaw * dx + sin_yaw * dy
+                y_b = -sin_yaw * dx + cos_yaw * dy
 
-            # Camera optical frame (Z forward, X right, Y down)
-            z_c = x_b
-            x_c = -y_b
+                # Camera optical frame (Z forward, X right, Y down)
+                z_c = x_b
+                x_c = -y_b
 
-            # D435i horizontal FOV is ~69 deg -> |x_c / z_c| < tan(35 deg) ~ 0.70
-            if 0.20 <= z_c <= 3.20 and abs(x_c / max(0.01, z_c)) <= 0.75:
-                dist = math.hypot(x_c, z_c)
-                if dist < min_dist:
-                    min_dist = dist
-                    best_fid = fid
-                    best_xc = x_c
-                    best_zc = z_c
+                # Forward camera horizontal FOV ~69 deg
+                if 0.20 <= z_c <= 3.20 and abs(x_c / max(0.01, z_c)) <= 0.75:
+                    dist = math.hypot(x_c, z_c)
+                    if dist < min_dist:
+                        min_dist = dist
+                        best_fid = fid
+                        best_xc = x_c
+                        best_zc = z_c
 
-        if best_fid is not None:
-            id_msg = Int32(data=int(best_fid["id"]))
-            self.pub_apriltag_id.publish(id_msg)
+            if best_fid is not None:
+                id_msg = Int32(data=int(best_fid["id"]))
+                self.pub_apriltag_id.publish(id_msg)
 
-            p_msg = PoseStamped()
-            p_msg.header.stamp = stamp
-            p_msg.header.frame_id = 'camera_color_optical_frame'
-            p_msg.pose.position.x = float(best_xc)
-            p_msg.pose.position.y = 0.0
-            p_msg.pose.position.z = float(best_zc)
-            p_msg.pose.orientation.w = 1.0
-            self.pub_apriltag_pose.publish(p_msg)
+                p_msg = PoseStamped()
+                p_msg.header.stamp = stamp
+                p_msg.header.frame_id = 'camera_color_optical_frame'
+                p_msg.pose.position.x = float(best_xc)
+                p_msg.pose.position.y = 0.0
+                p_msg.pose.position.z = float(best_zc)
+                p_msg.pose.orientation.w = 1.0
+                self.pub_apriltag_pose.publish(p_msg)
+
+        # 2. Downward Camera: Floor ArUco Ground Anchors (IDs 100-123)
+        if hasattr(self, 'floor_markers') and self.floor_markers:
+            best_fm = None
+            min_f_dist = float('inf')
+            best_f_xb = 0.0
+            best_f_yb = 0.0
+
+            for fm in self.floor_markers:
+                fx = fm["pose"]["x"]
+                fy = fm["pose"]["y"]
+                dx = fx - self.pos_x
+                dy = fy - self.pos_y
+                # Body frame
+                x_b = cos_yaw * dx + sin_yaw * dy
+                y_b = -sin_yaw * dx + cos_yaw * dy
+
+                # Downward camera FoV footprint: 0.40m to 2.20m ahead, |y_b| <= 0.65m
+                if 0.40 <= x_b <= 2.20 and abs(y_b) <= 0.65:
+                    f_dist = math.hypot(x_b, y_b)
+                    if f_dist < min_f_dist:
+                        min_f_dist = f_dist
+                        best_fm = fm
+                        best_f_xb = x_b
+                        best_f_yb = y_b
+
+            if best_fm is not None:
+                tid = int(best_fm["tag_id"])
+                self.pub_floor_aruco_id.publish(Int32(data=tid))
+
+                fp_msg = PoseStamped()
+                fp_msg.header.stamp = stamp
+                fp_msg.header.frame_id = 'camera_down_optical_frame'
+                fp_msg.pose.position.x = float(-best_f_yb)
+                fp_msg.pose.position.y = float(0.35)
+                fp_msg.pose.position.z = float(best_f_xb)
+                fp_msg.pose.orientation.w = 1.0
+                self.pub_floor_aruco_pose.publish(fp_msg)
+
+                # Apply Tri-Modal EKF Absolute Landmark Update (Snaps Covariance)
+                if hasattr(self, 'localizer'):
+                    self.localizer.update_floor_aruco(
+                        float(best_fm["pose"]["x"]),
+                        float(best_fm["pose"]["y"]),
+                        float(best_fm["pose"]["yaw_rad"])
+                    )
 
     def _broadcast_static_tf(self, stamp=None):
         if not hasattr(self, 'static_tf_broadcaster'):

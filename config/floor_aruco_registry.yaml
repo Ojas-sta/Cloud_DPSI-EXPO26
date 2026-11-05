@@ -1,0 +1,118 @@
+# ==============================================================================
+# Project Cloud: Concourse Optical Highway Floor ArUco Registry
+# Spacing: 2.0m along main transit corridors
+# Coordinate Frame: map (REP-103 right-handed, X=East, Y=North, Z=Up)
+# Marker Family: cv2.aruco.DICT_4X4_50 or DICT_5X5_250 (IDs 100 to 123)
+# Physical Mounting: Laminated matte-finish vinyl floor sticker flush at Z=0.001m
+# ==============================================================================
+
+floor_marker_family: "DICT_4X4_250"
+marker_size_meters: 0.18 # 180mm x 180mm high-contrast matte square
+min_spacing_meters: 2.0
+reprojection_rmse_threshold_px: 2.0
+min_contour_area_px: 900.0
+
+markers:
+  # --- South Entrance Foyer Corridor (Gate to Concourse) ---
+  - tag_id: 100
+    name: "FLOOR_SOUTH_GATE"
+    corridor: "SOUTH_FOYER"
+    pose: {x: 6.40, y: -7.50, z: 0.001, yaw_rad: 1.5708} # Facing North
+  - tag_id: 101
+    name: "FLOOR_SOUTH_FOYER_1"
+    corridor: "SOUTH_FOYER"
+    pose: {x: 6.40, y: -5.50, z: 0.001, yaw_rad: 1.5708}
+  - tag_id: 102
+    name: "FLOOR_SOUTH_FOYER_2"
+    corridor: "SOUTH_FOYER"
+    pose: {x: 6.40, y: -3.50, z: 0.001, yaw_rad: 1.5708}
+  - tag_id: 103
+    name: "FLOOR_SOUTH_JUNCTION"
+    corridor: "SOUTH_FOYER"
+    pose: {x: 6.40, y: -1.50, z: 0.001, yaw_rad: 1.5708}
+
+  # --- West Concourse (Projects Row P01-P12 at X=0.0m) ---
+  - tag_id: 104
+    name: "FLOOR_WEST_CONCOURSE_1"
+    corridor: "WEST_CONCOURSE"
+    pose: {x: 0.00, y: 1.00, z: 0.001, yaw_rad: 1.5708}
+  - tag_id: 105
+    name: "FLOOR_WEST_CONCOURSE_2"
+    corridor: "WEST_CONCOURSE"
+    pose: {x: 0.00, y: 3.00, z: 0.001, yaw_rad: 1.5708}
+  - tag_id: 106
+    name: "FLOOR_WEST_CONCOURSE_3"
+    corridor: "WEST_CONCOURSE"
+    pose: {x: 0.00, y: 5.00, z: 0.001, yaw_rad: 1.5708}
+  - tag_id: 107
+    name: "FLOOR_WEST_P06_APPROACH"
+    corridor: "WEST_CONCOURSE"
+    pose: {x: 0.00, y: 7.00, z: 0.001, yaw_rad: 1.5708}
+  - tag_id: 108
+    name: "FLOOR_WEST_CONCOURSE_4"
+    corridor: "WEST_CONCOURSE"
+    pose: {x: 0.00, y: 9.00, z: 0.001, yaw_rad: 1.5708}
+  - tag_id: 109
+    name: "FLOOR_WEST_CONCOURSE_5"
+    corridor: "WEST_CONCOURSE"
+    pose: {x: 0.00, y: 11.00, z: 0.001, yaw_rad: 1.5708}
+  - tag_id: 110
+    name: "FLOOR_WEST_P01_APPROACH"
+    corridor: "WEST_CONCOURSE"
+    pose: {x: 0.00, y: 13.00, z: 0.001, yaw_rad: 1.5708}
+  - tag_id: 111
+    name: "FLOOR_NORTH_WEST_TURN"
+    corridor: "WEST_CONCOURSE"
+    pose: {x: 0.00, y: 15.00, z: 0.001, yaw_rad: 0.0000} # Turning East
+
+  # --- North Promenade Concourse (Y=15.0m, connecting West & East) ---
+  - tag_id: 112
+    name: "FLOOR_NORTH_PROMENADE_1"
+    corridor: "NORTH_PROMENADE"
+    pose: {x: 2.40, y: 15.00, z: 0.001, yaw_rad: 0.0000}
+  - tag_id: 113
+    name: "FLOOR_NORTH_PROMENADE_2"
+    corridor: "NORTH_PROMENADE"
+    pose: {x: 4.80, y: 15.00, z: 0.001, yaw_rad: 0.0000}
+  - tag_id: 114
+    name: "FLOOR_NORTH_PROMENADE_3"
+    corridor: "NORTH_PROMENADE"
+    pose: {x: 7.20, y: 15.00, z: 0.001, yaw_rad: 0.0000}
+  - tag_id: 115
+    name: "FLOOR_NORTH_EAST_TURN"
+    corridor: "NORTH_PROMENADE"
+    pose: {x: 9.60, y: 15.00, z: 0.001, yaw_rad: -1.5708} # Turning South
+
+  # --- East Concourse (Design Row D01-D12 at X=9.6m) ---
+  - tag_id: 116
+    name: "FLOOR_EAST_CONCOURSE_1"
+    corridor: "EAST_CONCOURSE"
+    pose: {x: 9.60, y: 13.00, z: 0.001, yaw_rad: -1.5708} # Facing South
+  - tag_id: 117
+    name: "FLOOR_EAST_CONCOURSE_2"
+    corridor: "EAST_CONCOURSE"
+    pose: {x: 9.60, y: 11.00, z: 0.001, yaw_rad: -1.5708}
+  - tag_id: 118
+    name: "FLOOR_EAST_CONCOURSE_3"
+    corridor: "EAST_CONCOURSE"
+    pose: {x: 9.60, y: 9.00, z: 0.001, yaw_rad: -1.5708}
+  - tag_id: 119
+    name: "FLOOR_EAST_D01_APPROACH"
+    corridor: "EAST_CONCOURSE"
+    pose: {x: 9.60, y: 7.00, z: 0.001, yaw_rad: -1.5708}
+  - tag_id: 120
+    name: "FLOOR_EAST_CONCOURSE_4"
+    corridor: "EAST_CONCOURSE"
+    pose: {x: 9.60, y: 5.00, z: 0.001, yaw_rad: -1.5708}
+  - tag_id: 121
+    name: "FLOOR_EAST_CONCOURSE_5"
+    corridor: "EAST_CONCOURSE"
+    pose: {x: 9.60, y: 3.00, z: 0.001, yaw_rad: -1.5708}
+  - tag_id: 122
+    name: "FLOOR_EAST_CONCOURSE_6"
+    corridor: "EAST_CONCOURSE"
+    pose: {x: 9.60, y: 1.00, z: 0.001, yaw_rad: -1.5708}
+  - tag_id: 123
+    name: "FLOOR_SOUTH_RETURN_CROSSWAY"
+    corridor: "EAST_CONCOURSE"
+    pose: {x: 6.40, y: 0.00, z: 0.001, yaw_rad: -1.5708}
