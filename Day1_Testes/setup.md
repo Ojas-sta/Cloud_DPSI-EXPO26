@@ -95,12 +95,21 @@ cap.release()
 
 ---
 
-## 5. Pre-Flight Diagnostic Test Suite
+## 5. Pre-Flight Diagnostic Test Suite & Voice-Guided POST
 
-Before walking the robot, run the automated verification suite:
-
+### Automated Unit Test Suite
 ```bash
 python3 unitree_direct_sdk/test_milestones_end_to_end.py
+```
+
+### Voice-Guided Power-On Self-Test (POST) & Interactive Calibration
+Run the 7-stage interactive diagnostic before putting the Go2 on the aisle:
+```bash
+# In Emulation Mode (Offline Mac)
+python3 Day1_Testes/post_diagnostics.py --emulate --serve --port 8088
+
+# On Physical Robot (Live USB Camera)
+python3 Day1_Testes/post_diagnostics.py --real --camera 0 --serve --port 8088
 ```
 
 Expected output:

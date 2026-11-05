@@ -165,6 +165,7 @@ class MJPEGStreamHandler(BaseHTTPRequestHandler):
                 </div>
                 <!-- Interactive Evaluator & Topological SLAM Controls -->
                 <div class="controls-bar">
+                    <button class="btn" style="border-color: #10b981; color: #6ee7b7; font-weight: 700;" onclick="sendCmd('/api/post/run')">🩺 Run POST Diagnostics</button>
                     <button class="btn" onclick="sendCmd('/api/mode/tour')">🚀 Mode: Tour</button>
                     <button class="btn" onclick="sendCmd('/api/mode/discovery')">🗺️ Mode: Discovery</button>
                     <button class="btn" onclick="sendCmd('/api/save_graph')">💾 Save Graph (M)</button>
@@ -250,6 +251,18 @@ class MJPEGStreamHandler(BaseHTTPRequestHandler):
                 if vis.discovery_ref:
                     vis.discovery_ref.save_discovered_map()
                     print("  🌐 [Web UI]: Discovered topological graph saved!")
+            elif self.path == '/api/post/run':
+                print("  🌐 [Web UI]: Triggering POST Diagnostics...")
+                def _bg_post():
+                    try:
+                        from Day1_Testes.post_diagnostics import PostDiagnosticsSuite
+                        suite = PostDiagnosticsSuite(use_physical_robot=False, serve_cockpit=False)
+                        suite.visualizer = vis
+                        suite.voice.visualizer = vis
+                        suite.run_all()
+                    except Exception as err:
+                        print(f"  ⚠️ POST background run error: {err}")
+                threading.Thread(target=_bg_post, daemon=True).start()
             # Teleop commands
             elif self.path.startswith('/api/teleop'):
                 if vis.teleop_ref:
@@ -298,6 +311,7 @@ class CockpitVisualizer:
         self.fiducial_badge = "AprilTag (36h11)" if use_apriltag else "ArUco (4x4)"
         self.latest_frame: Optional[np.ndarray] = None
         self.latest_jpeg: Optional[bytes] = None
+        self.latest_speech_text: str = ""
         self.lock = threading.Lock()
         self.escort_ref = None
         self.discovery_ref = None
@@ -323,6 +337,13 @@ class CockpitVisualizer:
     def get_latest_jpeg(self) -> Optional[bytes]:
         with self.lock:
             return self.latest_jpeg
+
+    def set_latest_frame(self, frame: np.ndarray):
+        """Allows external callers (like POST diagnostics) to inject HUD frames directly."""
+        with self.lock:
+            self.latest_frame = frame
+            _, jpeg = cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 85])
+            self.latest_jpeg = jpeg.tobytes()
 
     def render_overhead_minimap(
         self,
@@ -526,11 +547,12 @@ class CockpitVisualizer:
             cv2.putText(hud, escort_sub, (32, ey + 44), cv2.FONT_HERSHEY_SIMPLEX, 0.38, (203, 213, 225), 1)
 
         # 6. Bottom Speech Transcript Banner
-        if speech_text:
+        effective_speech = speech_text or self.latest_speech_text
+        if effective_speech:
             cv2.rectangle(hud, (0, 640), (1280, 720), (11, 15, 25), -1)
             cv2.line(hud, (0, 640), (1280, 640), (0, 229, 255), 1)
             cv2.putText(hud, "[DOCENT SPEECH SYNTHESIS]", (20, 665), cv2.FONT_HERSHEY_SIMPLEX, 0.48, (0, 229, 255), 2)
-            display_txt = speech_text[:115] + ("..." if len(speech_text) > 115 else "")
+            display_txt = effective_speech[:115] + ("..." if len(effective_speech) > 115 else "")
             cv2.putText(hud, display_txt, (20, 695), cv2.FONT_HERSHEY_SIMPLEX, 0.55, (255, 255, 255), 1, cv2.LINE_AA)
 
         # Update latest frame & JPEG

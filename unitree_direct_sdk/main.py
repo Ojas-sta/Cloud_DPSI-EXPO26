@@ -485,7 +485,26 @@ def main():
     parser.add_argument("--port", type=int, default=8088, help="Web visualizer port")
     parser.add_argument("--serve", action="store_true", help="Keep Web Cockpit HTTP server active after run for interactive inspection")
     parser.add_argument("--apriltag", action="store_true", help="Use AprilTag (DICT_APRILTAG_36h11) instead of ArUco (DICT_4X4_250)")
+    parser.add_argument("--post", action="store_true", help="Run interactive voice-guided Power-On Self-Test (POST)")
     args = parser.parse_args()
+
+    if args.post:
+        from Day1_Testes.post_diagnostics import PostDiagnosticsSuite
+        suite = PostDiagnosticsSuite(
+            use_physical_robot=args.real,
+            camera_index=args.camera,
+            port=args.port,
+            serve_cockpit=args.serve
+        )
+        success = suite.run_all()
+        if args.serve:
+            print(f"\n  🌐 [CockpitVisualizer]: Holding server open at http://localhost:{args.port}. Press Ctrl+C to terminate.")
+            try:
+                while True:
+                    time.sleep(1.0)
+            except KeyboardInterrupt:
+                pass
+        sys.exit(0 if success else 1)
 
     robot = UnitreeGo2Interface(use_physical_robot=args.real)
     vision = RealArUcoVision(camera_index=args.camera, layout_preset=args.preset, use_apriltag=args.apriltag)

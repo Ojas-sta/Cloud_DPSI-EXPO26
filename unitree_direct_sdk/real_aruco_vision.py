@@ -277,7 +277,8 @@ class RealArUcoVision:
                         "dx": dx,
                         "dz": dz,
                         "rvec": rvec,
-                        "tvec": tvec
+                        "tvec": tvec,
+                        "corners": corners[i]
                     })
 
         return annotated, detections

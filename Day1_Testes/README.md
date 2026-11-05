@@ -84,6 +84,23 @@ python3 Day1_Testes/compare_aruco_vs_apriltag.py --camera 0 --frames 60
 
 ## 🚦 Testing Sequence: The 4 Sequential Milestones
 
+### Step 0: Voice-Guided Power-On Self-Test (POST) & Board Calibration
+Before running any milestones, execute the voice-guided POST suite to sequentially verify all 7 subsystems:
+```bash
+# Offline Emulation (Mac Dry-Run)
+python3 Day1_Testes/post_diagnostics.py --emulate --serve --port 8088
+
+# On Physical Go2 Robot (USB Camera)
+python3 Day1_Testes/post_diagnostics.py --real --camera 0 --serve --port 8088
+
+# Or via main.py flag
+python3 unitree_direct_sdk/main.py --post --serve --port 8088
+```
+- **What it tests**: Audio/TTS, CycloneDDS/IP telemetry & battery %, +8.0° docent pitch tilt & yaw nod, 360° LiDAR 0.60m E-stop, interactive ArUco board lock, interactive AprilTag board lock & jitter comparison, and exports `Day1_Testes/last_post_report.json`.
+- **Operator action**: Listen to spoken prompts; hold up the printed ArUco and AprilTag boards at 1.0m when prompted.
+
+---
+
 All milestones seamlessly support both fiducial families using the `--apriltag` flag.
 
 ### Milestone 1: Teleoperated Discovery Walk
