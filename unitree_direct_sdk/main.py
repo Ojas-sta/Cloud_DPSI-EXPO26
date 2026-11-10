@@ -75,7 +75,7 @@ def run_milestone_1(
         robot.update_emulation(dt=0.04)
         telemetry = robot.get_telemetry()
 
-        raw_frame = vision.generate_synthetic_frame(robot.x, robot.y, robot.yaw_deg, stage)
+        raw_frame = vision.read_frame(robot.x, robot.y, robot.yaw_deg, stage)
         annotated, detections = vision.process_frame(raw_frame)
 
         mapper.update_robot_odometry(robot.x, robot.y, robot.yaw_deg)
@@ -155,7 +155,7 @@ def run_milestone_2(
         robot.update_emulation(dt=0.04)
         telemetry = robot.get_telemetry()
 
-        raw_frame = vision.generate_synthetic_frame(robot.x, robot.y, robot.yaw_deg, stage)
+        raw_frame = vision.read_frame(robot.x, robot.y, robot.yaw_deg, stage)
         annotated, detections = vision.process_frame(raw_frame)
 
         top_info = {
@@ -243,7 +243,7 @@ def run_milestone_3(
         robot.update_emulation(dt=0.04)
         telemetry = robot.get_telemetry()
 
-        raw_frame = vision.generate_synthetic_frame(robot.x, robot.y, robot.yaw_deg, stage)
+        raw_frame = vision.read_frame(robot.x, robot.y, robot.yaw_deg, stage)
         annotated, detections = vision.process_frame(raw_frame)
 
         top_info = {
@@ -371,7 +371,7 @@ def run_milestone_4(
         robot.y = wy
         robot.yaw_deg = wyaw
         robot.update_emulation(0.04)
-        raw_frame = vision.generate_synthetic_frame(wx, wy, wyaw, wdesc)
+        raw_frame = vision.read_frame(wx, wy, wyaw, wdesc)
         _, dets = vision.process_frame(raw_frame)
         mapper.update_robot_odometry(wx, wy, wyaw)
         mapper.update_lidar_scan(wx, wy, wyaw, 1.40, 1.60)
@@ -385,7 +385,7 @@ def run_milestone_4(
         robot.update_emulation(dt=0.04)
         telemetry = robot.get_telemetry()
 
-        raw_frame = vision.generate_synthetic_frame(robot.x, robot.y, robot.yaw_deg, stage)
+        raw_frame = vision.read_frame(robot.x, robot.y, robot.yaw_deg, stage)
         annotated, detections = vision.process_frame(raw_frame)
 
         top_info = {
@@ -526,7 +526,18 @@ def main():
         print(f"\n  🌐 [CockpitVisualizer]: Holding server open at http://localhost:{args.port}. Press Ctrl+C to terminate.")
         try:
             while True:
-                time.sleep(1.0)
+                # If a physical camera is connected, keep streaming live frames into the Cockpit HUD
+                if vision.cap is not None and vision.cap.isOpened():
+                    raw_frame = vision.read_frame()
+                    annotated, detections = vision.process_frame(raw_frame)
+                    telemetry = robot.get_telemetry()
+                    hud_info = mapper.get_hud_info() if 'mapper' in locals() else {}
+                    visualizer.compose_cockpit_frame(
+                        annotated, telemetry, "LIVE STREAM ACTIVE",
+                        mode_label="LIVE REAL CAMERA",
+                        topological_info=hud_info
+                    )
+                time.sleep(0.04)
         except KeyboardInterrupt:
             print("\n  🛑 Server terminated by user.")
 

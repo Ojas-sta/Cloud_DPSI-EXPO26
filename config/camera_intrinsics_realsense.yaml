@@ -1,0 +1,20 @@
+# Intel RealSense D435i RGB Optical Calibration Parameters
+# Sensor: OmniVision OV2740 (1920x1080 Full HD)
+# Calibrated using: 3x2 AprilTag tag36h11 Precision Docking & Calibration Board
+calibration_date: "2026-11-06"
+resolution:
+  width: 1920
+  height: 1080
+camera_matrix:
+  fx: 1642.26
+  fy: 1642.26
+  cx: 999.63
+  cy: 490.62
+distortion_coefficients:
+  k1: 0.0
+  k2: 0.0
+  p1: 0.0
+  p2: 0.0
+  k3: 0.0
+reprojection_error_pixels: 1.87
+solver: "cv2.SOLVEPNP_IPPE_SQUARE"

@@ -393,7 +393,14 @@ class CockpitVisualizer:
                             cv2.line(m, pu, pv, (80, 140, 200), 1, cv2.LINE_AA)
 
             # Draw nodes
-            for nid, ndata in graph_nodes.items():
+            node_items = graph_nodes.items() if isinstance(graph_nodes, dict) else enumerate(graph_nodes)
+            for item in node_items:
+                if isinstance(item, tuple) and len(item) == 2:
+                    nid, ndata = item
+                else:
+                    continue
+                if not isinstance(ndata, dict):
+                    continue
                 nx_val = ndata["pose"]["x"]
                 ny_val = ndata["pose"]["y"]
                 npx, npy = to_px(nx_val, ny_val)

@@ -6,3 +6,6 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 *.db
+
+exported_visual_resources/
+.venv_realsense/

@@ -29,13 +29,13 @@ class RealArUcoVision:
         self.use_apriltag = use_apriltag
         self.cap = None
 
-        # Camera intrinsic matrix (standard 720p FOV ~69 deg)
-        self.width = 1280
-        self.height = 720
-        fx = 900.0
-        fy = 900.0
-        cx = self.width / 2.0
-        cy = self.height / 2.0
+        # Camera intrinsic matrix (RealSense D435i 1080p Calibrated vs. standard fallback)
+        self.width = 1920
+        self.height = 1080
+        fx = 1642.26
+        fy = 1642.26
+        cx = 999.63
+        cy = 490.62
         self.camera_matrix = np.array([
             [fx,  0, cx],
             [ 0, fy, cy],
@@ -75,12 +75,22 @@ class RealArUcoVision:
         print(f"  📷 [RealArUcoVision]: Attempting connection to physical camera {idx}...")
         self.cap = cv2.VideoCapture(idx)
         if self.cap.isOpened():
-            self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, self.width)
-            self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
-            print(f"  ✓ [RealArUcoVision]: Physical camera {idx} connected (1280x720).")
+            self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+            self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+            actual_w = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+            actual_h = int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+            print(f"  ✓ [RealArUcoVision]: Physical camera {idx} connected ({actual_w}x{actual_h}).")
         else:
             print(f"  ⚠️ [RealArUcoVision]: Camera {idx} unavailable. Using synthetic visual renderer.")
             self.cap = None
+
+    def read_frame(self, fallback_x: float = 0.0, fallback_y: float = 0.0, fallback_yaw: float = 0.0, stage: str = "") -> np.ndarray:
+        """Reads a real frame from the hardware camera if connected; otherwise falls back to synthetic generation."""
+        if self.cap is not None and self.cap.isOpened():
+            ret, frame = self.cap.read()
+            if ret and frame is not None and frame.size > 0:
+                return frame
+        return self.generate_synthetic_frame(fallback_x, fallback_y, fallback_yaw, stage)
 
     def generate_synthetic_frame(self, robot_x: float, robot_y: float, robot_yaw_deg: float, target_stall: str) -> np.ndarray:
         """Generates a realistic 3D perspective camera frame containing real ArUco markers."""
