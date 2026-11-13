@@ -288,6 +288,49 @@
             transform: scale(1.08);
         }
 
+        .hud-btn.active {
+            background: rgba(52, 199, 89, 0.28);
+            border-color: #34C759;
+            color: #34C759;
+            box-shadow: 0 0 16px rgba(52, 199, 89, 0.45);
+        }
+
+        .hud-btn.active svg {
+            filter: drop-shadow(0 0 4px #34C759);
+        }
+
+        /* Ambient Speech Waveform Visualizer in HUD */
+        .speech-indicator {
+            display: none;
+            align-items: center;
+            gap: 3px;
+            height: 18px;
+            padding: 0 8px;
+            border-radius: 9999px;
+            background: rgba(52, 199, 89, 0.15);
+            border: 1px solid rgba(52, 199, 89, 0.35);
+        }
+
+        .speech-indicator.speaking {
+            display: flex;
+        }
+
+        .speech-bar {
+            width: 3px;
+            height: 8px;
+            background: #34C759;
+            border-radius: 2px;
+            animation: waveBounce 0.8s ease-in-out infinite alternate;
+        }
+
+        .speech-bar:nth-child(2) { animation-delay: 0.2s; height: 14px; }
+        .speech-bar:nth-child(3) { animation-delay: 0.4s; height: 10px; }
+
+        @keyframes waveBounce {
+            0% { transform: scaleY(0.4); opacity: 0.6; }
+            100% { transform: scaleY(1.4); opacity: 1; }
+        }
+
         .progress-bar-wrap {
             position: fixed;
             top: 0;
@@ -1008,6 +1051,10 @@
 
         <div class="hud-actions">
             <div class="hud-counter" id="slideCounter">01 / 08</div>
+            <button class="hud-btn" id="playBtn" title="Auto-Play Slides every 6s (P)">
+                <svg id="playIcon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                <svg id="pauseIcon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display: none;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+            </button>
             <button class="hud-btn" id="prevBtn" title="Previous Slide (Left Arrow)">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
             </button>
@@ -1025,7 +1072,7 @@
 
     <!-- Keyboard Hint -->
     <div class="keyboard-hint">
-        Navigate <span class="key-badge">←</span> <span class="key-badge">→</span> • Fullscreen <span class="key-badge">F</span>
+        Play/Pause <span class="key-badge">P</span> • Navigate <span class="key-badge">←</span> <span class="key-badge">→</span> • Fullscreen <span class="key-badge">F</span>
     </div>
 
     <!-- ===========================================
@@ -1365,7 +1412,9 @@
                 this.currentSlide = 0;
                 this.totalSlides = 8;
                 this.isTransitioning = false;
-                this.autoPlayTimer = null;
+                this.isPlaying = false;
+                this.autoAdvanceIntervalMs = 6000; // Exact 6.0 seconds per slide
+                this.presentationTimer = null;
 
                 // DOM Elements
                 this.slides = Array.from(document.querySelectorAll('.slide-layer'));
@@ -1375,6 +1424,9 @@
                 this.progressBar = document.getElementById('progressBar');
                 this.slideCounter = document.getElementById('slideCounter');
                 this.navDots = document.getElementById('navDots');
+                this.playBtn = document.getElementById('playBtn');
+                this.playIcon = document.getElementById('playIcon');
+                this.pauseIcon = document.getElementById('pauseIcon');
 
                 // Poses
                 this.poses = {
@@ -1471,6 +1523,9 @@
                     dot.addEventListener('click', (e) => {
                         e.stopPropagation();
                         this.goToSlide(i);
+                        if (this.isPlaying) {
+                            this.scheduleNextAutoAdvance();
+                        }
                     });
                     this.navDots.appendChild(dot);
                 }
@@ -1509,7 +1564,7 @@
                         case 'p':
                         case 'P':
                             e.preventDefault();
-                            this.toggleAutoPlay();
+                            this.togglePlayPresentation();
                             break;
                     }
                 });
@@ -1549,13 +1604,21 @@
                 }, { passive: true });
 
                 // HUD Button Controls
+                if (this.playBtn) {
+                    this.playBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        this.togglePlayPresentation();
+                    });
+                }
                 document.getElementById('prevBtn').addEventListener('click', (e) => {
                     e.stopPropagation();
                     this.prev();
+                    if (this.isPlaying) this.scheduleNextAutoAdvance();
                 });
                 document.getElementById('nextBtn').addEventListener('click', (e) => {
                     e.stopPropagation();
                     this.next();
+                    if (this.isPlaying) this.scheduleNextAutoAdvance();
                 });
                 document.getElementById('fullscreenBtn').addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -1676,15 +1739,61 @@
                 }
             }
 
-            toggleAutoPlay() {
-                if (this.autoPlayTimer) {
-                    clearInterval(this.autoPlayTimer);
-                    this.autoPlayTimer = null;
+            togglePlayPresentation() {
+                if (this.isPlaying) {
+                    this.pausePresentation();
                 } else {
-                    this.autoPlayTimer = setInterval(() => {
-                        this.next();
-                    }, 5500);
+                    this.startPresentation();
                 }
+            }
+
+            startPresentation() {
+                this.isPlaying = true;
+                if (this.playBtn) this.playBtn.classList.add('active');
+                if (this.playIcon) this.playIcon.style.display = 'none';
+                if (this.pauseIcon) this.pauseIcon.style.display = 'block';
+
+                // If currently at the end, wrap to start
+                if (this.currentSlide >= this.totalSlides - 1) {
+                    this.goToSlide(0);
+                }
+                this.scheduleNextAutoAdvance();
+            }
+
+            pausePresentation() {
+                this.isPlaying = false;
+                if (this.playBtn) this.playBtn.classList.remove('active');
+                if (this.playIcon) this.playIcon.style.display = 'block';
+                if (this.pauseIcon) this.pauseIcon.style.display = 'none';
+
+                if (this.presentationTimer) {
+                    clearTimeout(this.presentationTimer);
+                    this.presentationTimer = null;
+                }
+            }
+
+            scheduleNextAutoAdvance() {
+                if (!this.isPlaying) return;
+
+                if (this.presentationTimer) {
+                    clearTimeout(this.presentationTimer);
+                    this.presentationTimer = null;
+                }
+
+                // Exactly 6 seconds per slide
+                this.presentationTimer = setTimeout(() => {
+                    if (!this.isPlaying) return;
+
+                    if (this.currentSlide < this.totalSlides - 1) {
+                        this.next();
+                    } else {
+                        // Loop back to beginning
+                        this.goToSlide(0);
+                    }
+
+                    // Schedule next slide after 6 seconds
+                    this.scheduleNextAutoAdvance();
+                }, this.autoAdvanceIntervalMs);
             }
         }
 
