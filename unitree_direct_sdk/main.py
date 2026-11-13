@@ -470,18 +470,85 @@ def run_milestone_4(
     print("\n  ✓ MILESTONE 4 COMPLETED SUCCESSFULLY!\n")
 
 
+def run_teleop_only(
+    robot: UnitreeGo2Interface,
+    vision: RealArUcoVision,
+    visualizer: CockpitVisualizer,
+    mapper: DiscoveryMapper
+):
+    """Pure manual teleoperation mode (zero autonomous movement when idle)."""
+    print("\n" + "=" * 80)
+    print("  🎮 SAFE MANUAL TELEOP MODE (ZERO AUTO-MOTION)")
+    print("  • Controls: WASD (Move), QE (Turn), Space (Brake), M (Save Map), X (Exit)")
+    print("  • Safety:   0.40s Auto-Zero Watchdog active")
+    print("=" * 80 + "\n")
+
+    visualizer.active_milestone = "SAFE MANUAL TELEOP"
+    visualizer.discovery_ref = mapper
+    robot.stand_up()
+    time.sleep(0.5)
+
+    teleop = KeyboardTeleop(
+        command_callback=lambda vx, vy, wz: robot.move(vx=vx, vy=vy, wz=wz),
+        save_map_callback=lambda: mapper.save_discovered_map()
+    )
+    visualizer.teleop_ref = teleop
+    if sys.stdin.isatty():
+        teleop.start()
+
+    was_moving = False
+    try:
+        while teleop.running or not sys.stdin.isatty():
+            moving = (teleop.vx != 0.0 or teleop.vy != 0.0 or teleop.wz != 0.0)
+            if moving:
+                robot.move(vx=teleop.vx, vy=teleop.vy, wz=teleop.wz)
+            elif was_moving:
+                robot.stop()
+            was_moving = moving
+
+            robot.update_emulation(dt=0.04)
+            telemetry = robot.get_telemetry()
+            raw_frame = vision.read_frame(robot.x, robot.y, robot.yaw_deg, "MANUAL TELEOP")
+            annotated, detections = vision.process_frame(raw_frame)
+
+            mapper.update_robot_odometry(robot.x, robot.y, robot.yaw_deg)
+            mapper.update_aruco_detections(robot.x, robot.y, robot.yaw_deg, detections)
+
+            top_info = mapper.get_hud_info()
+            top_info["nodes"] = mapper.discovered_nodes
+            top_info["edges"] = mapper.discovered_edges
+
+            visualizer.compose_cockpit_frame(
+                annotated, telemetry, "MANUAL TELEOP ACTIVE",
+                mode_label="MANUAL TELEOP",
+                topological_info=top_info
+            )
+            time.sleep(0.04)
+    except KeyboardInterrupt:
+        print("\n  🛑 Teleop interrupted by user.")
+    finally:
+        robot.stop()
+        teleop.stop()
+
+
 def main():
     parser = argparse.ArgumentParser(description="Incremental ArUco Mapping, Autonomous Stall Sequence & Judge Pacing")
     parser.add_argument("--milestone", type=int, choices=[1, 2, 3, 4], default=1,
                         help="Select engineering milestone to run: 1, 2, 3, or 4")
-    parser.add_argument("--preset", choices=["minimal_2m_1s", "scaled_5m_2s"], default="minimal_2m_1s",
-                        help="Venue layout preset: 'minimal_2m_1s' (default) or 'scaled_5m_2s'")
+    parser.add_argument("--preset", choices=["minimal_2m_1s", "scaled_5m_2s", "scaled_36s", "dpsi_expo_31stalls"], default="dpsi_expo_31stalls",
+                        help="Venue layout preset: 'minimal_2m_1s', 'scaled_5m_2s', 'scaled_36s', or 'dpsi_expo_31stalls' (default)")
     parser.add_argument("--mode", choices=["discovery", "tour", "both"], default="tour",
                         help="Operation mode (overridden if --milestone is passed)")
     parser.add_argument("--pacing", choices=["on", "off"], default="on",
                         help="Companion judge pacing: 'on' (default) or 'off'")
     parser.add_argument("--real", action="store_true", help="Connect to physical Unitree Go2 robot via SDK2")
+    parser.add_argument("--net-if", type=str, default="en11",
+                        help="Network interface for Unitree SDK2 CycloneDDS (default: en11 on macOS USB-Ethernet)")
+    parser.add_argument("--teleop-only", action="store_true",
+                        help="Run pure manual teleop without autonomous milestone sweep")
     parser.add_argument("--camera", type=int, default=None, help="Camera index for physical USB/RealSense camera")
+    parser.add_argument("--builtin-cam", action="store_true",
+                        help="Use Unitree Go2 built-in front camera via SDK2 VideoClient (no external RealSense required)")
     parser.add_argument("--port", type=int, default=8088, help="Web visualizer port")
     parser.add_argument("--serve", action="store_true", help="Keep Web Cockpit HTTP server active after run for interactive inspection")
     parser.add_argument("--apriltag", action="store_true", help="Use AprilTag (DICT_APRILTAG_36h11) instead of ArUco (DICT_4X4_250)")
@@ -506,14 +573,21 @@ def main():
                 pass
         sys.exit(0 if success else 1)
 
-    robot = UnitreeGo2Interface(use_physical_robot=args.real)
-    vision = RealArUcoVision(camera_index=args.camera, layout_preset=args.preset, use_apriltag=args.apriltag)
+    robot = UnitreeGo2Interface(use_physical_robot=args.real, network_interface=args.net_if)
+    vision = RealArUcoVision(
+        camera_index=args.camera,
+        use_builtin_cam=args.builtin_cam,
+        layout_preset=args.preset,
+        use_apriltag=args.apriltag
+    )
     visualizer = CockpitVisualizer(port=args.port, use_apriltag=args.apriltag)
     escort = JudgeEscortController(nominal_speed=0.35, max_speed=0.55)
-    mapper = DiscoveryMapper(use_apriltag=args.apriltag)
+    mapper = DiscoveryMapper(use_apriltag=args.apriltag, layout_preset=args.preset)
     navigator = TopologicalArucoNavigator(use_apriltag=args.apriltag)
 
-    if args.milestone == 1:
+    if args.teleop_only:
+        run_teleop_only(robot, vision, visualizer, mapper)
+    elif args.milestone == 1:
         run_milestone_1(robot, vision, visualizer, mapper)
     elif args.milestone == 2:
         run_milestone_2(robot, vision, visualizer, navigator)

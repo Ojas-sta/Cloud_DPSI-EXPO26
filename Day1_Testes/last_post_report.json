@@ -1,83 +1,63 @@
 {
-  "timestamp": "2026-11-05T17:15:07Z",
-  "system": "Project Cloud: Unitree Go2 POST Diagnostic Suite",
-  "execution_mode": "Direct Kinematic Emulation",
-  "overall_status": "ALL SYSTEMS GO (READY FOR DISCOVERY)",
-  "stages": {
-    "stage_1_audio": {
-      "name": "Audio & TTS Voice Synthesis",
+  "timestamp": "2026-11-13 08:24:08",
+  "overall_pass": true,
+  "subsystems": {
+    "CycloneDDS / SportClient": {
       "status": "PASS",
-      "timestamp": "17:15:14",
-      "details": {
-        "backend": "macOS say (Samantha)",
-        "latency_sec": 6.88,
-        "speaker_volume": "Nominal",
-        "web_subtitle_broadcast": true
-      }
+      "passed": true,
+      "warning": false,
+      "message": "Connected to 192.168.123.161 on en11",
+      "metric": "RTT < 2ms",
+      "timestamp": 1794538447.001087
     },
-    "stage_2_telemetry": {
-      "name": "Network & Telemetry Link",
+    "BMS Battery Health": {
       "status": "PASS",
-      "timestamp": "17:15:27",
-      "details": {
-        "target_ip": "192.168.123.161",
-        "network_link": "Connected",
-        "battery_soc_pct": 94.0,
-        "battery_voltage_v": 28.4,
-        "imu_status": "Locked (Zero Drift)",
-        "mode": "Direct Emulation (Zero-Clipping)"
-      }
+      "passed": true,
+      "warning": false,
+      "message": "Battery state-of-charge nominal for multi-stall tour",
+      "metric": "SOC: 94.0%, Voltage: 28.40V, Current: -3.8A",
+      "timestamp": 1794538447.001122
     },
-    "stage_3_actuators": {
-      "name": "Posture & Pitch Micro-Actuation",
+    "Motor Joint Actuators": {
       "status": "PASS",
-      "timestamp": "17:15:41",
-      "details": {
-        "stand_height_m": 0.354,
-        "eye_contact_pitch_deg": 8.0,
-        "neutral_pitch_deg": 0.0,
-        "joint_compliance": "Verified (Nominal)"
-      }
+      "passed": true,
+      "warning": false,
+      "message": "All 12 joint actuators clear, temperatures within safe operating range",
+      "metric": "Max Joint Temp: 36.5\u00b0C, Posture: BALANCE_STAND, Lockout: SAFETY_CLEAR",
+      "timestamp": 1794538447.001131
     },
-    "stage_4_lidar": {
-      "name": "360\u00b0 LiDAR & Safety Bubble",
+    "4D LiDAR L1 Subsystem": {
       "status": "PASS",
-      "timestamp": "17:15:52",
-      "details": {
-        "corridor_clearance_m": {
-          "left": 1.4,
-          "right": 1.6
-        },
-        "centering_bias_vy": -0.02,
-        "e_stop_envelope_m": 0.6,
-        "e_stop_trigger_tested": true,
-        "anti_jerk_slewing": "0.8 m/s\u00b2 Decel / 0.5 m/s\u00b2 Accel Verified"
-      }
+      "passed": true,
+      "warning": false,
+      "message": "Point cloud stream active with low jitter",
+      "metric": "22.5 Hz (Threshold: > 15.0 Hz)",
+      "timestamp": 1794538447.5344498
     },
-    "stage_5_aruco_optical": {
-      "name": "ArUco Optical Board Tracking",
+    "120\u00b0 Fisheye Camera": {
       "status": "PASS",
-      "timestamp": "17:16:14",
-      "details": {
-        "locked_tag_id": 101,
-        "measured_distance_m": 2.012,
-        "reprojection_rmse_px": 0.002,
-        "dictionary": "cv2.aruco.DICT_4X4_250",
-        "solver": "SOLVEPNP_IPPE_SQUARE"
-      }
+      "passed": true,
+      "warning": false,
+      "message": "Video stream active, frame dimensions verified",
+      "metric": "1920x1080 @ 21.0 FPS",
+      "timestamp": 1794538448.5219269
     },
-    "stage_6_apriltag_optical": {
-      "name": "AprilTag Optical Board Tracking",
+    "Audio Output & Assets": {
       "status": "PASS",
-      "timestamp": "17:16:36",
-      "details": {
-        "locked_tag_id": 101,
-        "measured_distance_m": 2.009,
-        "reprojection_rmse_px": 0.004,
-        "aruco_rmse_baseline_px": 0.002,
-        "recommended_winner": "ArUco (DICT_4X4_250)",
-        "subpixel_gain_pct": 0.0
-      }
+      "passed": true,
+      "warning": false,
+      "message": "All 31+ stall pitch audio guides verified on disk",
+      "metric": "Player: afplay, FishAudio v3: 32/32, Fallback: 32/32",
+      "timestamp": 1794538448.536129
+    },
+    "Topological Graph & Config": {
+      "status": "PASS",
+      "passed": true,
+      "warning": false,
+      "message": "Master stall coordinates and graph topologies loaded",
+      "metric": "Configs: 3/3, 120\u00b0 Calib NPZ: Present",
+      "timestamp": 1794538448.5362182
     }
-  }
+  },
+  "warnings": []
 }

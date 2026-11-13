@@ -1,0 +1,258 @@
+{
+  "B-01": {
+    "code": "B-01",
+    "title": "Zap Fit",
+    "lead": "Avneet",
+    "pitch": "Welcome to Stall B-01: Zap Fit. Guided by Avneet, ZAP FIT is a fitness and nutrition business that combines personalised meal planning with convenient home-cooking services. Through its smart app, users receive meal recommendations based on their fitness goals, dietary preferences, allergies, and ingredients available at home.",
+    "word_count": 47,
+    "output_file": "b_01_25s.mp3"
+  },
+  "B-02": {
+    "code": "B-02",
+    "title": "GrowGrid",
+    "lead": "Dana",
+    "pitch": "Welcome to Stall B-02: GrowGrid. Guided by Dana, GrowGrid is a modular hydroponics business that helps people grow fresh food in homes, offices, schools, caf\u00e9s, and restaurants. It combines easy-to-use growing systems, crop starter packs, a nursery setup, and smart monitoring tools that track plant conditions and guide users from setup to harvest.",
+    "word_count": 53,
+    "output_file": "b_02_25s.mp3"
+  },
+  "B-03": {
+    "code": "B-03",
+    "title": "P&P",
+    "lead": "Vaibhav and Ajay",
+    "pitch": "Welcome to Stall B-03: P&P. Guided by Vaibhav and Ajay, P&P (kit)-  is a business model designed to provide suitable Personal Protective Equipment (PPE) kits according to different professions. Our project helps workers identify the safety equipment required for their jobs.",
+    "word_count": 41,
+    "output_file": "b_03_25s.mp3"
+  },
+  "B-04": {
+    "code": "B-04",
+    "title": "Tera Mosac Lounges",
+    "lead": "Vaibhav and Ajay",
+    "pitch": "Welcome to Stall B-04: Tera Mosac Lounges. Guided by Vaibhav and Ajay, The Terra Mosaic Lounges is a Smart Waiting Area Setup which is an innovative project designed to transform traditional waiting spaces into intelligent, comfortable, and efficient environments. It integrates IoT, automation, and AI-based technologies to enhance visitor experience.",
+    "word_count": 50,
+    "output_file": "b_04_25s.mp3"
+  },
+  "B-05": {
+    "code": "B-05",
+    "title": "Steel & Stack",
+    "lead": "Shashank",
+    "pitch": "Welcome to Stall B-05: Steel & Stack. Guided by Shashank, Steel & Stack is a technology engineering business that develops integrated hardware and software solutions for businesses and individuals. Its services include website development, AI integration, automation, AI agents, and robotics prototyping.",
+    "word_count": 42,
+    "output_file": "b_05_25s.mp3"
+  },
+  "B-06": {
+    "code": "B-06",
+    "title": "WishCollege",
+    "lead": "Shashank",
+    "pitch": "Welcome to Stall B-06: WishCollege. Guided by Shashank, Wish College is an AI-powered college counselling platform designed to make university admissions more accessible, affordable, and less stressful for students worldwide. The platform analyzes students\u2019 academic achievements, extracurricular activities, and personal preferences to recommend suitable universities.",
+    "word_count": 45,
+    "output_file": "b_06_25s.mp3"
+  },
+  "B-07": {
+    "code": "B-07",
+    "title": "WonderTech",
+    "lead": "Vaibhav and Ajay",
+    "pitch": "Welcome to Stall B-07: WonderTech. Guided by Vaibhav and Ajay, Wonder Tech is a digital learning ecosystem designed to reduce students\u2019 dependence on heavy school bags by providing digital textbooks, notebooks, assignments, and learning resources through a single application. Students can create notes, annotate books, and access their saved work across authorized.",
+    "word_count": 52,
+    "output_file": "b_07_25s.mp3"
+  },
+  "D-01": {
+    "code": "D-01",
+    "title": "Farm To Home",
+    "lead": "Divya",
+    "pitch": "Welcome to Stall D-01: Farm To Home. Guided by Divya, Farm to Home is an e-commerce platform connecting farmers, urban gardeners, and customers to promote fresh, locally grown produce and sustainable agriculture. It enables farmers and home growers to sell directly to consumers, reducing middlemen and creating income opportunities.",
+    "word_count": 49,
+    "output_file": "d_01_25s.mp3"
+  },
+  "D-02": {
+    "code": "D-02",
+    "title": "HetuSetu",
+    "lead": "Dana",
+    "pitch": "Welcome to Stall D-02: HetuSetu. Guided by Dana, Hetu Setu is a maternal healthcare platform connecting pregnant women, ASHA workers, clinics, and hospitals throughout pregnancy and postnatal care. Using a unique Hetu ID and QR code, it enables accessible records, coordinated referrals, and follow-up without requiring Aadhaar or smartphones.",
+    "word_count": 49,
+    "output_file": "d_02_25s.mp3"
+  },
+  "D-03": {
+    "code": "D-03",
+    "title": "Rehab Path 360",
+    "lead": "Divya",
+    "pitch": "Welcome to Stall D-03: Rehab Path 360. Guided by Divya, REHABPATH360 is an AI-powered prisoner rehabilitation platform designed to help correctional professionals create personalized rehabilitation plans. It evaluates individuals across multiple areas, including behaviour, education, vocational skills, well-being, and reintegration readiness.",
+    "word_count": 41,
+    "output_file": "d_03_25s.mp3"
+  },
+  "D-04": {
+    "code": "D-04",
+    "title": "Transportation Hub Crowd Management",
+    "lead": "Divya",
+    "pitch": "Welcome to Stall D-04: Transportation Hub Crowd Management. Guided by Divya, Transportation Hub Crowd Management is a solution designed to make travelling to busy public places easier, safer, and more convenient. The main aim of this project is to help people understand crowd concentration at different locations before visiting them.",
+    "word_count": 50,
+    "output_file": "d_04_25s.mp3"
+  },
+  "D-05": {
+    "code": "D-05",
+    "title": "CityWatch AI",
+    "lead": "Divya",
+    "pitch": "Welcome to Stall D-05: CityWatch AI. Guided by Divya, CityWatch AI is an AI-powered smart city solution designed to improve road safety, traffic management, and urban transportation. It combines three intelligent modules: road hazard detection to identify potholes and obstacles, accident detection to alert authorities about potential emergencies, and smart traffic light.",
+    "word_count": 52,
+    "output_file": "d_05_25s.mp3"
+  },
+  "D-06": {
+    "code": "D-06",
+    "title": "Smart Exit Hub",
+    "lead": "Divya",
+    "pitch": "Welcome to Stall D-06: Smart Exit Hub. Guided by Divya, Smart Exit Hub is an airport waiting facility designed to provide comfort and convenience for passengers awaiting transportation, particularly elderly travellers and families with young children. It offers dedicated spaces with comfortable seating and essential amenities, alongside digital displays showing transportation availability.",
+    "word_count": 52,
+    "output_file": "d_06_25s.mp3"
+  },
+  "D-07": {
+    "code": "D-07",
+    "title": "Little care",
+    "lead": "Divya",
+    "pitch": "Welcome to Stall D-07: Little care. Guided by Divya, Little Care is an interactive paediatric healthcare application designed to connect children, parents, and hospitals through one platform. It features three modules: Admin, Kids, and Parents.",
+    "word_count": 35,
+    "output_file": "d_07_25s.mp3"
+  },
+  "D-08": {
+    "code": "D-08",
+    "title": "Munchly",
+    "lead": "Shashank",
+    "pitch": "Welcome to Stall D-08: Munchly. Guided by Shashank, DPS Indirapuram Cafeteria System is an integrated school dining and cashless wallet platform that helps parents, students, and campus staff manage daily school meals with complete ease and financial transparency. It combines isolated student digital wallets, instant Razorpay-powered top-ups, advance meal pre-booking with automated.",
+    "word_count": 52,
+    "output_file": "d_08_25s.mp3"
+  },
+  "D-09": {
+    "code": "D-09",
+    "title": "FindIT",
+    "lead": "Shashank",
+    "pitch": "Welcome to Stall D-09: FindIT. Guided by Shashank, CampusFound is an institutional lost-and-found management platform that helps schools catalog, protect, and reunite lost property across campus. It combines phone-free shared terminal logging, smart locker custody tracking, digital claim passes with anti-theft verification, and seamless integration into school LMS and student smart RFID cards.",
+    "word_count": 53,
+    "output_file": "d_09_25s.mp3"
+  },
+  "D-10": {
+    "code": "D-10",
+    "title": "RouteWise",
+    "lead": "Shashank",
+    "pitch": "Welcome to Stall D-10: RouteWise. Guided by Shashank, SafeDrive Sentinel is an intelligent transit and fleet safety platform that helps commercial drivers, school fleets, and logistics operators navigate secure routes while safeguarding driver welfare. It combines real-time route optimization, automated periodic safety check-ins, hands-free multilingual voice commands, offline map caching, and an.",
+    "word_count": 52,
+    "output_file": "d_10_25s.mp3"
+  },
+  "D-11": {
+    "code": "D-11",
+    "title": "AI Exam Monitor",
+    "lead": "Shashank",
+    "pitch": "Welcome to Stall D-11: AI Exam Monitor. Guided by Shashank, AI-powered classroom monitoring system that helps schools, educators, and administrators track student focus, attendance, and discipline in real time across classrooms and lecture halls. It combines high-precision facial expression detection, 3D directed gaze telemetry, automated daily LMS sync, and weekly escalation reports.",
+    "word_count": 52,
+    "output_file": "d_11_25s.mp3"
+  },
+  "D-12": {
+    "code": "D-12",
+    "title": "Eagle's Eye",
+    "lead": "Shashank",
+    "pitch": "Welcome to Stall D-12: Eagle's Eye. Guided by Shashank, Eagle\u2019s Eye is an AI-powered classroom monitoring system that helps schools and educators track student focus, attendance, and discipline in real time. It combines high-precision facial expression detection, 3D directed gaze telemetry, automated daily LMS sync for teachers, and weekly escalation reports that.",
+    "word_count": 52,
+    "output_file": "d_12_25s.mp3"
+  },
+  "DISPLAY": {
+    "code": "DISPLAY",
+    "title": "Display (Aeroplane)",
+    "lead": "Shubham",
+    "pitch": "Welcome to our Special Exhibition Showcase. Supervised by Shubham, this live robotics and simulation hub features advanced humanoid bipedal reinforcement learning, autonomous mobile rovers, and real-time student mechatronics.",
+    "word_count": 28,
+    "output_file": "display_25s.mp3"
+  },
+  "P-01": {
+    "code": "P-01",
+    "title": "Stepwise AI",
+    "lead": "Divya",
+    "pitch": "Welcome to Stall P-01: Stepwise AI. Guided by Divya, StepWise is an AI-assisted diabetic foot screening system designed to detect early warning signs of foot complications, particularly for people with reduced pain sensitivity. Using five cameras and AI-powered image analysis, the device identifies visible concerns such as ulcers, cracks, swelling, and discoloration.",
+    "word_count": 52,
+    "output_file": "p_01_25s.mp3"
+  },
+  "P-02": {
+    "code": "P-02",
+    "title": "ADAS",
+    "lead": "Shubham",
+    "pitch": "Welcome to Stall P-02: ADAS. Guided by Shubham, ADAS System: A low-cost aftermarket driver assistance kit for affordable cars that don\u2019t come with ADAS. Side sensors provide blind spot and side vehicle detection, alerting the driver before a risky lane change.",
+    "word_count": 41,
+    "output_file": "p_02_25s.mp3"
+  },
+  "P-03": {
+    "code": "P-03",
+    "title": "Water Management System",
+    "lead": "Vaibhav and Ajay",
+    "pitch": "Welcome to Stall P-03: Water Management System. Guided by Vaibhav and Ajay, The Water Management System aims to conserve water by collecting and reusing wastewater from bathroom sinks and RO purifiers. The collected water passes through a filtration unit and is stored in a tank.",
+    "word_count": 45,
+    "output_file": "p_03_25s.mp3"
+  },
+  "P-04": {
+    "code": "P-04",
+    "title": "EcoVoice",
+    "lead": "Krishna",
+    "pitch": "Welcome to Stall P-04: EcoVoice. Guided by Krishna, EcoVoice  is a Raspberry Pi-based waste management system designed to encourage proper waste segregation and sustainable practices. It features three separate bins for plastic, paper, and biodegradable waste, each equipped with a foot-operated lid and LED indicators.",
+    "word_count": 45,
+    "output_file": "p_04_25s.mp3"
+  },
+  "P-05": {
+    "code": "P-05",
+    "title": "Aero lift",
+    "lead": "Shubham  Divya",
+    "pitch": "Welcome to Stall P-05: Aero lift. Guided by Shubham  Divya, A drone designed to deliver urgent medical supplies such as medicines, blood samples, first-aid kits and vaccines to remote or hard-to-reach areas. It flies a set route using GPS, carries a secure and padded payload bay, and drops or lands at the destination.",
+    "word_count": 53,
+    "output_file": "p_05_25s.mp3"
+  },
+  "P-06": {
+    "code": "P-06",
+    "title": "Binzo",
+    "lead": "Shubham",
+    "pitch": "Welcome to Stall P-06: Binzo. Guided by Shubham, A line-following dustbin that travels along a corridor on its own. When its sensors detect a person nearby, it stops and automatically opens its lid so waste can be dropped in without touching it.",
+    "word_count": 42,
+    "output_file": "p_06_25s.mp3"
+  },
+  "P-07": {
+    "code": "P-07",
+    "title": "Health Thread",
+    "lead": "Shubham",
+    "pitch": "Welcome to Stall P-07: Health Thread. Guided by Shubham, HealthThread is an AI-powered healthcare platform designed to securely store and organize an individual\u2019s complete medical history in one accessible space, regardless of which hospital or doctor they visit. Through HealthThread Vault, users can manage medical records, prescriptions, and health updates, while Beacon.",
+    "word_count": 52,
+    "output_file": "p_07_25s.mp3"
+  },
+  "P-08": {
+    "code": "P-08",
+    "title": "QUBIT",
+    "lead": "Vaibhav and Ajay",
+    "pitch": "Welcome to Stall P-08: QUBIT. Guided by Vaibhav and Ajay, The Smart Classroom Doubt Queue System is an IoT-based solution designed to help teachers manage multiple student queries efficiently. It uses two ESP32 microcontrollers: a transmitter with a keypad and display for entering student roll numbers, and a receiver that wirelessly collects.",
+    "word_count": 52,
+    "output_file": "p_08_25s.mp3"
+  },
+  "P-09": {
+    "code": "P-09",
+    "title": "Smart Parcel Box",
+    "lead": "Shubham",
+    "pitch": "Welcome to Stall P-09: Smart Parcel Box. Guided by Shubham, Smart Delivery Box is a secure parcel delivery system designed to prevent package theft and ensure safe, reliable deliveries. Delivery personnel place parcels inside a specially designed box that automatically locks after the package is deposited.",
+    "word_count": 46,
+    "output_file": "p_09_25s.mp3"
+  },
+  "P-10": {
+    "code": "P-10",
+    "title": "Automated Passes",
+    "lead": "Vaibhav and Ajay",
+    "pitch": "Welcome to Stall P-10: Automated Passes. Guided by Vaibhav and Ajay, This project aims to develop a smart school attendance and access control system using RFID cards, an ESP32 microcontroller, and an RFID reader. Each student is assigned a unique RFID card to register entry and exit with accurate timestamps.",
+    "word_count": 50,
+    "output_file": "p_10_25s.mp3"
+  },
+  "P-11": {
+    "code": "P-11",
+    "title": "Neuralink",
+    "lead": "Shashank",
+    "pitch": "Welcome to Stall P-11: Neuralink. Guided by Shashank, Neuralink is an accessible Brain-Computer Interface (BCI) system that enables hands-free device control and cognitive monitoring for assistive tech, interactive gaming, and robotics. It combines low-latency wireless biosignal acquisition, real-time spectral focus tracking, neuromuscular trigger detection, and an adaptive control pipeline that translates neural.",
+    "word_count": 52,
+    "output_file": "p_11_25s.mp3"
+  },
+  "P-12": {
+    "code": "P-12",
+    "title": "AeroDry",
+    "lead": "Vaibhav and Ajay",
+    "pitch": "Welcome to Stall P-12: AeroDry. Guided by Vaibhav and Ajay, Project Name: AeroDry \u2013 Smart Indoor Clothes Drying System AeroDry is an innovative indoor clothes-drying system designed to overcome the challenges of drying clothes during monsoons, winters, and humid weather conditions. It provides a convenient indoor drying space where clothes can be.",
+    "word_count": 52,
+    "output_file": "p_12_25s.mp3"
+  }
+}

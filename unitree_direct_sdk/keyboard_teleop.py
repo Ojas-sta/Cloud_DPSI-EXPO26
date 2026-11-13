@@ -102,8 +102,9 @@ class KeyboardTeleop:
         fd = sys.stdin.fileno()
         try:
             old_settings = termios.tcgetattr(fd)
-            tty.setraw(fd)
-        except Exception:
+            tty.setcbreak(fd)
+        except Exception as e:
+            print(f"  ⚠️ [KeyboardTeleop]: Could not enable cbreak keyboard capture ({e}).")
             return
 
         try:
@@ -139,6 +140,8 @@ class KeyboardTeleop:
 
                     if self.command_callback:
                         self.command_callback(self.vx, self.vy, self.wz)
+                    if ch in ('w', 'W', 's', 'S', 'a', 'A', 'd', 'D', 'q', 'Q', 'e', 'E', ' '):
+                        print(f"  🎮 [Teleop]: vx={self.vx:+.2f} vy={self.vy:+.2f} wz={self.wz:+.2f}")
 
         finally:
             try:

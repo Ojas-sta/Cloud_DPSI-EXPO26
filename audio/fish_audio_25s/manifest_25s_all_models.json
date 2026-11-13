@@ -1,0 +1,1282 @@
+[
+  {
+    "voice": "v1",
+    "code": "P-02",
+    "title": "ADAS (Driver Assistance)",
+    "lead": "Shubham",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/p_02_narration.mp3",
+    "status": "OK",
+    "duration_sec": 18.78,
+    "script": "Welcome to Stall P-02: ADAS. Guided by Shubham, this edge-AI driver assistance system deploys forward radar and computer vision for predictive collision braking, blind-spot monitoring, and real-time lane deviation alerts to enhance vehicular road safety."
+  },
+  {
+    "voice": "v1",
+    "code": "P-06",
+    "title": "Binzo (Smart Robotic Waste Bin)",
+    "lead": "Shubham",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/p_06_narration.mp3",
+    "status": "OK",
+    "duration_sec": 18.42,
+    "script": "Welcome to Stall P-06: Binzo. Guided by Shubham, Binzo is an autonomous mobile waste platform utilizing planar LiDAR SLAM and ultrasonic fill-level telemetry to navigate public concourses and reduce custodial maintenance requirements."
+  },
+  {
+    "voice": "v1",
+    "code": "P-05",
+    "title": "Aero Lift",
+    "lead": "Shubham and Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/p_05_narration.mp3",
+    "status": "OK",
+    "duration_sec": 19.02,
+    "script": "Welcome to Stall P-05: Aero Lift. Guided by Shubham and Divya, this hybrid aeromechanical lift mechanism integrates pneumatic counterbalancing and brushless propulsion to transport delicate makerspace payloads smoothly across varying structural elevations."
+  },
+  {
+    "voice": "v1",
+    "code": "P-04",
+    "title": "EcoVoice",
+    "lead": "Krishna",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/p_04_narration.mp3",
+    "status": "OK",
+    "duration_sec": 19.67,
+    "script": "Welcome to Stall P-04: EcoVoice. Guided by Krishna, EcoVoice is an environmental acoustic monitoring platform deploying smart microphones and neural classification to monitor urban noise pollution, analyze wildlife biomes, and promote sustainable acoustic habitats."
+  },
+  {
+    "voice": "v1",
+    "code": "P-03",
+    "title": "Water Management System",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/p_03_narration.mp3",
+    "status": "OK",
+    "duration_sec": 20.45,
+    "script": "Welcome to Stall P-03: Water Management System. Guided by Vaibhav and Ajay, this automated IoT conservation network monitors reservoir levels, detects pipeline leaks using ultrasonic telemetry, and optimizes municipal water distribution to prevent resource wastage."
+  },
+  {
+    "voice": "v1",
+    "code": "P-01",
+    "title": "Stepwise AI",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/p_01_narration.mp3",
+    "status": "OK",
+    "duration_sec": 21.37,
+    "script": "Welcome to Stall P-01: Stepwise AI. Guided by Divya, this biomechanical gait analysis platform uses wearable six-axis IMUs and computer vision to analyze ankle pronation, track real-time deviations, and quantify patient recovery with clinical precision."
+  },
+  {
+    "voice": "v1",
+    "code": "P-08",
+    "title": "QUBIT",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/p_08_narration.mp3",
+    "status": "OK",
+    "duration_sec": 17.35,
+    "script": "Welcome to Stall P-08: QUBIT. Guided by Vaibhav and Ajay, QUBIT is an interactive quantum computing educational simulator that visualizes superposition, entanglement, and quantum gate operations through an intuitive browser interface."
+  },
+  {
+    "voice": "v1",
+    "code": "D-01",
+    "title": "Farm to Home",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/d_01_narration.mp3",
+    "status": "Cached",
+    "duration_sec": 18.65,
+    "script": "Welcome to Stall D-01: Farm to Home. Guided by Divya, this direct-to-consumer agri-tech network connects organic regional farmers directly with urban households, ensuring fair prices, harvest traceability, and reduced transit spoilage."
+  },
+  {
+    "voice": "v1",
+    "code": "D-02",
+    "title": "HetuSetu",
+    "lead": "Dana",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/d_02_narration.mp3",
+    "status": "Cached",
+    "duration_sec": 16.56,
+    "script": "Welcome to Stall D-02: HetuSetu. Guided by Dana, HetuSetu is a multilingual digital bridge connecting community members with essential social welfare programs and civic resources through intuitive voice-guided workflows."
+  },
+  {
+    "voice": "v1",
+    "code": "D-03",
+    "title": "Rehab Path 360",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/d_03_narration.mp3",
+    "status": "Cached",
+    "duration_sec": 18.36,
+    "script": "Welcome to Stall D-03: Rehab Path 360. Guided by Divya, this holistic physical rehabilitation platform combines smart wearable motion sensors with personalized recovery exercises to optimize patient physiotherapy outcomes."
+  },
+  {
+    "voice": "v1",
+    "code": "D-04",
+    "title": "Transit Hub Crowd Management",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/d_04_narration.mp3",
+    "status": "Cached",
+    "duration_sec": 17.48,
+    "script": "Welcome to Stall D-04: Transit Hub Crowd Management. Guided by Divya, this intelligent computer vision platform analyzes platform pedestrian density, predicts choke points, and balances commuter flows across metro terminals."
+  },
+  {
+    "voice": "v1",
+    "code": "P-09",
+    "title": "Smart Parcel Box",
+    "lead": "Shubham",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/p_09_narration.mp3",
+    "status": "OK",
+    "duration_sec": 18.86,
+    "script": "Welcome to Stall P-09: Smart Parcel Box. Guided by Shubham, this secure contactless delivery locker combines encrypted QR verification, internal weight verification, and companion app telemetry to eliminate package theft and secure residential deliveries."
+  },
+  {
+    "voice": "v1",
+    "code": "P-10",
+    "title": "Automated Passes",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/p_10_narration.mp3",
+    "status": "OK",
+    "duration_sec": 17.61,
+    "script": "Welcome to Stall P-10: Automated Passes. Guided by Vaibhav and Ajay, this smart campus access control ecosystem uses NFC authentication and dynamic digital credentials to automate visitor check-ins and streamline campus security."
+  },
+  {
+    "voice": "v1",
+    "code": "P-07",
+    "title": "Health Thread",
+    "lead": "Shubham",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/p_07_narration.mp3",
+    "status": "OK",
+    "duration_sec": 19.93,
+    "script": "Welcome to Stall P-07: Health Thread. Guided by Shubham, this wearable vital telemetry system continuously tracks heart rate, SpO2, and peripheral temperature, transmitting encrypted alerts to clinical providers to detect anomalies before emergencies arise."
+  },
+  {
+    "voice": "v1",
+    "code": "P-12",
+    "title": "AeroDry",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/p_12_narration.mp3",
+    "status": "OK",
+    "duration_sec": 16.64,
+    "script": "Welcome to Stall P-12: AeroDry. Guided by Vaibhav and Ajay, this energy-efficient smart drying chamber blends convective airflow and infrared sensors to accelerate dehumidification for laboratories and agricultural storage."
+  },
+  {
+    "voice": "v1",
+    "code": "P-11",
+    "title": "Neuralink (BCI)",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/p_11_narration.mp3",
+    "status": "OK",
+    "duration_sec": 16.98,
+    "script": "Welcome to Stall P-11: Neuralink. Guided by Shashank, this accessible brain-computer interface decodes neuromuscular and EEG signals into real-time digital commands, enabling hands-free control of assistive robotics and computers."
+  },
+  {
+    "voice": "v1",
+    "code": "D-05",
+    "title": "CityWatch AI",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/d_05_narration.mp3",
+    "status": "OK",
+    "duration_sec": 16.69,
+    "script": "Welcome to Stall D-05: CityWatch AI. Guided by Divya, CityWatch AI processes municipal camera feeds to detect public safety hazards, traffic gridlocks, and illegal dumping, triggering automated municipal service dispatches."
+  },
+  {
+    "voice": "v1",
+    "code": "D-06",
+    "title": "Smart Exit Hub",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/d_06_narration.mp3",
+    "status": "OK",
+    "duration_sec": 16.74,
+    "script": "Welcome to Stall D-06: Smart Exit Hub. Guided by Divya, this automated facility emergency egress system uses dynamic photoluminescent signage and real-time crowd sensors to guide occupants along safe evacuation corridors."
+  },
+  {
+    "voice": "v1",
+    "code": "D-10",
+    "title": "RouteWise",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/d_10_narration.mp3",
+    "status": "OK",
+    "duration_sec": 15.15,
+    "script": "Welcome to Stall D-10: RouteWise. Guided by Shashank, RouteWise optimizes student bus transit fleets using dynamic routing algorithms, minimizing transit times, fuel emissions, and parent pickup delays."
+  },
+  {
+    "voice": "v1",
+    "code": "B-01",
+    "title": "Zap Fit",
+    "lead": "Avneet",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/b_01_narration.mp3",
+    "status": "Cached",
+    "duration_sec": 16.04,
+    "script": "Welcome to Stall B-01: Zap Fit. Guided by Avneet, Zap Fit integrates AI-driven nutritional planning, pantry ingredient management, and verified home chef services to make balanced dietary wellness accessible."
+  },
+  {
+    "voice": "v1",
+    "code": "B-02",
+    "title": "GrowGrid",
+    "lead": "Dana",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/b_02_narration.mp3",
+    "status": "Cached",
+    "duration_sec": 16.33,
+    "script": "Welcome to Stall B-02: GrowGrid. Guided by Dana, GrowGrid is a modular vertical hydroponics system featuring automated nutrient dosing and sensor telemetry for growing pesticide-free crops in classrooms and homes."
+  },
+  {
+    "voice": "v1",
+    "code": "B-03",
+    "title": "P&P (Safety Kits)",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/b_03_narration.mp3",
+    "status": "Cached",
+    "duration_sec": 18.18,
+    "script": "Welcome to Stall B-03: P&P. Guided by Vaibhav and Ajay, P&P delivers profession-specific personal protective equipment kits customized for sanitation, construction, and electrical workers to ensure occupational safety."
+  },
+  {
+    "voice": "v1",
+    "code": "B-04",
+    "title": "Tera Mosac Lounges",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/b_04_narration.mp3",
+    "status": "Cached",
+    "duration_sec": 17.11,
+    "script": "Welcome to Stall B-04: Tera Mosac Lounges. Guided by Vaibhav and Ajay, this smart waiting room integrates automated token queues, occupancy sensors, and climate control to transform visitor waiting experiences."
+  },
+  {
+    "voice": "v1",
+    "code": "B-05",
+    "title": "Steel & Stack",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/b_05_narration.mp3",
+    "status": "Cached",
+    "duration_sec": 16.09,
+    "script": "Welcome to Stall B-05: Steel and Stack. Guided by Shashank, Steel and Stack provides end-to-end engineering, web integration, and robotics prototyping to help students and businesses build custom digital products."
+  },
+  {
+    "voice": "v1",
+    "code": "B-06",
+    "title": "WishCollege",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/b_06_narration.mp3",
+    "status": "Cached",
+    "duration_sec": 16.88,
+    "script": "Welcome to Stall B-06: WishCollege. Guided by Shashank, WishCollege is an AI-powered college admissions platform providing personalized university matching, essay roadmaps, and scholarship guidance for aspiring scholars."
+  },
+  {
+    "voice": "v1",
+    "code": "B-07",
+    "title": "WonderTech",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/b_07_narration.mp3",
+    "status": "Cached",
+    "duration_sec": 15.91,
+    "script": "Welcome to Stall B-07: WonderTech. Guided by Vaibhav and Ajay, WonderTech is a unified digital classroom platform providing cloud-synced textbooks and assignment management to lighten student school bags."
+  },
+  {
+    "voice": "v1",
+    "code": "D-07",
+    "title": "Little Care",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/d_07_narration.mp3",
+    "status": "OK",
+    "duration_sec": 17.58,
+    "script": "Welcome to Stall D-07: Little Care. Guided by Divya, Little Care is a neonatal and pediatric healthcare tracking platform that digitizes immunization schedules, growth milestones, and early developmental screenings for parents."
+  },
+  {
+    "voice": "v1",
+    "code": "D-08",
+    "title": "Munchly",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/d_08_narration.mp3",
+    "status": "OK",
+    "duration_sec": 16.17,
+    "script": "Welcome to Stall D-08: Munchly. Guided by Shashank, Munchly is a smart school cafeteria ordering and nutrition tracking service that streamlines lunch queues while offering balanced dietary recommendations for students."
+  },
+  {
+    "voice": "v1",
+    "code": "D-09",
+    "title": "FindIT",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/d_09_narration.mp3",
+    "status": "OK",
+    "duration_sec": 17.48,
+    "script": "Welcome to Stall D-09: FindIT. Guided by Shashank, FindIT is a low-power Bluetooth beacon asset tracking ecosystem that helps schools and enterprises rapidly pinpoint misplaced laboratory equipment and inventory."
+  },
+  {
+    "voice": "v1",
+    "code": "D-12",
+    "title": "Eagle's Eye",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/d_12_narration.mp3",
+    "status": "OK",
+    "duration_sec": 15.62,
+    "script": "Welcome to Stall D-12: Eagle's Eye. Guided by Shashank, Eagle's Eye is an autonomous aerial surveillance platform using edge neural networks to detect perimeter intrusions and environmental hazards across campus grounds."
+  },
+  {
+    "voice": "v1",
+    "code": "D-11",
+    "title": "AI Exam Monitor",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/d_11_narration.mp3",
+    "status": "OK",
+    "duration_sec": 17.48,
+    "script": "Welcome to Stall D-11: AI Exam Monitor. Guided by Shashank, this ethical exam proctoring tool monitors gaze tracking and audio deviations on edge devices, preserving academic integrity while respecting student privacy."
+  },
+  {
+    "voice": "v1",
+    "code": "DISPLAY",
+    "title": "Robotics & Simulation Arena",
+    "lead": "Shashank & Shubham",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v1/display_narration.mp3",
+    "status": "OK",
+    "duration_sec": 15.07,
+    "script": "Welcome to the Robotics and Simulation Showcase. Supervised by Shashank and Shubham, this live arena features the Unitree G1 humanoid simulation, gesture-controlled rovers, and quadruped docent telemetry."
+  },
+  {
+    "voice": "v2",
+    "code": "P-01",
+    "title": "Stepwise AI",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/p_01_narration.mp3",
+    "status": "OK",
+    "duration_sec": 16.77,
+    "script": "Welcome to Stall P-01: Stepwise AI. Guided by Divya, this biomechanical gait analysis platform uses wearable six-axis IMUs and computer vision to analyze ankle pronation, track real-time deviations, and quantify patient recovery with clinical precision."
+  },
+  {
+    "voice": "v2",
+    "code": "P-02",
+    "title": "ADAS (Driver Assistance)",
+    "lead": "Shubham",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/p_02_narration.mp3",
+    "status": "OK",
+    "duration_sec": 15.75,
+    "script": "Welcome to Stall P-02: ADAS. Guided by Shubham, this edge-AI driver assistance system deploys forward radar and computer vision for predictive collision braking, blind-spot monitoring, and real-time lane deviation alerts to enhance vehicular road safety."
+  },
+  {
+    "voice": "v2",
+    "code": "P-03",
+    "title": "Water Management System",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/p_03_narration.mp3",
+    "status": "OK",
+    "duration_sec": 16.88,
+    "script": "Welcome to Stall P-03: Water Management System. Guided by Vaibhav and Ajay, this automated IoT conservation network monitors reservoir levels, detects pipeline leaks using ultrasonic telemetry, and optimizes municipal water distribution to prevent resource wastage."
+  },
+  {
+    "voice": "v2",
+    "code": "P-04",
+    "title": "EcoVoice",
+    "lead": "Krishna",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/p_04_narration.mp3",
+    "status": "OK",
+    "duration_sec": 16.4,
+    "script": "Welcome to Stall P-04: EcoVoice. Guided by Krishna, EcoVoice is an environmental acoustic monitoring platform deploying smart microphones and neural classification to monitor urban noise pollution, analyze wildlife biomes, and promote sustainable acoustic habitats."
+  },
+  {
+    "voice": "v2",
+    "code": "P-05",
+    "title": "Aero Lift",
+    "lead": "Shubham and Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/p_05_narration.mp3",
+    "status": "OK",
+    "duration_sec": 16.09,
+    "script": "Welcome to Stall P-05: Aero Lift. Guided by Shubham and Divya, this hybrid aeromechanical lift mechanism integrates pneumatic counterbalancing and brushless propulsion to transport delicate makerspace payloads smoothly across varying structural elevations."
+  },
+  {
+    "voice": "v2",
+    "code": "P-06",
+    "title": "Binzo (Smart Robotic Waste Bin)",
+    "lead": "Shubham",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/p_06_narration.mp3",
+    "status": "OK",
+    "duration_sec": 15.57,
+    "script": "Welcome to Stall P-06: Binzo. Guided by Shubham, Binzo is an autonomous mobile waste platform utilizing planar LiDAR SLAM and ultrasonic fill-level telemetry to navigate public concourses and reduce custodial maintenance requirements."
+  },
+  {
+    "voice": "v2",
+    "code": "P-08",
+    "title": "QUBIT",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/p_08_narration.mp3",
+    "status": "OK",
+    "duration_sec": 14.73,
+    "script": "Welcome to Stall P-08: QUBIT. Guided by Vaibhav and Ajay, QUBIT is an interactive quantum computing educational simulator that visualizes superposition, entanglement, and quantum gate operations through an intuitive browser interface."
+  },
+  {
+    "voice": "v2",
+    "code": "P-07",
+    "title": "Health Thread",
+    "lead": "Shubham",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/p_07_narration.mp3",
+    "status": "OK",
+    "duration_sec": 16.27,
+    "script": "Welcome to Stall P-07: Health Thread. Guided by Shubham, this wearable vital telemetry system continuously tracks heart rate, SpO2, and peripheral temperature, transmitting encrypted alerts to clinical providers to detect anomalies before emergencies arise."
+  },
+  {
+    "voice": "v2",
+    "code": "P-09",
+    "title": "Smart Parcel Box",
+    "lead": "Shubham",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/p_09_narration.mp3",
+    "status": "OK",
+    "duration_sec": 16.17,
+    "script": "Welcome to Stall P-09: Smart Parcel Box. Guided by Shubham, this secure contactless delivery locker combines encrypted QR verification, internal weight verification, and companion app telemetry to eliminate package theft and secure residential deliveries."
+  },
+  {
+    "voice": "v2",
+    "code": "P-12",
+    "title": "AeroDry",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/p_12_narration.mp3",
+    "status": "OK",
+    "duration_sec": 13.3,
+    "script": "Welcome to Stall P-12: AeroDry. Guided by Vaibhav and Ajay, this energy-efficient smart drying chamber blends convective airflow and infrared sensors to accelerate dehumidification for laboratories and agricultural storage."
+  },
+  {
+    "voice": "v2",
+    "code": "P-10",
+    "title": "Automated Passes",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/p_10_narration.mp3",
+    "status": "OK",
+    "duration_sec": 14.55,
+    "script": "Welcome to Stall P-10: Automated Passes. Guided by Vaibhav and Ajay, this smart campus access control ecosystem uses NFC authentication and dynamic digital credentials to automate visitor check-ins and streamline campus security."
+  },
+  {
+    "voice": "v2",
+    "code": "D-02",
+    "title": "HetuSetu",
+    "lead": "Dana",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/d_02_narration.mp3",
+    "status": "OK",
+    "duration_sec": 13.9,
+    "script": "Welcome to Stall D-02: HetuSetu. Guided by Dana, HetuSetu is a multilingual digital bridge connecting community members with essential social welfare programs and civic resources through intuitive voice-guided workflows."
+  },
+  {
+    "voice": "v2",
+    "code": "P-11",
+    "title": "Neuralink (BCI)",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/p_11_narration.mp3",
+    "status": "OK",
+    "duration_sec": 14.55,
+    "script": "Welcome to Stall P-11: Neuralink. Guided by Shashank, this accessible brain-computer interface decodes neuromuscular and EEG signals into real-time digital commands, enabling hands-free control of assistive robotics and computers."
+  },
+  {
+    "voice": "v2",
+    "code": "D-01",
+    "title": "Farm to Home",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/d_01_narration.mp3",
+    "status": "OK",
+    "duration_sec": 14.6,
+    "script": "Welcome to Stall D-01: Farm to Home. Guided by Divya, this direct-to-consumer agri-tech network connects organic regional farmers directly with urban households, ensuring fair prices, harvest traceability, and reduced transit spoilage."
+  },
+  {
+    "voice": "v2",
+    "code": "D-03",
+    "title": "Rehab Path 360",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/d_03_narration.mp3",
+    "status": "OK",
+    "duration_sec": 15.15,
+    "script": "Welcome to Stall D-03: Rehab Path 360. Guided by Divya, this holistic physical rehabilitation platform combines smart wearable motion sensors with personalized recovery exercises to optimize patient physiotherapy outcomes."
+  },
+  {
+    "voice": "v2",
+    "code": "D-04",
+    "title": "Transit Hub Crowd Management",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/d_04_narration.mp3",
+    "status": "OK",
+    "duration_sec": 14.13,
+    "script": "Welcome to Stall D-04: Transit Hub Crowd Management. Guided by Divya, this intelligent computer vision platform analyzes platform pedestrian density, predicts choke points, and balances commuter flows across metro terminals."
+  },
+  {
+    "voice": "v2",
+    "code": "D-08",
+    "title": "Munchly",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/d_08_narration.mp3",
+    "status": "OK",
+    "duration_sec": 13.17,
+    "script": "Welcome to Stall D-08: Munchly. Guided by Shashank, Munchly is a smart school cafeteria ordering and nutrition tracking service that streamlines lunch queues while offering balanced dietary recommendations for students."
+  },
+  {
+    "voice": "v2",
+    "code": "D-06",
+    "title": "Smart Exit Hub",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/d_06_narration.mp3",
+    "status": "OK",
+    "duration_sec": 14.31,
+    "script": "Welcome to Stall D-06: Smart Exit Hub. Guided by Divya, this automated facility emergency egress system uses dynamic photoluminescent signage and real-time crowd sensors to guide occupants along safe evacuation corridors."
+  },
+  {
+    "voice": "v2",
+    "code": "D-07",
+    "title": "Little Care",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/d_07_narration.mp3",
+    "status": "OK",
+    "duration_sec": 14.65,
+    "script": "Welcome to Stall D-07: Little Care. Guided by Divya, Little Care is a neonatal and pediatric healthcare tracking platform that digitizes immunization schedules, growth milestones, and early developmental screenings for parents."
+  },
+  {
+    "voice": "v2",
+    "code": "D-05",
+    "title": "CityWatch AI",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/d_05_narration.mp3",
+    "status": "OK",
+    "duration_sec": 15.33,
+    "script": "Welcome to Stall D-05: CityWatch AI. Guided by Divya, CityWatch AI processes municipal camera feeds to detect public safety hazards, traffic gridlocks, and illegal dumping, triggering automated municipal service dispatches."
+  },
+  {
+    "voice": "v2",
+    "code": "D-09",
+    "title": "FindIT",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/d_09_narration.mp3",
+    "status": "OK",
+    "duration_sec": 13.71,
+    "script": "Welcome to Stall D-09: FindIT. Guided by Shashank, FindIT is a low-power Bluetooth beacon asset tracking ecosystem that helps schools and enterprises rapidly pinpoint misplaced laboratory equipment and inventory."
+  },
+  {
+    "voice": "v2",
+    "code": "D-10",
+    "title": "RouteWise",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/d_10_narration.mp3",
+    "status": "OK",
+    "duration_sec": 13.01,
+    "script": "Welcome to Stall D-10: RouteWise. Guided by Shashank, RouteWise optimizes student bus transit fleets using dynamic routing algorithms, minimizing transit times, fuel emissions, and parent pickup delays."
+  },
+  {
+    "voice": "v2",
+    "code": "D-12",
+    "title": "Eagle's Eye",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/d_12_narration.mp3",
+    "status": "OK",
+    "duration_sec": 13.01,
+    "script": "Welcome to Stall D-12: Eagle's Eye. Guided by Shashank, Eagle's Eye is an autonomous aerial surveillance platform using edge neural networks to detect perimeter intrusions and environmental hazards across campus grounds."
+  },
+  {
+    "voice": "v2",
+    "code": "B-02",
+    "title": "GrowGrid",
+    "lead": "Dana",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/b_02_narration.mp3",
+    "status": "OK",
+    "duration_sec": 13.35,
+    "script": "Welcome to Stall B-02: GrowGrid. Guided by Dana, GrowGrid is a modular vertical hydroponics system featuring automated nutrient dosing and sensor telemetry for growing pesticide-free crops in classrooms and homes."
+  },
+  {
+    "voice": "v2",
+    "code": "D-11",
+    "title": "AI Exam Monitor",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/d_11_narration.mp3",
+    "status": "OK",
+    "duration_sec": 14.42,
+    "script": "Welcome to Stall D-11: AI Exam Monitor. Guided by Shashank, this ethical exam proctoring tool monitors gaze tracking and audio deviations on edge devices, preserving academic integrity while respecting student privacy."
+  },
+  {
+    "voice": "v2",
+    "code": "B-01",
+    "title": "Zap Fit",
+    "lead": "Avneet",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/b_01_narration.mp3",
+    "status": "OK",
+    "duration_sec": 14.08,
+    "script": "Welcome to Stall B-01: Zap Fit. Guided by Avneet, Zap Fit integrates AI-driven nutritional planning, pantry ingredient management, and verified home chef services to make balanced dietary wellness accessible."
+  },
+  {
+    "voice": "v2",
+    "code": "B-03",
+    "title": "P&P (Safety Kits)",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/b_03_narration.mp3",
+    "status": "OK",
+    "duration_sec": 14.97,
+    "script": "Welcome to Stall B-03: P&P. Guided by Vaibhav and Ajay, P&P delivers profession-specific personal protective equipment kits customized for sanitation, construction, and electrical workers to ensure occupational safety."
+  },
+  {
+    "voice": "v2",
+    "code": "B-04",
+    "title": "Tera Mosac Lounges",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/b_04_narration.mp3",
+    "status": "OK",
+    "duration_sec": 14.18,
+    "script": "Welcome to Stall B-04: Tera Mosac Lounges. Guided by Vaibhav and Ajay, this smart waiting room integrates automated token queues, occupancy sensors, and climate control to transform visitor waiting experiences."
+  },
+  {
+    "voice": "v2",
+    "code": "B-05",
+    "title": "Steel & Stack",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/b_05_narration.mp3",
+    "status": "OK",
+    "duration_sec": 13.48,
+    "script": "Welcome to Stall B-05: Steel and Stack. Guided by Shashank, Steel and Stack provides end-to-end engineering, web integration, and robotics prototyping to help students and businesses build custom digital products."
+  },
+  {
+    "voice": "v2",
+    "code": "B-07",
+    "title": "WonderTech",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/b_07_narration.mp3",
+    "status": "OK",
+    "duration_sec": 12.75,
+    "script": "Welcome to Stall B-07: WonderTech. Guided by Vaibhav and Ajay, WonderTech is a unified digital classroom platform providing cloud-synced textbooks and assignment management to lighten student school bags."
+  },
+  {
+    "voice": "v2",
+    "code": "DISPLAY",
+    "title": "Robotics & Simulation Arena",
+    "lead": "Shashank & Shubham",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/display_narration.mp3",
+    "status": "OK",
+    "duration_sec": 12.93,
+    "script": "Welcome to the Robotics and Simulation Showcase. Supervised by Shashank and Shubham, this live arena features the Unitree G1 humanoid simulation, gesture-controlled rovers, and quadruped docent telemetry."
+  },
+  {
+    "voice": "v2",
+    "code": "B-06",
+    "title": "WishCollege",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v2/b_06_narration.mp3",
+    "status": "OK",
+    "duration_sec": 14.5,
+    "script": "Welcome to Stall B-06: WishCollege. Guided by Shashank, WishCollege is an AI-powered college admissions platform providing personalized university matching, essay roadmaps, and scholarship guidance for aspiring scholars."
+  },
+  {
+    "voice": "v3",
+    "code": "P-01",
+    "title": "Stepwise AI",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/p_01_narration.mp3",
+    "status": "OK",
+    "duration_sec": 14.68,
+    "script": "Welcome to Stall P-01: Stepwise AI. Guided by Divya, this biomechanical gait analysis platform uses wearable six-axis IMUs and computer vision to analyze ankle pronation, track real-time deviations, and quantify patient recovery with clinical precision."
+  },
+  {
+    "voice": "v3",
+    "code": "P-02",
+    "title": "ADAS (Driver Assistance)",
+    "lead": "Shubham",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/p_02_narration.mp3",
+    "status": "OK",
+    "duration_sec": 12.15,
+    "script": "Welcome to Stall P-02: ADAS. Guided by Shubham, this edge-AI driver assistance system deploys forward radar and computer vision for predictive collision braking, blind-spot monitoring, and real-time lane deviation alerts to enhance vehicular road safety."
+  },
+  {
+    "voice": "v3",
+    "code": "P-03",
+    "title": "Water Management System",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/p_03_narration.mp3",
+    "status": "OK",
+    "duration_sec": 13.58,
+    "script": "Welcome to Stall P-03: Water Management System. Guided by Vaibhav and Ajay, this automated IoT conservation network monitors reservoir levels, detects pipeline leaks using ultrasonic telemetry, and optimizes municipal water distribution to prevent resource wastage."
+  },
+  {
+    "voice": "v3",
+    "code": "P-04",
+    "title": "EcoVoice",
+    "lead": "Krishna",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/p_04_narration.mp3",
+    "status": "OK",
+    "duration_sec": 13.77,
+    "script": "Welcome to Stall P-04: EcoVoice. Guided by Krishna, EcoVoice is an environmental acoustic monitoring platform deploying smart microphones and neural classification to monitor urban noise pollution, analyze wildlife biomes, and promote sustainable acoustic habitats."
+  },
+  {
+    "voice": "v3",
+    "code": "P-05",
+    "title": "Aero Lift",
+    "lead": "Shubham and Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/p_05_narration.mp3",
+    "status": "OK",
+    "duration_sec": 13.11,
+    "script": "Welcome to Stall P-05: Aero Lift. Guided by Shubham and Divya, this hybrid aeromechanical lift mechanism integrates pneumatic counterbalancing and brushless propulsion to transport delicate makerspace payloads smoothly across varying structural elevations."
+  },
+  {
+    "voice": "v3",
+    "code": "P-06",
+    "title": "Binzo (Smart Robotic Waste Bin)",
+    "lead": "Shubham",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/p_06_narration.mp3",
+    "status": "OK",
+    "duration_sec": 12.46,
+    "script": "Welcome to Stall P-06: Binzo. Guided by Shubham, Binzo is an autonomous mobile waste platform utilizing planar LiDAR SLAM and ultrasonic fill-level telemetry to navigate public concourses and reduce custodial maintenance requirements."
+  },
+  {
+    "voice": "v3",
+    "code": "P-07",
+    "title": "Health Thread",
+    "lead": "Shubham",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/p_07_narration.mp3",
+    "status": "OK",
+    "duration_sec": 13.82,
+    "script": "Welcome to Stall P-07: Health Thread. Guided by Shubham, this wearable vital telemetry system continuously tracks heart rate, SpO2, and peripheral temperature, transmitting encrypted alerts to clinical providers to detect anomalies before emergencies arise."
+  },
+  {
+    "voice": "v3",
+    "code": "P-08",
+    "title": "QUBIT",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/p_08_narration.mp3",
+    "status": "OK",
+    "duration_sec": 12.15,
+    "script": "Welcome to Stall P-08: QUBIT. Guided by Vaibhav and Ajay, QUBIT is an interactive quantum computing educational simulator that visualizes superposition, entanglement, and quantum gate operations through an intuitive browser interface."
+  },
+  {
+    "voice": "v3",
+    "code": "P-09",
+    "title": "Smart Parcel Box",
+    "lead": "Shubham",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/p_09_narration.mp3",
+    "status": "OK",
+    "duration_sec": 12.8,
+    "script": "Welcome to Stall P-09: Smart Parcel Box. Guided by Shubham, this secure contactless delivery locker combines encrypted QR verification, internal weight verification, and companion app telemetry to eliminate package theft and secure residential deliveries."
+  },
+  {
+    "voice": "v3",
+    "code": "P-12",
+    "title": "AeroDry",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/p_12_narration.mp3",
+    "status": "OK",
+    "duration_sec": 10.24,
+    "script": "Welcome to Stall P-12: AeroDry. Guided by Vaibhav and Ajay, this energy-efficient smart drying chamber blends convective airflow and infrared sensors to accelerate dehumidification for laboratories and agricultural storage."
+  },
+  {
+    "voice": "v3",
+    "code": "P-10",
+    "title": "Automated Passes",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/p_10_narration.mp3",
+    "status": "OK",
+    "duration_sec": 12.23,
+    "script": "Welcome to Stall P-10: Automated Passes. Guided by Vaibhav and Ajay, this smart campus access control ecosystem uses NFC authentication and dynamic digital credentials to automate visitor check-ins and streamline campus security."
+  },
+  {
+    "voice": "v3",
+    "code": "P-11",
+    "title": "Neuralink (BCI)",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/p_11_narration.mp3",
+    "status": "OK",
+    "duration_sec": 11.73,
+    "script": "Welcome to Stall P-11: Neuralink. Guided by Shashank, this accessible brain-computer interface decodes neuromuscular and EEG signals into real-time digital commands, enabling hands-free control of assistive robotics and computers."
+  },
+  {
+    "voice": "v3",
+    "code": "D-01",
+    "title": "Farm to Home",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/d_01_narration.mp3",
+    "status": "OK",
+    "duration_sec": 11.86,
+    "script": "Welcome to Stall D-01: Farm to Home. Guided by Divya, this direct-to-consumer agri-tech network connects organic regional farmers directly with urban households, ensuring fair prices, harvest traceability, and reduced transit spoilage."
+  },
+  {
+    "voice": "v3",
+    "code": "D-02",
+    "title": "HetuSetu",
+    "lead": "Dana",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/d_02_narration.mp3",
+    "status": "OK",
+    "duration_sec": 11.08,
+    "script": "Welcome to Stall D-02: HetuSetu. Guided by Dana, HetuSetu is a multilingual digital bridge connecting community members with essential social welfare programs and civic resources through intuitive voice-guided workflows."
+  },
+  {
+    "voice": "v3",
+    "code": "D-03",
+    "title": "Rehab Path 360",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/d_03_narration.mp3",
+    "status": "OK",
+    "duration_sec": 11.73,
+    "script": "Welcome to Stall D-03: Rehab Path 360. Guided by Divya, this holistic physical rehabilitation platform combines smart wearable motion sensors with personalized recovery exercises to optimize patient physiotherapy outcomes."
+  },
+  {
+    "voice": "v3",
+    "code": "D-04",
+    "title": "Transit Hub Crowd Management",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/d_04_narration.mp3",
+    "status": "OK",
+    "duration_sec": 12.04,
+    "script": "Welcome to Stall D-04: Transit Hub Crowd Management. Guided by Divya, this intelligent computer vision platform analyzes platform pedestrian density, predicts choke points, and balances commuter flows across metro terminals."
+  },
+  {
+    "voice": "v3",
+    "code": "D-06",
+    "title": "Smart Exit Hub",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/d_06_narration.mp3",
+    "status": "OK",
+    "duration_sec": 11.73,
+    "script": "Welcome to Stall D-06: Smart Exit Hub. Guided by Divya, this automated facility emergency egress system uses dynamic photoluminescent signage and real-time crowd sensors to guide occupants along safe evacuation corridors."
+  },
+  {
+    "voice": "v3",
+    "code": "D-05",
+    "title": "CityWatch AI",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/d_05_narration.mp3",
+    "status": "OK",
+    "duration_sec": 12.8,
+    "script": "Welcome to Stall D-05: CityWatch AI. Guided by Divya, CityWatch AI processes municipal camera feeds to detect public safety hazards, traffic gridlocks, and illegal dumping, triggering automated municipal service dispatches."
+  },
+  {
+    "voice": "v3",
+    "code": "D-08",
+    "title": "Munchly",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/d_08_narration.mp3",
+    "status": "OK",
+    "duration_sec": 11.68,
+    "script": "Welcome to Stall D-08: Munchly. Guided by Shashank, Munchly is a smart school cafeteria ordering and nutrition tracking service that streamlines lunch queues while offering balanced dietary recommendations for students."
+  },
+  {
+    "voice": "v3",
+    "code": "D-07",
+    "title": "Little Care",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/d_07_narration.mp3",
+    "status": "OK",
+    "duration_sec": 12.23,
+    "script": "Welcome to Stall D-07: Little Care. Guided by Divya, Little Care is a neonatal and pediatric healthcare tracking platform that digitizes immunization schedules, growth milestones, and early developmental screenings for parents."
+  },
+  {
+    "voice": "v3",
+    "code": "D-10",
+    "title": "RouteWise",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/d_10_narration.mp3",
+    "status": "OK",
+    "duration_sec": 10.66,
+    "script": "Welcome to Stall D-10: RouteWise. Guided by Shashank, RouteWise optimizes student bus transit fleets using dynamic routing algorithms, minimizing transit times, fuel emissions, and parent pickup delays."
+  },
+  {
+    "voice": "v3",
+    "code": "D-09",
+    "title": "FindIT",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/d_09_narration.mp3",
+    "status": "OK",
+    "duration_sec": 11.81,
+    "script": "Welcome to Stall D-09: FindIT. Guided by Shashank, FindIT is a low-power Bluetooth beacon asset tracking ecosystem that helps schools and enterprises rapidly pinpoint misplaced laboratory equipment and inventory."
+  },
+  {
+    "voice": "v3",
+    "code": "D-12",
+    "title": "Eagle's Eye",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/d_12_narration.mp3",
+    "status": "OK",
+    "duration_sec": 11.08,
+    "script": "Welcome to Stall D-12: Eagle's Eye. Guided by Shashank, Eagle's Eye is an autonomous aerial surveillance platform using edge neural networks to detect perimeter intrusions and environmental hazards across campus grounds."
+  },
+  {
+    "voice": "v3",
+    "code": "D-11",
+    "title": "AI Exam Monitor",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/d_11_narration.mp3",
+    "status": "OK",
+    "duration_sec": 11.34,
+    "script": "Welcome to Stall D-11: AI Exam Monitor. Guided by Shashank, this ethical exam proctoring tool monitors gaze tracking and audio deviations on edge devices, preserving academic integrity while respecting student privacy."
+  },
+  {
+    "voice": "v3",
+    "code": "B-02",
+    "title": "GrowGrid",
+    "lead": "Dana",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/b_02_narration.mp3",
+    "status": "OK",
+    "duration_sec": 11.26,
+    "script": "Welcome to Stall B-02: GrowGrid. Guided by Dana, GrowGrid is a modular vertical hydroponics system featuring automated nutrient dosing and sensor telemetry for growing pesticide-free crops in classrooms and homes."
+  },
+  {
+    "voice": "v3",
+    "code": "B-01",
+    "title": "Zap Fit",
+    "lead": "Avneet",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/b_01_narration.mp3",
+    "status": "OK",
+    "duration_sec": 11.91,
+    "script": "Welcome to Stall B-01: Zap Fit. Guided by Avneet, Zap Fit integrates AI-driven nutritional planning, pantry ingredient management, and verified home chef services to make balanced dietary wellness accessible."
+  },
+  {
+    "voice": "v3",
+    "code": "B-03",
+    "title": "P&P (Safety Kits)",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/b_03_narration.mp3",
+    "status": "OK",
+    "duration_sec": 12.04,
+    "script": "Welcome to Stall B-03: P&P. Guided by Vaibhav and Ajay, P&P delivers profession-specific personal protective equipment kits customized for sanitation, construction, and electrical workers to ensure occupational safety."
+  },
+  {
+    "voice": "v3",
+    "code": "B-04",
+    "title": "Tera Mosac Lounges",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/b_04_narration.mp3",
+    "status": "OK",
+    "duration_sec": 12.56,
+    "script": "Welcome to Stall B-04: Tera Mosac Lounges. Guided by Vaibhav and Ajay, this smart waiting room integrates automated token queues, occupancy sensors, and climate control to transform visitor waiting experiences."
+  },
+  {
+    "voice": "v3",
+    "code": "B-05",
+    "title": "Steel & Stack",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/b_05_narration.mp3",
+    "status": "OK",
+    "duration_sec": 11.34,
+    "script": "Welcome to Stall B-05: Steel and Stack. Guided by Shashank, Steel and Stack provides end-to-end engineering, web integration, and robotics prototyping to help students and businesses build custom digital products."
+  },
+  {
+    "voice": "v3",
+    "code": "B-06",
+    "title": "WishCollege",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/b_06_narration.mp3",
+    "status": "OK",
+    "duration_sec": 11.39,
+    "script": "Welcome to Stall B-06: WishCollege. Guided by Shashank, WishCollege is an AI-powered college admissions platform providing personalized university matching, essay roadmaps, and scholarship guidance for aspiring scholars."
+  },
+  {
+    "voice": "v3",
+    "code": "DISPLAY",
+    "title": "Robotics & Simulation Arena",
+    "lead": "Shashank & Shubham",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/display_narration.mp3",
+    "status": "OK",
+    "duration_sec": 10.08,
+    "script": "Welcome to the Robotics and Simulation Showcase. Supervised by Shashank and Shubham, this live arena features the Unitree G1 humanoid simulation, gesture-controlled rovers, and quadruped docent telemetry."
+  },
+  {
+    "voice": "v3",
+    "code": "B-07",
+    "title": "WonderTech",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v3/b_07_narration.mp3",
+    "status": "OK",
+    "duration_sec": 10.5,
+    "script": "Welcome to Stall B-07: WonderTech. Guided by Vaibhav and Ajay, WonderTech is a unified digital classroom platform providing cloud-synced textbooks and assignment management to lighten student school bags."
+  },
+  {
+    "voice": "v4",
+    "code": "P-02",
+    "title": "ADAS (Driver Assistance)",
+    "lead": "Shubham",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/p_02_narration.mp3",
+    "status": "OK",
+    "duration_sec": 14.24,
+    "script": "Welcome to Stall P-02: ADAS. Guided by Shubham, this edge-AI driver assistance system deploys forward radar and computer vision for predictive collision braking, blind-spot monitoring, and real-time lane deviation alerts to enhance vehicular road safety."
+  },
+  {
+    "voice": "v4",
+    "code": "P-04",
+    "title": "EcoVoice",
+    "lead": "Krishna",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/p_04_narration.mp3",
+    "status": "OK",
+    "duration_sec": 14.73,
+    "script": "Welcome to Stall P-04: EcoVoice. Guided by Krishna, EcoVoice is an environmental acoustic monitoring platform deploying smart microphones and neural classification to monitor urban noise pollution, analyze wildlife biomes, and promote sustainable acoustic habitats."
+  },
+  {
+    "voice": "v4",
+    "code": "P-03",
+    "title": "Water Management System",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/p_03_narration.mp3",
+    "status": "OK",
+    "duration_sec": 15.62,
+    "script": "Welcome to Stall P-03: Water Management System. Guided by Vaibhav and Ajay, this automated IoT conservation network monitors reservoir levels, detects pipeline leaks using ultrasonic telemetry, and optimizes municipal water distribution to prevent resource wastage."
+  },
+  {
+    "voice": "v4",
+    "code": "P-01",
+    "title": "Stepwise AI",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/p_01_narration.mp3",
+    "status": "OK",
+    "duration_sec": 16.64,
+    "script": "Welcome to Stall P-01: Stepwise AI. Guided by Divya, this biomechanical gait analysis platform uses wearable six-axis IMUs and computer vision to analyze ankle pronation, track real-time deviations, and quantify patient recovery with clinical precision."
+  },
+  {
+    "voice": "v4",
+    "code": "P-06",
+    "title": "Binzo (Smart Robotic Waste Bin)",
+    "lead": "Shubham",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/p_06_narration.mp3",
+    "status": "OK",
+    "duration_sec": 14.24,
+    "script": "Welcome to Stall P-06: Binzo. Guided by Shubham, Binzo is an autonomous mobile waste platform utilizing planar LiDAR SLAM and ultrasonic fill-level telemetry to navigate public concourses and reduce custodial maintenance requirements."
+  },
+  {
+    "voice": "v4",
+    "code": "P-05",
+    "title": "Aero Lift",
+    "lead": "Shubham and Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/p_05_narration.mp3",
+    "status": "OK",
+    "duration_sec": 15.07,
+    "script": "Welcome to Stall P-05: Aero Lift. Guided by Shubham and Divya, this hybrid aeromechanical lift mechanism integrates pneumatic counterbalancing and brushless propulsion to transport delicate makerspace payloads smoothly across varying structural elevations."
+  },
+  {
+    "voice": "v4",
+    "code": "P-07",
+    "title": "Health Thread",
+    "lead": "Shubham",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/p_07_narration.mp3",
+    "status": "OK",
+    "duration_sec": 14.84,
+    "script": "Welcome to Stall P-07: Health Thread. Guided by Shubham, this wearable vital telemetry system continuously tracks heart rate, SpO2, and peripheral temperature, transmitting encrypted alerts to clinical providers to detect anomalies before emergencies arise."
+  },
+  {
+    "voice": "v4",
+    "code": "P-08",
+    "title": "QUBIT",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/p_08_narration.mp3",
+    "status": "OK",
+    "duration_sec": 14.0,
+    "script": "Welcome to Stall P-08: QUBIT. Guided by Vaibhav and Ajay, QUBIT is an interactive quantum computing educational simulator that visualizes superposition, entanglement, and quantum gate operations through an intuitive browser interface."
+  },
+  {
+    "voice": "v4",
+    "code": "P-10",
+    "title": "Automated Passes",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/p_10_narration.mp3",
+    "status": "OK",
+    "duration_sec": 14.24,
+    "script": "Welcome to Stall P-10: Automated Passes. Guided by Vaibhav and Ajay, this smart campus access control ecosystem uses NFC authentication and dynamic digital credentials to automate visitor check-ins and streamline campus security."
+  },
+  {
+    "voice": "v4",
+    "code": "P-09",
+    "title": "Smart Parcel Box",
+    "lead": "Shubham",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/p_09_narration.mp3",
+    "status": "OK",
+    "duration_sec": 14.47,
+    "script": "Welcome to Stall P-09: Smart Parcel Box. Guided by Shubham, this secure contactless delivery locker combines encrypted QR verification, internal weight verification, and companion app telemetry to eliminate package theft and secure residential deliveries."
+  },
+  {
+    "voice": "v4",
+    "code": "P-11",
+    "title": "Neuralink (BCI)",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/p_11_narration.mp3",
+    "status": "OK",
+    "duration_sec": 13.53,
+    "script": "Welcome to Stall P-11: Neuralink. Guided by Shashank, this accessible brain-computer interface decodes neuromuscular and EEG signals into real-time digital commands, enabling hands-free control of assistive robotics and computers."
+  },
+  {
+    "voice": "v4",
+    "code": "P-12",
+    "title": "AeroDry",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/p_12_narration.mp3",
+    "status": "OK",
+    "duration_sec": 14.0,
+    "script": "Welcome to Stall P-12: AeroDry. Guided by Vaibhav and Ajay, this energy-efficient smart drying chamber blends convective airflow and infrared sensors to accelerate dehumidification for laboratories and agricultural storage."
+  },
+  {
+    "voice": "v4",
+    "code": "D-02",
+    "title": "HetuSetu",
+    "lead": "Dana",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/d_02_narration.mp3",
+    "status": "OK",
+    "duration_sec": 12.28,
+    "script": "Welcome to Stall D-02: HetuSetu. Guided by Dana, HetuSetu is a multilingual digital bridge connecting community members with essential social welfare programs and civic resources through intuitive voice-guided workflows."
+  },
+  {
+    "voice": "v4",
+    "code": "D-01",
+    "title": "Farm to Home",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/d_01_narration.mp3",
+    "status": "OK",
+    "duration_sec": 13.82,
+    "script": "Welcome to Stall D-01: Farm to Home. Guided by Divya, this direct-to-consumer agri-tech network connects organic regional farmers directly with urban households, ensuring fair prices, harvest traceability, and reduced transit spoilage."
+  },
+  {
+    "voice": "v4",
+    "code": "D-04",
+    "title": "Transit Hub Crowd Management",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/d_04_narration.mp3",
+    "status": "OK",
+    "duration_sec": 12.75,
+    "script": "Welcome to Stall D-04: Transit Hub Crowd Management. Guided by Divya, this intelligent computer vision platform analyzes platform pedestrian density, predicts choke points, and balances commuter flows across metro terminals."
+  },
+  {
+    "voice": "v4",
+    "code": "D-03",
+    "title": "Rehab Path 360",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/d_03_narration.mp3",
+    "status": "OK",
+    "duration_sec": 14.97,
+    "script": "Welcome to Stall D-03: Rehab Path 360. Guided by Divya, this holistic physical rehabilitation platform combines smart wearable motion sensors with personalized recovery exercises to optimize patient physiotherapy outcomes."
+  },
+  {
+    "voice": "v4",
+    "code": "D-05",
+    "title": "CityWatch AI",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/d_05_narration.mp3",
+    "status": "OK",
+    "duration_sec": 12.98,
+    "script": "Welcome to Stall D-05: CityWatch AI. Guided by Divya, CityWatch AI processes municipal camera feeds to detect public safety hazards, traffic gridlocks, and illegal dumping, triggering automated municipal service dispatches."
+  },
+  {
+    "voice": "v4",
+    "code": "D-06",
+    "title": "Smart Exit Hub",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/d_06_narration.mp3",
+    "status": "OK",
+    "duration_sec": 13.64,
+    "script": "Welcome to Stall D-06: Smart Exit Hub. Guided by Divya, this automated facility emergency egress system uses dynamic photoluminescent signage and real-time crowd sensors to guide occupants along safe evacuation corridors."
+  },
+  {
+    "voice": "v4",
+    "code": "D-07",
+    "title": "Little Care",
+    "lead": "Divya",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/d_07_narration.mp3",
+    "status": "OK",
+    "duration_sec": 13.22,
+    "script": "Welcome to Stall D-07: Little Care. Guided by Divya, Little Care is a neonatal and pediatric healthcare tracking platform that digitizes immunization schedules, growth milestones, and early developmental screenings for parents."
+  },
+  {
+    "voice": "v4",
+    "code": "D-08",
+    "title": "Munchly",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/d_08_narration.mp3",
+    "status": "OK",
+    "duration_sec": 12.04,
+    "script": "Welcome to Stall D-08: Munchly. Guided by Shashank, Munchly is a smart school cafeteria ordering and nutrition tracking service that streamlines lunch queues while offering balanced dietary recommendations for students."
+  },
+  {
+    "voice": "v4",
+    "code": "D-09",
+    "title": "FindIT",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/d_09_narration.mp3",
+    "status": "OK",
+    "duration_sec": 12.51,
+    "script": "Welcome to Stall D-09: FindIT. Guided by Shashank, FindIT is a low-power Bluetooth beacon asset tracking ecosystem that helps schools and enterprises rapidly pinpoint misplaced laboratory equipment and inventory."
+  },
+  {
+    "voice": "v4",
+    "code": "D-10",
+    "title": "RouteWise",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/d_10_narration.mp3",
+    "status": "OK",
+    "duration_sec": 12.33,
+    "script": "Welcome to Stall D-10: RouteWise. Guided by Shashank, RouteWise optimizes student bus transit fleets using dynamic routing algorithms, minimizing transit times, fuel emissions, and parent pickup delays."
+  },
+  {
+    "voice": "v4",
+    "code": "D-11",
+    "title": "AI Exam Monitor",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/d_11_narration.mp3",
+    "status": "OK",
+    "duration_sec": 12.83,
+    "script": "Welcome to Stall D-11: AI Exam Monitor. Guided by Shashank, this ethical exam proctoring tool monitors gaze tracking and audio deviations on edge devices, preserving academic integrity while respecting student privacy."
+  },
+  {
+    "voice": "v4",
+    "code": "D-12",
+    "title": "Eagle's Eye",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/d_12_narration.mp3",
+    "status": "OK",
+    "duration_sec": 12.15,
+    "script": "Welcome to Stall D-12: Eagle's Eye. Guided by Shashank, Eagle's Eye is an autonomous aerial surveillance platform using edge neural networks to detect perimeter intrusions and environmental hazards across campus grounds."
+  },
+  {
+    "voice": "v4",
+    "code": "B-01",
+    "title": "Zap Fit",
+    "lead": "Avneet",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/b_01_narration.mp3",
+    "status": "OK",
+    "duration_sec": 12.33,
+    "script": "Welcome to Stall B-01: Zap Fit. Guided by Avneet, Zap Fit integrates AI-driven nutritional planning, pantry ingredient management, and verified home chef services to make balanced dietary wellness accessible."
+  },
+  {
+    "voice": "v4",
+    "code": "B-02",
+    "title": "GrowGrid",
+    "lead": "Dana",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/b_02_narration.mp3",
+    "status": "OK",
+    "duration_sec": 12.7,
+    "script": "Welcome to Stall B-02: GrowGrid. Guided by Dana, GrowGrid is a modular vertical hydroponics system featuring automated nutrient dosing and sensor telemetry for growing pesticide-free crops in classrooms and homes."
+  },
+  {
+    "voice": "v4",
+    "code": "B-03",
+    "title": "P&P (Safety Kits)",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/b_03_narration.mp3",
+    "status": "OK",
+    "duration_sec": 13.22,
+    "script": "Welcome to Stall B-03: P&P. Guided by Vaibhav and Ajay, P&P delivers profession-specific personal protective equipment kits customized for sanitation, construction, and electrical workers to ensure occupational safety."
+  },
+  {
+    "voice": "v4",
+    "code": "B-04",
+    "title": "Tera Mosac Lounges",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/b_04_narration.mp3",
+    "status": "OK",
+    "duration_sec": 12.33,
+    "script": "Welcome to Stall B-04: Tera Mosac Lounges. Guided by Vaibhav and Ajay, this smart waiting room integrates automated token queues, occupancy sensors, and climate control to transform visitor waiting experiences."
+  },
+  {
+    "voice": "v4",
+    "code": "B-05",
+    "title": "Steel & Stack",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/b_05_narration.mp3",
+    "status": "OK",
+    "duration_sec": 11.81,
+    "script": "Welcome to Stall B-05: Steel and Stack. Guided by Shashank, Steel and Stack provides end-to-end engineering, web integration, and robotics prototyping to help students and businesses build custom digital products."
+  },
+  {
+    "voice": "v4",
+    "code": "B-06",
+    "title": "WishCollege",
+    "lead": "Shashank",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/b_06_narration.mp3",
+    "status": "OK",
+    "duration_sec": 13.3,
+    "script": "Welcome to Stall B-06: WishCollege. Guided by Shashank, WishCollege is an AI-powered college admissions platform providing personalized university matching, essay roadmaps, and scholarship guidance for aspiring scholars."
+  },
+  {
+    "voice": "v4",
+    "code": "B-07",
+    "title": "WonderTech",
+    "lead": "Vaibhav and Ajay",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/b_07_narration.mp3",
+    "status": "OK",
+    "duration_sec": 12.28,
+    "script": "Welcome to Stall B-07: WonderTech. Guided by Vaibhav and Ajay, WonderTech is a unified digital classroom platform providing cloud-synced textbooks and assignment management to lighten student school bags."
+  },
+  {
+    "voice": "v4",
+    "code": "DISPLAY",
+    "title": "Robotics & Simulation Arena",
+    "lead": "Shashank & Shubham",
+    "audio_path": "/Users/roopalisingh/.gemini/antigravity/scratch/cloud-argus-docent/audio/fish_audio_25s/v4/display_narration.mp3",
+    "status": "OK",
+    "duration_sec": 11.96,
+    "script": "Welcome to the Robotics and Simulation Showcase. Supervised by Shashank and Shubham, this live arena features the Unitree G1 humanoid simulation, gesture-controlled rovers, and quadruped docent telemetry."
+  }
+]

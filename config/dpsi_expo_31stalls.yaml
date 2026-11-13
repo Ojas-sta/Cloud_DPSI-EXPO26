@@ -1,0 +1,328 @@
+# ==============================================================================
+# DPSI EXPO 2026: Official 31-Stall Exhibition Layout & Database
+# Platform: Unitree Go2 Edu Quadruped ("Cloud" / The Docent)
+# Standardized Optical Fiducials: 160x160mm AprilTag tag36h11 (IDs 1-31 for stalls, 99 for dock, 100-115 for floor)
+# ==============================================================================
+
+venue:
+  name: "DPSI EXPO 2026 - Main Exhibition Pavilion"
+  dimensions_meters: [32.0, 22.0]
+  origin_offset: [-5.0, -2.0]
+  global_frame: "map"
+  aisle_width_meters: 2.40
+  default_terminal_standoff_meters: 0.95
+  default_presentation_pitch_rad: -0.14 # +8 deg nose-up eye contact
+
+recharge_dock:
+  node_id: "DOCK_STAGE_99"
+  marker_id: 99
+  apriltag_family: "tag36h11"
+  label: "South Entrance Autonomous Base & Recharge Bay"
+  pose: {x: 4.00, y: 0.00, z: 0.25, yaw: 1.5708}
+  staging_pose: {x: 4.00, y: 1.20, z: 0.32, yaw: -1.5708}
+  standoff_m: 0.50
+
+evaluator_cohorts:
+  - evaluator: "Divya"
+    stall_ids: ["P-01", "P-05", "D-01", "D-03", "D-04", "D-05", "D-06", "D-07"]
+  - evaluator: "Shubham"
+    stall_ids: ["P-02", "P-05", "P-06", "P-07", "P-09"]
+  - evaluator: "Vaibhav & Ajay"
+    stall_ids: ["P-03", "P-08", "P-10", "P-12", "B-03", "B-04", "B-07"]
+  - evaluator: "Shashank"
+    stall_ids: ["P-11", "D-08", "D-09", "D-10", "D-11", "D-12", "B-01", "B-05"]
+  - evaluator: "Dana"
+    stall_ids: ["D-02", "B-02"]
+  - evaluator: "Krishna"
+    stall_ids: ["P-04"]
+  - evaluator: "Avneet"
+    stall_ids: ["B-06"]
+
+stalls:
+  # ============================================================================
+  # P-SERIES (P-01 to P-12)
+  # ============================================================================
+  - id: "P-01"
+    tag_id: 1
+    title: "Stepwise AI"
+    evaluator: "Divya"
+    cluster: "West Wall (Lower)"
+    facing: "EAST"
+    booth_pose: {x: 0.50, y: 3.50, z: 0.40, yaw: 0.0}
+    staging_pose: {x: 1.80, y: 3.50, z: 0.32, yaw: 3.1416}
+
+  - id: "P-02"
+    tag_id: 2
+    title: "ADAS (Advanced Driver Assistance)"
+    evaluator: "Shubham"
+    cluster: "West Wall (Lower)"
+    facing: "EAST"
+    booth_pose: {x: 0.50, y: 5.50, z: 0.40, yaw: 0.0}
+    staging_pose: {x: 1.80, y: 5.50, z: 0.32, yaw: 3.1416}
+
+  - id: "P-03"
+    tag_id: 3
+    title: "Water Management System"
+    evaluator: "Vaibhav & Ajay"
+    cluster: "West Wall (Lower)"
+    facing: "EAST"
+    booth_pose: {x: 0.50, y: 7.50, z: 0.40, yaw: 0.0}
+    staging_pose: {x: 1.80, y: 7.50, z: 0.32, yaw: 3.1416}
+
+  - id: "P-04"
+    tag_id: 4
+    title: "EcoVoice"
+    evaluator: "Krishna"
+    cluster: "West Wall (Upper)"
+    facing: "EAST"
+    booth_pose: {x: 0.50, y: 11.50, z: 0.40, yaw: 0.0}
+    staging_pose: {x: 1.80, y: 11.50, z: 0.32, yaw: 3.1416}
+
+  - id: "P-05"
+    tag_id: 5
+    title: "Aero Lift"
+    evaluator: "Shubham & Divya"
+    cluster: "West Wall (Upper)"
+    facing: "EAST"
+    booth_pose: {x: 0.50, y: 13.50, z: 0.40, yaw: 0.0}
+    staging_pose: {x: 1.80, y: 13.50, z: 0.32, yaw: 3.1416}
+
+  - id: "P-06"
+    tag_id: 6
+    title: "Binzo (Smart Robotic Waste Bin)"
+    evaluator: "Shubham"
+    cluster: "West Wall (Upper)"
+    facing: "EAST"
+    booth_pose: {x: 0.50, y: 15.50, z: 0.40, yaw: 0.0}
+    staging_pose: {x: 1.80, y: 15.50, z: 0.32, yaw: 3.1416}
+
+  - id: "P-07"
+    tag_id: 7
+    title: "Health Thread"
+    evaluator: "Shubham"
+    cluster: "North Wall (Left)"
+    facing: "SOUTH"
+    booth_pose: {x: 2.00, y: 18.50, z: 0.40, yaw: -1.5708}
+    staging_pose: {x: 2.00, y: 17.20, z: 0.32, yaw: 1.5708}
+
+  - id: "P-08"
+    tag_id: 8
+    title: "QUBIT"
+    evaluator: "Vaibhav & Ajay"
+    cluster: "North Wall (Left)"
+    facing: "SOUTH"
+    booth_pose: {x: 4.00, y: 18.50, z: 0.40, yaw: -1.5708}
+    staging_pose: {x: 4.00, y: 17.20, z: 0.32, yaw: 1.5708}
+
+  - id: "P-09"
+    tag_id: 9
+    title: "Smart Parcel Box"
+    evaluator: "Shubham"
+    cluster: "North Wall (Left)"
+    facing: "SOUTH"
+    booth_pose: {x: 6.00, y: 18.50, z: 0.40, yaw: -1.5708}
+    staging_pose: {x: 6.00, y: 17.20, z: 0.32, yaw: 1.5708}
+
+  - id: "P-10"
+    tag_id: 10
+    title: "Automated Passes"
+    evaluator: "Vaibhav & Ajay"
+    cluster: "North Wall (Left)"
+    facing: "SOUTH"
+    booth_pose: {x: 8.00, y: 18.50, z: 0.40, yaw: -1.5708}
+    staging_pose: {x: 8.00, y: 17.20, z: 0.32, yaw: 1.5708}
+
+  - id: "P-11"
+    tag_id: 11
+    title: "From Muscle to Motion"
+    evaluator: "Shashank"
+    cluster: "Central Island (Upper-West)"
+    facing: "WEST"
+    booth_pose: {x: 9.50, y: 15.50, z: 0.40, yaw: 3.1416}
+    staging_pose: {x: 8.20, y: 15.50, z: 0.32, yaw: 0.0}
+
+  - id: "P-12"
+    tag_id: 12
+    title: "AeroDry"
+    evaluator: "Vaibhav & Ajay"
+    cluster: "Central Island (Upper-West)"
+    facing: "WEST"
+    booth_pose: {x: 9.50, y: 13.50, z: 0.40, yaw: 3.1416}
+    staging_pose: {x: 8.20, y: 13.50, z: 0.32, yaw: 0.0}
+
+  # ============================================================================
+  # D-SERIES (D-01 to D-12)
+  # ============================================================================
+  - id: "D-01"
+    tag_id: 13
+    title: "Farm to Home"
+    evaluator: "Divya"
+    cluster: "Central Island (Upper-West)"
+    facing: "WEST"
+    booth_pose: {x: 9.50, y: 11.50, z: 0.40, yaw: 3.1416}
+    staging_pose: {x: 8.20, y: 11.50, z: 0.32, yaw: 0.0}
+
+  - id: "D-02"
+    tag_id: 14
+    title: "Hetu Setu"
+    evaluator: "Dana"
+    cluster: "Central Island (Lower-West)"
+    facing: "WEST"
+    booth_pose: {x: 9.50, y: 7.50, z: 0.40, yaw: 3.1416}
+    staging_pose: {x: 8.20, y: 7.50, z: 0.32, yaw: 0.0}
+
+  - id: "D-03"
+    tag_id: 15
+    title: "Rehab Path 360"
+    evaluator: "Divya"
+    cluster: "Central Island (Lower-West)"
+    facing: "WEST"
+    booth_pose: {x: 9.50, y: 5.50, z: 0.40, yaw: 3.1416}
+    staging_pose: {x: 8.20, y: 5.50, z: 0.32, yaw: 0.0}
+
+  - id: "D-04"
+    tag_id: 16
+    title: "Transportation Hub Crowd Management"
+    evaluator: "Divya"
+    cluster: "Central Island (Lower-West)"
+    facing: "WEST"
+    booth_pose: {x: 9.50, y: 3.50, z: 0.40, yaw: 3.1416}
+    staging_pose: {x: 8.20, y: 3.50, z: 0.32, yaw: 0.0}
+
+  - id: "D-05"
+    tag_id: 17
+    title: "CityWatch AI"
+    evaluator: "Divya"
+    cluster: "Central Island (Lower-East)"
+    facing: "EAST"
+    booth_pose: {x: 13.50, y: 3.50, z: 0.40, yaw: 0.0}
+    staging_pose: {x: 14.80, y: 3.50, z: 0.32, yaw: 3.1416}
+
+  - id: "D-06"
+    tag_id: 18
+    title: "Smart Exit Hub"
+    evaluator: "Divya"
+    cluster: "Central Island (Lower-East)"
+    facing: "EAST"
+    booth_pose: {x: 13.50, y: 5.50, z: 0.40, yaw: 0.0}
+    staging_pose: {x: 14.80, y: 5.50, z: 0.32, yaw: 3.1416}
+
+  - id: "D-07"
+    tag_id: 19
+    title: "Little Care"
+    evaluator: "Divya"
+    cluster: "Central Island (Lower-East)"
+    facing: "EAST"
+    booth_pose: {x: 13.50, y: 7.50, z: 0.40, yaw: 0.0}
+    staging_pose: {x: 14.80, y: 7.50, z: 0.32, yaw: 3.1416}
+
+  - id: "D-08"
+    tag_id: 20
+    title: "Munchly"
+    evaluator: "Shashank"
+    cluster: "Central Island (Upper-East)"
+    facing: "EAST"
+    booth_pose: {x: 13.50, y: 11.50, z: 0.40, yaw: 0.0}
+    staging_pose: {x: 14.80, y: 11.50, z: 0.32, yaw: 3.1416}
+
+  - id: "D-09"
+    tag_id: 21
+    title: "FindIT"
+    evaluator: "Shashank"
+    cluster: "Central Island (Upper-East)"
+    facing: "EAST"
+    booth_pose: {x: 13.50, y: 13.50, z: 0.40, yaw: 0.0}
+    staging_pose: {x: 14.80, y: 13.50, z: 0.32, yaw: 3.1416}
+
+  - id: "D-10"
+    tag_id: 22
+    title: "RouteWise"
+    evaluator: "Shashank"
+    cluster: "Central Island (Upper-East)"
+    facing: "EAST"
+    booth_pose: {x: 13.50, y: 15.50, z: 0.40, yaw: 0.0}
+    staging_pose: {x: 14.80, y: 15.50, z: 0.32, yaw: 3.1416}
+
+  - id: "D-11"
+    tag_id: 23
+    title: "AI Exam Monitor"
+    evaluator: "Shashank"
+    cluster: "North Wall (Center)"
+    facing: "SOUTH"
+    booth_pose: {x: 15.00, y: 18.50, z: 0.40, yaw: -1.5708}
+    staging_pose: {x: 15.00, y: 17.20, z: 0.32, yaw: 1.5708}
+
+  - id: "D-12"
+    tag_id: 24
+    title: "Eagle's Eye"
+    evaluator: "Shashank"
+    cluster: "North Wall (Center)"
+    facing: "SOUTH"
+    booth_pose: {x: 17.00, y: 18.50, z: 0.40, yaw: -1.5708}
+    staging_pose: {x: 17.00, y: 17.20, z: 0.32, yaw: 1.5708}
+
+  # ============================================================================
+  # B-SERIES (B-01 to B-07)
+  # ============================================================================
+  - id: "B-01"
+    tag_id: 25
+    title: "Wish College"
+    evaluator: "Shashank"
+    cluster: "North Wall (Center)"
+    facing: "SOUTH"
+    booth_pose: {x: 19.00, y: 18.50, z: 0.40, yaw: -1.5708}
+    staging_pose: {x: 19.00, y: 17.20, z: 0.32, yaw: 1.5708}
+
+  - id: "B-02"
+    tag_id: 26
+    title: "GrowGrid"
+    evaluator: "Dana"
+    cluster: "North Wall (Right / Hydroponics)"
+    facing: "SOUTH"
+    booth_pose: {x: 21.00, y: 18.50, z: 0.40, yaw: -1.5708}
+    staging_pose: {x: 21.00, y: 17.20, z: 0.32, yaw: 1.5708}
+
+  - id: "B-03"
+    tag_id: 27
+    title: "P&P"
+    evaluator: "Vaibhav & Ajay"
+    cluster: "East Wall (Upper)"
+    facing: "WEST"
+    booth_pose: {x: 24.50, y: 14.50, z: 0.40, yaw: 3.1416}
+    staging_pose: {x: 23.20, y: 14.50, z: 0.32, yaw: 0.0}
+
+  - id: "B-04"
+    tag_id: 28
+    title: "Tera Mosac Lounges"
+    evaluator: "Vaibhav & Ajay"
+    cluster: "East Wall (Upper)"
+    facing: "WEST"
+    booth_pose: {x: 24.50, y: 12.50, z: 0.40, yaw: 3.1416}
+    staging_pose: {x: 23.20, y: 12.50, z: 0.32, yaw: 0.0}
+
+  - id: "B-05"
+    tag_id: 29
+    title: "Steel & Stack"
+    evaluator: "Shashank"
+    cluster: "East Wall (Lower)"
+    facing: "WEST"
+    booth_pose: {x: 24.50, y: 7.50, z: 0.40, yaw: 3.1416}
+    staging_pose: {x: 23.20, y: 7.50, z: 0.32, yaw: 0.0}
+
+  - id: "B-06"
+    tag_id: 30
+    title: "Zap Fit"
+    evaluator: "Avneet"
+    cluster: "East Wall (Lower)"
+    facing: "WEST"
+    booth_pose: {x: 24.50, y: 5.50, z: 0.40, yaw: 3.1416}
+    staging_pose: {x: 23.20, y: 5.50, z: 0.32, yaw: 0.0}
+
+  - id: "B-07"
+    tag_id: 31
+    title: "WonderTech"
+    evaluator: "Vaibhav & Ajay"
+    cluster: "East Wall (Lower)"
+    facing: "WEST"
+    booth_pose: {x: 24.50, y: 3.50, z: 0.40, yaw: 3.1416}
+    staging_pose: {x: 23.20, y: 3.50, z: 0.32, yaw: 0.0}

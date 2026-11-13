@@ -1,0 +1,436 @@
+{
+  "B-01": {
+    "code": "B-01",
+    "title": "Zap Fit",
+    "lead": "Avneet",
+    "script": "Welcome to Stall B-01: Zap Fit. Guided by Avneet, ZAP FIT is a fitness and nutrition business that combines personalised meal planning with convenient home-cooking services. Through its smart app, users receive meal recommendations based on their fitness goals, dietary preferences, allergies, and ingredients available at home. Its pantry management system helps reduce food waste by suggesting meals using existing ingredients. ZAP FIT also offers CookNow, a service that connects customers with verified home chefs, called Chef Didis, who visit their homes to prepare fresh, nutritious meals. By integrating smart technology, fitness, and home cooking, ZAP FIT makes healthy eating easier, more convenient, and accessible.",
+    "students": [
+      "Mohammad Zaid Khan",
+      "Anushka Gulati",
+      "Aryaman Soni",
+      "Akshita Gaur",
+      "Riyansh",
+      "Triaansh"
+    ],
+    "audio_file": "b_01_narration.mp3"
+  },
+  "B-02": {
+    "code": "B-02",
+    "title": "GrowGrid",
+    "lead": "Dana",
+    "script": "Welcome to Stall B-02: GrowGrid. Guided by Dana, GrowGrid is a modular hydroponics business that helps people grow fresh food in homes, offices, schools, cafés, and restaurants. It combines easy-to-use growing systems, crop starter packs, a nursery setup, and smart monitoring tools that track plant conditions and guide users from setup to harvest.",
+    "students": [
+      "ABIR BANDHOPADHYAY",
+      "YASHVARDHAN MISHRA",
+      "Ananya Sharma",
+      "Aradhya Singh",
+      "Aniha Mittal",
+      "Pranshi Chadha"
+    ],
+    "audio_file": "b_02_narration.mp3"
+  },
+  "B-03": {
+    "code": "B-03",
+    "title": "PandP",
+    "lead": "Vaibhav and Ajay",
+    "script": "Welcome to Stall B-03: PandP. Guided by Vaibhav and Ajay, P&P (kit)-  is a business model designed to provide suitable Personal Protective Equipment (PPE) kits according to different professions. Our project helps workers identify the safety equipment required for their jobs. Customers can select their profession, such as sanitation worker, construction worker, electrician, or delivery person, and receive recommendations for a suitable PPE kit. Each kit includes protective equipment based on workplace hazards and job requirements. Our business aims to make safety equipment selection easy, accessible, and convenient. Through a website, we plan to display customized kits, product details, and prices while promoting workplace safety awareness.",
+    "students": [
+      "Hitesh",
+      "Aayush",
+      "Naysha",
+      "Agamya Tripathi",
+      "Ayaan"
+    ],
+    "audio_file": "b_03_narration.mp3"
+  },
+  "B-04": {
+    "code": "B-04",
+    "title": "Tera Mosac Lounges",
+    "lead": "Vaibhav and Ajay",
+    "script": "Welcome to Stall B-04: Tera Mosac Lounges. Guided by Vaibhav and Ajay, The Terra Mosaic Lounges is a Smart Waiting Area Setup which is an innovative project designed to transform traditional waiting spaces into intelligent, comfortable, and efficient environments. It integrates IoT, automation, and AI-based technologies to enhance visitor experience. Key features include automatic token generation and queue management, smart seating with occupancy detection, temperature and lighting control, air-quality monitoring, and automated cafeteria ordering. An emergency assistance system and accessibility features ensure safety and convenience. A central dashboard monitors all operations in real time. This project demonstrates how smart technologies can reduce waiting time, optimise resource utilisation, improve comfort, and create a sustainable, user-friendly waiting environment.",
+    "students": [
+      "Nehal Goyal",
+      "Amyra Jain",
+      "Vidushi Verma",
+      "Anvay Jain",
+      "Luv Jindal"
+    ],
+    "audio_file": "b_04_narration.mp3"
+  },
+  "B-05": {
+    "code": "B-05",
+    "title": "Steel and Stack",
+    "lead": "Shashank",
+    "script": "Welcome to Stall B-05: Steel and Stack. Guided by Shashank, Steel & Stack is a technology engineering business that develops integrated hardware and software solutions for businesses and individuals. Its services include website development, AI integration, automation, AI agents, and robotics prototyping. The company aims to simplify technology adoption by offering end-to-end solutions, from initial concept and planning to development, launch, and ongoing support. With affordable, transparent pricing and customizable solutions, Steel & Stack helps clients build smarter digital systems, automate workflows, and turn innovative ideas into functional products.",
+    "students": [
+      "Devansh Grover"
+    ],
+    "audio_file": "b_05_narration.mp3"
+  },
+  "B-06": {
+    "code": "B-06",
+    "title": "WishCollege",
+    "lead": "Shashank",
+    "script": "Welcome to Stall B-06: WishCollege. Guided by Shashank, Wish College is an AI-powered college counselling platform designed to make university admissions more accessible, affordable, and less stressful for students worldwide. The platform analyzes students’ academic achievements, extracurricular activities, and personal preferences to recommend suitable universities. It also provides personalized guidance for writing compelling application essays, preparing for standardized tests, exploring scholarships, and managing application deadlines. Through customized roadmaps and step-by-step support, Wish College empowers students to navigate the admissions process confidently, without the high costs of traditional college counselling.",
+    "students": [
+      "Bisman"
+    ],
+    "audio_file": "b_06_narration.mp3"
+  },
+  "B-07": {
+    "code": "B-07",
+    "title": "WonderTech",
+    "lead": "Vaibhav and Ajay",
+    "script": "Welcome to Stall B-07: WonderTech. Guided by Vaibhav and Ajay, Wonder Tech is a digital learning ecosystem designed to reduce students’ dependence on heavy school bags by providing digital textbooks, notebooks, assignments, and learning resources through a single application. Students can create notes, annotate books, and access their saved work across authorized devices using secure cloud synchronization. The platform includes teacher and school administration dashboards for managing learning materials and student accounts. Schools purchase an annual licence and subscription to provide access to students. The ecosystem can also integrate dedicated tablets, charging docks, or computer stations, enabling convenient, organized, and technology-driven classroom learning.",
+    "students": [
+      "Abhishi Jain",
+      "Aadya Rana",
+      "Saanvi Narula",
+      "Aadhya Raj Singh",
+      "Khyati",
+      "Sarthak",
+      "PRATYUSH KASHYAP"
+    ],
+    "audio_file": "b_07_narration.mp3"
+  },
+  "D-01": {
+    "code": "D-01",
+    "title": "Farm To Home",
+    "lead": "Divya",
+    "script": "Welcome to Stall D-01: Farm To Home. Guided by Divya, Farm to Home is an e-commerce platform connecting farmers, urban gardeners, and customers to promote fresh, locally grown produce and sustainable agriculture. It enables farmers and home growers to sell directly to consumers, reducing middlemen and creating income opportunities. The platform features customer, seller, and admin portals for shopping, inventory management, and business operations. A Learning Hub also guides beginners in growing their own food. Farm to Home aims to support local livelihoods, encourage urban gardening, and build greener communities.",
+    "students": [
+      "Drisha Rathi",
+      "Parth Pal",
+      "Siddhi Saurav",
+      "Tavishi Gupta",
+      "Vihaan Kapoor",
+      "Aashvi"
+    ],
+    "audio_file": "d_01_narration.mp3"
+  },
+  "D-02": {
+    "code": "D-02",
+    "title": "HetuSetu",
+    "lead": "Dana",
+    "script": "Welcome to Stall D-02: HetuSetu. Guided by Dana, Hetu Setu is a maternal healthcare platform connecting pregnant women, ASHA workers, clinics, and hospitals throughout pregnancy and postnatal care. Using a unique Hetu ID and QR code, it enables accessible records, coordinated referrals, and follow-up without requiring Aadhaar or smartphones. With AI-assisted guidance and verified facility matching, Hetu Setu helps women access appropriate, timely, and continuous essential maternal care.",
+    "students": [
+      "Hiya Garg",
+      "Akshara Barath",
+      "Sarisha Sachdeva",
+      "Mishka Singla"
+    ],
+    "audio_file": "d_02_narration.mp3"
+  },
+  "D-03": {
+    "code": "D-03",
+    "title": "Rehab Path 360",
+    "lead": "Divya",
+    "script": "Welcome to Stall D-03: Rehab Path 360. Guided by Divya, REHABPATH360 is an AI-powered prisoner rehabilitation platform designed to help correctional professionals create personalized rehabilitation plans. It evaluates individuals across multiple areas, including behaviour, education, vocational skills, well-being, and reintegration readiness. Through four progressive rehabilitation levels, the system recommends tailored interventions and tracks individual development using visual dashboards and assessments. With human oversight guiding all decisions, REHABPATH360 aims to make prisoner rehabilitation more structured, measurable, and adaptive, ultimately improving rehabilitation outcomes and supporting successful reintegration into society.",
+    "students": [
+      "Abhyudaya Singh",
+      "Abeer Singhal",
+      "Vdwan Bhatnagar",
+      "Neel Arora",
+      "Amish Chandra",
+      "Harshil Verma"
+    ],
+    "audio_file": "d_03_narration.mp3"
+  },
+  "D-04": {
+    "code": "D-04",
+    "title": "Transportation Hub Crowd Management",
+    "lead": "Divya",
+    "script": "Welcome to Stall D-04: Transportation Hub Crowd Management. Guided by Divya, Transportation Hub Crowd Management is a solution designed to make travelling to busy public places easier, safer, and more convenient. The main aim of this project is to help people understand crowd concentration at different locations before visiting them. The application provides an interactive map that highlights areas with low, moderate, and high crowd levels, allowing users to make better decisions about their travel plans. It also displays the estimated time required to reach a selected destination, helping users plan their journeys more effectively.  By providing useful information about busy locations, it supports better crowd distribution and improves the overall visitor experience. It can also assist management authorities in identifying highly crowded areas and taking appropriate steps to maintain safety and convenience. This project aims to save time, reduce stress, improve public safety, and encourage smarter movement in crowded spaces, making everyday travel more organised, comfortable, and efficient for everyone, especially during festivals, holidays, and other major public gatherings.",
+    "students": [
+      "Aarush Agarwal",
+      "Ayyan Rahman",
+      "Parv Tomar",
+      "Yaashvy Nangia",
+      "Rachita Verma",
+      "Tanishka Tomer"
+    ],
+    "audio_file": "d_04_narration.mp3"
+  },
+  "D-05": {
+    "code": "D-05",
+    "title": "CityWatch AI",
+    "lead": "Divya",
+    "script": "Welcome to Stall D-05: CityWatch AI. Guided by Divya, CityWatch AI is an AI-powered smart city solution designed to improve road safety, traffic management, and urban transportation. It combines three intelligent modules: road hazard detection to identify potholes and obstacles, accident detection to alert authorities about potential emergencies, and smart traffic light management to optimize traffic flow and reduce congestion. By integrating AI-based monitoring, automated reporting, and intelligent traffic analysis, CityWatch AI aims to support faster emergency responses, safer roads, and more efficient urban mobility.",
+    "students": [
+      "Dheyanshi Malik",
+      "Zainul Abdeen",
+      "Ehan Haider",
+      "Mihir Bouri",
+      "Ridhima Agarwal",
+      "Vaanika Goyal",
+      "Aradhya Navalakha",
+      "Aadya Mehra"
+    ],
+    "audio_file": "d_05_narration.mp3"
+  },
+  "D-06": {
+    "code": "D-06",
+    "title": "Smart Exit Hub",
+    "lead": "Divya",
+    "script": "Welcome to Stall D-06: Smart Exit Hub. Guided by Divya, Smart Exit Hub is an airport waiting facility designed to provide comfort and convenience for passengers awaiting transportation, particularly elderly travellers and families with young children. It offers dedicated spaces with comfortable seating and essential amenities, alongside digital displays showing transportation availability and estimated arrival times. Developed in partnership with Movement, which provides the technology, Smart Exit Hub combines physical infrastructure with real-time travel information to create a safer, more accessible, and stress-free airport exit experience.",
+    "students": [
+      "Aradhya Singh",
+      "Evaan Rustagi",
+      "Sanchi Jain",
+      "Veronica Chawla",
+      "Manviya Parker"
+    ],
+    "audio_file": "d_06_narration.mp3"
+  },
+  "D-07": {
+    "code": "D-07",
+    "title": "Little care",
+    "lead": "Divya",
+    "script": "Welcome to Stall D-07: Little care. Guided by Divya, Little Care is an interactive paediatric healthcare application designed to connect children, parents, and hospitals through one platform. It features three modules: Admin, Kids, and Parents. Children can access engaging health education videos and basic health assessments, while parents can monitor health reports and schedule paediatric appointments. Hospital administrators can manage educational content and healthcare information. By combining interactive learning, health monitoring, and appointment management, Little Care aims to make paediatric healthcare more accessible, organised, and engaging for families.",
+    "students": [
+      "Aarika Kapoor",
+      "Aarna Verma",
+      "Vedhika Dhawan",
+      "Anav Mittal",
+      "Erisha Gupta"
+    ],
+    "audio_file": "d_07_narration.mp3"
+  },
+  "D-08": {
+    "code": "D-08",
+    "title": "Munchly",
+    "lead": "Shashank",
+    "script": "Welcome to Stall D-08: Munchly. Guided by Shashank, DPS Indirapuram Cafeteria System is an integrated school dining and cashless wallet platform that helps parents, students, and campus staff manage daily school meals with complete ease and financial transparency. It combines isolated student digital wallets, instant Razorpay-powered top-ups, advance meal pre-booking with automated collection tokens, and a fast canteen POS counter backed by real-time spending limits and double-entry ledger accounting.",
+    "students": [
+      "ANANYA GAUR",
+      "ANAYA DANISH",
+      "J. CHANAKYA ANAND",
+      "SANVEE JHA",
+      "SHANAYA SHARMA"
+    ],
+    "audio_file": "d_08_narration.mp3"
+  },
+  "D-09": {
+    "code": "D-09",
+    "title": "FindIT",
+    "lead": "Shashank",
+    "script": "Welcome to Stall D-09: FindIT. Guided by Shashank, CampusFound is an institutional lost-and-found management platform that helps schools catalog, protect, and reunite lost property across campus. It combines phone-free shared terminal logging, smart locker custody tracking, digital claim passes with anti-theft verification, and seamless integration into school LMS and student smart RFID cards.",
+    "students": [
+      "Divyansh Mittal",
+      "Keshav Sharma",
+      "AARADHY SAHU",
+      "Agasthya Taneja",
+      "Darsh Gupta",
+      "TEJASH KUMAR SINGH"
+    ],
+    "audio_file": "d_09_narration.mp3"
+  },
+  "D-10": {
+    "code": "D-10",
+    "title": "RouteWise",
+    "lead": "Shashank",
+    "script": "Welcome to Stall D-10: RouteWise. Guided by Shashank, SafeDrive Sentinel is an intelligent transit and fleet safety platform that helps commercial drivers, school fleets, and logistics operators navigate secure routes while safeguarding driver welfare. It combines real-time route optimization, automated periodic safety check-ins, hands-free multilingual voice commands, offline map caching, and an emergency escalation engine that instantly diverts vehicles to verified 24/7 police safe havens.",
+    "students": [
+      "Riddhi Pandey",
+      "Mudit",
+      "Rakshita",
+      "Zarmin Fatema Abbas",
+      "Vardaan Khokhar"
+    ],
+    "audio_file": "d_10_narration.mp3"
+  },
+  "D-11": {
+    "code": "D-11",
+    "title": "AI Exam Monitor",
+    "lead": "Shashank",
+    "script": "Welcome to Stall D-11: AI Exam Monitor. Guided by Shashank, AI-powered classroom monitoring system that helps schools, educators, and administrators track student focus, attendance, and discipline in real time across classrooms and lecture halls. It combines high-precision facial expression detection, 3D directed gaze telemetry, automated daily LMS sync, and weekly escalation reports that evaluate student engagement, streamline classroom management, and guide proactive academic interventions from daily roll call to parent-teacher conferences.",
+    "students": [
+      "SPARSH GOEL, Deeya Malhotra, Adarsh Acharya, Priyan Asawa XII-E"
+    ],
+    "audio_file": "d_11_narration.mp3"
+  },
+  "D-12": {
+    "code": "D-12",
+    "title": "Eagle's Eye",
+    "lead": "Shashank",
+    "script": "Welcome to Stall D-12: Eagle's Eye. Guided by Shashank, Eagle’s Eye is an AI-powered classroom monitoring system that helps schools and educators track student focus, attendance, and discipline in real time. It combines high-precision facial expression detection, 3D directed gaze telemetry, automated daily LMS sync for teachers, and weekly escalation reports that keep parents informed and guide proactive academic interventions.",
+    "students": [
+      "AAVYA MISHRA",
+      "MYRA CHAUDHARY",
+      "ARSHITA SHRIVASTAVA"
+    ],
+    "audio_file": "d_12_narration.mp3"
+  },
+  "DISPLAY": {
+    "code": "DISPLAY",
+    "title": "Display (Aeroplane)",
+    "lead": "Shubham",
+    "script": "Welcome to the Special Exhibition Showcase: Display (Aeroplane). Supervised by Shubham, this live robotics and engineering demonstration highlights advanced humanoid simulations, mechatronics, and autonomous systems engineered by DPSI students.",
+    "students": [
+      "ABIR BANDYOPADHYAY",
+      "DEVRAJ RAUTELA",
+      "Ojas Pandey",
+      "Ojas Singh",
+      "Dhruv Jain"
+    ],
+    "audio_file": "display_narration.mp3"
+  },
+  "P-01": {
+    "code": "P-01",
+    "title": "Stepwise AI",
+    "lead": "Divya",
+    "script": "Welcome to Stall P-01: Stepwise AI. Guided by Divya, StepWise is an AI-assisted diabetic foot screening system designed to detect early warning signs of foot complications, particularly for people with reduced pain sensitivity. Using five cameras and AI-powered image analysis, the device identifies visible concerns such as ulcers, cracks, swelling, and discoloration. Its connected app provides screening reports, medical record storage, multilingual support, and emergency assistance. By combining accessible technology with preventive monitoring, StepWise aims to support early intervention, improve healthcare accessibility, and help prevent serious diabetic foot complications.",
+    "students": [
+      "Pulkit Chandra",
+      "Aryan Jindal"
+    ],
+    "audio_file": "p_01_narration.mp3"
+  },
+  "P-02": {
+    "code": "P-02",
+    "title": "ADAS",
+    "lead": "Shubham",
+    "script": "Welcome to Stall P-02: ADAS. Guided by Shubham, ADAS System: A low-cost aftermarket driver assistance kit for affordable cars that don’t come with ADAS. Side sensors provide blind spot and side vehicle detection, alerting the driver before a risky lane change. A dashboard unit inside the car monitors the driver for drowsiness and warns them to take a break, while also working as a dashcam to record the road. Basic, affordable, and easy to install.",
+    "students": [
+      "Srishti jain",
+      "Shivangi Negi",
+      "Pranshoo Mittal"
+    ],
+    "audio_file": "p_02_narration.mp3"
+  },
+  "P-03": {
+    "code": "P-03",
+    "title": "Water Management System",
+    "lead": "Vaibhav and Ajay",
+    "script": "Welcome to Stall P-03: Water Management System. Guided by Vaibhav and Ajay, The Water Management System aims to conserve water by collecting and reusing wastewater from bathroom sinks and RO purifiers. The collected water passes through a filtration unit and is stored in a tank. A motor pump transfers the stored water to a toilet flush tank for reuse. This system demonstrates how a simple plumbing arrangement can reduce water wastage and decrease the consumption of fresh water for flushing. It provides a practical and effective approach to water conservation by making better use of available water resources. The project promotes sustainable water management and environmental protection for a better future.",
+    "students": [
+      "Aadvik Bhargava",
+      "Chitrakshi Sharma",
+      "Jaivardhan Joshi",
+      "Karnav Arora",
+      "Maurya Santosh",
+      "Samarth Bhatia",
+      "Yashika Adhikari"
+    ],
+    "audio_file": "p_03_narration.mp3"
+  },
+  "P-04": {
+    "code": "P-04",
+    "title": "EcoVoice",
+    "lead": "Krishna",
+    "script": "Welcome to Stall P-04: EcoVoice. Guided by Krishna, EcoVoice  is a Raspberry Pi-based waste management system designed to encourage proper waste segregation and sustainable practices. It features three separate bins for plastic, paper, and biodegradable waste, each equipped with a foot-operated lid and LED indicators. The system provides voice announcements through a Bluetooth speaker and displays real-time bin activity on an iPad. An integrated composting mechanism converts biodegradable waste into compost, promoting recycling, reducing environmental pollution, and making waste management more interactive and efficient.",
+    "students": [
+      "Diana Chopra",
+      "Vihaan Saxena",
+      "AARNA SONI",
+      "Agrima",
+      "Arnisha",
+      "SANVI SINGH"
+    ],
+    "audio_file": "p_04_narration.mp3"
+  },
+  "P-05": {
+    "code": "P-05",
+    "title": "Aero lift",
+    "lead": "Shubham  Divya",
+    "script": "Welcome to Stall P-05: Aero lift. Guided by Shubham  Divya, A drone designed to deliver urgent medical supplies such as medicines, blood samples, first-aid kits and vaccines to remote or hard-to-reach areas. It flies a set route using GPS, carries a secure and padded payload bay, and drops or lands at the destination. It saves critical time when roads are blocked or too far, helping patients get care faster.",
+    "students": [
+      "Ashmit Roy,",
+      "Vatsal Kumar",
+      "Prakhar Prashant Sangal",
+      "Aadya Agarwal",
+      "Angel Kansal"
+    ],
+    "audio_file": "p_05_narration.mp3"
+  },
+  "P-06": {
+    "code": "P-06",
+    "title": "Binzo",
+    "lead": "Shubham",
+    "script": "Welcome to Stall P-06: Binzo. Guided by Shubham, A line-following dustbin that travels along a corridor on its own. When its sensors detect a person nearby, it stops and automatically opens its lid so waste can be dropped in without touching it. Once the person moves away, it closes the lid and continues its route, keeping corridors cleaner and encouraging proper disposal.",
+    "students": [
+      "RITISHA VARSHNEY",
+      "ABHIVEER ARORA",
+      "Sharanya"
+    ],
+    "audio_file": "p_06_narration.mp3"
+  },
+  "P-07": {
+    "code": "P-07",
+    "title": "Health Thread",
+    "lead": "Shubham",
+    "script": "Welcome to Stall P-07: Health Thread. Guided by Shubham, HealthThread is an AI-powered healthcare platform designed to securely store and organize an individual’s complete medical history in one accessible space, regardless of which hospital or doctor they visit. Through HealthThread Vault, users can manage medical records, prescriptions, and health updates, while Beacon provides access to Lumi, an AI health assistant available at home and on personal devices. Connected to their medical information, Lumi offers personalized health guidance, answers health-related questions, and records updates, enabling more informed consultations and continuous healthcare management.",
+    "students": [
+      "Bisman",
+      "Aradhya Tripathi",
+      "Pragun  Aggarwaal",
+      "Arjun Singh",
+      "Ammelia R Mitra"
+    ],
+    "audio_file": "p_07_narration.mp3"
+  },
+  "P-08": {
+    "code": "P-08",
+    "title": "QUBIT",
+    "lead": "Vaibhav and Ajay",
+    "script": "Welcome to Stall P-08: QUBIT. Guided by Vaibhav and Ajay, The Smart Classroom Doubt Queue System is an IoT-based solution designed to help teachers manage multiple student queries efficiently. It uses two ESP32 microcontrollers: a transmitter with a keypad and display for entering student roll numbers, and a receiver that wirelessly collects submissions and hosts a web portal. Accessible through any phone, tablet, or laptop connected to the receiver's Wi-Fi, the portal displays a real-time queue. Teachers can mark doubts as Solved or Unsolved, with unresolved entries highlighted in yellow. This system ensures fair turn management, prevents students from being overlooked, and improves classroom efficiency.",
+    "students": [
+      "Akrish",
+      "Arav",
+      "Dhruv Jain"
+    ],
+    "audio_file": "p_08_narration.mp3"
+  },
+  "P-09": {
+    "code": "P-09",
+    "title": "Smart Parcel Box",
+    "lead": "Shubham",
+    "script": "Welcome to Stall P-09: Smart Parcel Box. Guided by Shubham, Smart Delivery Box is a secure parcel delivery system designed to prevent package theft and ensure safe, reliable deliveries. Delivery personnel place parcels inside a specially designed box that automatically locks after the package is deposited. The box can only be opened by entering the correct One-Time Password (OTP), ensuring that only authorized recipients can access their deliveries. By combining electronic locking technology with OTP authentication, the system provides a convenient, secure, and contactless solution for residential and commercial deliveries.",
+    "students": [
+      "RITVIJ DWIVEDI",
+      "PRATYOOSH SINGH",
+      "LAVISHKA SOOD",
+      "VIDHI JAIN",
+      "SHASHWAT SINGH",
+      "TARINI MAKHIJA"
+    ],
+    "audio_file": "p_09_narration.mp3"
+  },
+  "P-10": {
+    "code": "P-10",
+    "title": "Automated Passes",
+    "lead": "Vaibhav and Ajay",
+    "script": "Welcome to Stall P-10: Automated Passes. Guided by Vaibhav and Ajay, This project aims to develop a smart school attendance and access control system using RFID cards, an ESP32 microcontroller, and an RFID reader. Each student is assigned a unique RFID card to register entry and exit with accurate timestamps. The ESP32 transmits attendance records through Wi-Fi to an online portal, where authorized staff can monitor student activity, view individual attendance histories, and generate reports. An electronic solenoid lock provides controlled access to authorized users. The system reduces manual attendance work, improves record management, and enhances school security through real-time digital monitoring.",
+    "students": [
+      "KUMAR SATVIK",
+      "Avyaan",
+      "Pranav",
+      "Eeshan",
+      "Ted"
+    ],
+    "audio_file": "p_10_narration.mp3"
+  },
+  "P-11": {
+    "code": "P-11",
+    "title": "Neuralink",
+    "lead": "Shashank",
+    "script": "Welcome to Stall P-11: Neuralink. Guided by Shashank, Neuralink is an accessible Brain-Computer Interface (BCI) system that enables hands-free device control and cognitive monitoring for assistive tech, interactive gaming, and robotics. It combines low-latency wireless biosignal acquisition, real-time spectral focus tracking, neuromuscular trigger detection, and an adaptive control pipeline that translates neural states into immediate digital and physical actions.",
+    "students": [
+      "Ojas Panday"
+    ],
+    "audio_file": "p_11_narration.mp3"
+  },
+  "P-12": {
+    "code": "P-12",
+    "title": "AeroDry",
+    "lead": "Vaibhav and Ajay",
+    "script": "Welcome to Stall P-12: AeroDry. Guided by Vaibhav and Ajay, Project Name: AeroDry – Smart Indoor Clothes Drying System  AeroDry is an innovative indoor clothes-drying system designed to overcome the challenges of drying clothes during monsoons, winters, and humid weather conditions. It provides a convenient indoor drying space where clothes can be hung and dried efficiently using controlled airflow and an optional heating mechanism. The system aims to reduce drying time, prevent moisture accumulation, and eliminate dependency on sunlight and outdoor weather. It offers a practical, time-saving, and user-friendly solution for modern households, ensuring that clothes can be dried anytime, throughout the year.",
+    "students": [
+      "Arhan",
+      "Adrit",
+      "Aarav",
+      "SHRIHAN SINHA"
+    ],
+    "audio_file": "p_12_narration.mp3"
+  }
+}

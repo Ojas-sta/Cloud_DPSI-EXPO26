@@ -1,172 +1,192 @@
 metadata:
   system: 'Project Cloud: Topological ArUco/AprilTag SLAM & Teach-and-Repeat Graph'
   fiducial_family: DICT_4X4_250
-  generated_at: '2026-11-05T16:36:41Z'
-  num_floor_tags: 5
-  num_booth_tags: 2
+  generated_at: '2026-11-12T19:16:13Z'
+  num_floor_tags: 3
+  num_booth_tags: 4
   total_nodes: 7
   total_edges: 12
 nodes:
-  '1':
-    tag_id: 1
+  '5':
+    tag_id: 5
     tag_type: BOOTH
     pose:
-      x: 1.849
-      y: 13.717
-      theta: -0.041
-    observations: 2
-    first_seen_time: 1793896601.3
-    label: P01 (Stepwise AI)
-    parent_floor_tag: 101
+      x: 1.903
+      y: 11.188
+      theta: -0.8645
+    observations: 25
+    first_seen_time: 1794510971.76
+    label: P05 (Aero Lift)
+    parent_floor_tag: 105
     relative_to_parent:
-      dx_world: 1.851
-      dy_world: -0.076
-      distance_m: 1.853
-      target_heading_rad: -0.041
-      heading_offset_deg: -92.4
-      local_fwd: -0.076
-      local_lat: 1.851
+      dx_world: 1.906
+      dy_world: -2.234
+      distance_m: 2.937
+      target_heading_rad: -0.8645
+      heading_offset_deg: -139.5
+      local_fwd: -2.234
+      local_lat: 1.906
     standoff_distance_m: 0.95
-  '2':
-    tag_id: 2
+  '6':
+    tag_id: 6
     tag_type: BOOTH
     pose:
-      x: 1.849
-      y: 17.717
-      theta: -0.041
-    observations: 2
-    first_seen_time: 1793896601.33
-    label: 'P02 (Move Smarter: ADAS)'
-    parent_floor_tag: 103
+      x: 2.623
+      y: 13.014
+      theta: -0.1541
+    observations: 52
+    first_seen_time: 1794510961.04
+    label: P06 (Binzo)
+    parent_floor_tag: 105
     relative_to_parent:
-      dx_world: 1.851
-      dy_world: -0.076
-      distance_m: 1.853
-      target_heading_rad: -0.041
-      heading_offset_deg: -92.4
-      local_fwd: -0.076
-      local_lat: 1.851
+      dx_world: 2.626
+      dy_world: -0.408
+      distance_m: 2.658
+      target_heading_rad: -0.1541
+      heading_offset_deg: -98.8
+      local_fwd: -0.408
+      local_lat: 2.626
     standoff_distance_m: 0.95
-  '100':
-    tag_id: 100
+  '7':
+    tag_id: 7
+    tag_type: BOOTH
+    pose:
+      x: 2.787
+      y: 16.109
+      theta: -0.5363
+    observations: 168
+    first_seen_time: 1794510961.04
+    label: P07 (Health Thread)
+    parent_floor_tag: 107
+    relative_to_parent:
+      dx_world: 1.933
+      dy_world: -1.149
+      distance_m: 2.249
+      target_heading_rad: -0.5363
+      heading_offset_deg: -81.1
+      local_fwd: 0.346
+      local_lat: 2.222
+    standoff_distance_m: 0.95
+  '8':
+    tag_id: 8
+    tag_type: BOOTH
+    pose:
+      x: 3.236
+      y: 18.266
+      theta: 0.4003
+    observations: 5
+    first_seen_time: 1794510971.44
+    label: P08 (QUBIT)
+    parent_floor_tag: 107
+    relative_to_parent:
+      dx_world: 2.382
+      dy_world: 1.008
+      distance_m: 2.587
+      target_heading_rad: 0.4003
+      heading_offset_deg: -27.5
+      local_fwd: 2.295
+      local_lat: 1.194
+    standoff_distance_m: 0.95
+  '105':
+    tag_id: 105
     tag_type: FLOOR
     pose:
       x: -0.003
-      y: 10.963
+      y: 13.422
       theta: 1.5708
-    observations: 1
-    first_seen_time: 1793896601.3
-    label: Tag_100
-  '101':
-    tag_id: 101
+    observations: 74
+    first_seen_time: 1794510961.04
+    label: Tag_105
+  '106':
+    tag_id: 106
     tag_type: FLOOR
     pose:
-      x: -0.002
-      y: 13.793
+      x: 0.419
+      y: 15.177
       theta: 1.5708
-    observations: 2
-    first_seen_time: 1793896601.3
-    label: Tag_101
-  '102':
-    tag_id: 102
+    observations: 140
+    first_seen_time: 1794510962.69
+    label: Tag_106
+  '107':
+    tag_id: 107
     tag_type: FLOOR
     pose:
-      x: -0.002
-      y: 15.793
-      theta: 1.5708
-    observations: 2
-    first_seen_time: 1793896601.31
-    label: Tag_102
-  '103':
-    tag_id: 103
-    tag_type: FLOOR
-    pose:
-      x: -0.002
-      y: 17.793
-      theta: 1.5708
-    observations: 2
-    first_seen_time: 1793896601.33
-    label: Tag_103
-  '104':
-    tag_id: 104
-    tag_type: FLOOR
-    pose:
-      x: -0.002
-      y: 19.793
-      theta: 1.5708
-    observations: 2
-    first_seen_time: 1793896601.34
-    label: Tag_104
+      x: 0.854
+      y: 17.258
+      theta: 0.88
+    observations: 9
+    first_seen_time: 1794510971.06
+    label: Tag_107
 edges:
-- from: 100
-  to: 101
-  dx: 0.001
-  dy: 2.977
+- from: 105
+  to: 6
+  dx: 1.479
+  dy: -0.488
+  dtheta: -1.8895
+  distance_m: 1.557
+- from: 6
+  to: 105
+  dx: -1.479
+  dy: 0.488
+  dtheta: 1.8895
+  distance_m: 1.557
+- from: 105
+  to: 106
+  dx: -0.005
+  dy: 3.38
   dtheta: 0.0
-  distance_m: 2.977
-- from: 101
-  to: 100
-  dx: -0.001
-  dy: -2.977
+  distance_m: 3.38
+- from: 106
+  to: 105
+  dx: 0.005
+  dy: -3.38
   dtheta: -0.0
-  distance_m: 2.977
-- from: 101
-  to: 1
-  dx: 1.608
-  dy: 0.08
-  dtheta: -1.5211
-  distance_m: 1.61
-- from: 1
-  to: 101
-  dx: -1.608
-  dy: -0.08
-  dtheta: 1.5211
-  distance_m: 1.61
-- from: 101
-  to: 102
-  dx: 0.0
-  dy: 2.147
-  dtheta: 0.0
-  distance_m: 2.147
-- from: 102
-  to: 101
-  dx: -0.0
-  dy: -2.147
-  dtheta: -0.0
-  distance_m: 2.147
-- from: 102
-  to: 103
-  dx: 0.0
-  dy: 2.147
-  dtheta: 0.0
-  distance_m: 2.147
-- from: 103
-  to: 102
-  dx: -0.0
-  dy: -2.147
-  dtheta: -0.0
-  distance_m: 2.147
-- from: 103
-  to: 2
-  dx: 1.608
-  dy: 0.08
-  dtheta: -1.5211
-  distance_m: 1.61
-- from: 2
-  to: 103
-  dx: -1.608
-  dy: -0.08
-  dtheta: 1.5211
-  distance_m: 1.61
-- from: 103
-  to: 104
-  dx: 0.0
-  dy: 2.147
-  dtheta: 0.0
-  distance_m: 2.147
-- from: 104
-  to: 103
-  dx: -0.0
-  dy: -2.147
-  dtheta: -0.0
-  distance_m: 2.147
+  distance_m: 3.38
+- from: 106
+  to: 107
+  dx: 0.568
+  dy: 2.08
+  dtheta: -0.6908
+  distance_m: 2.156
+- from: 107
+  to: 106
+  dx: -0.568
+  dy: -2.08
+  dtheta: 0.6908
+  distance_m: 2.156
+- from: 107
+  to: 7
+  dx: 1.375
+  dy: -1.368
+  dtheta: -1.6628
+  distance_m: 1.94
+- from: 7
+  to: 107
+  dx: -1.375
+  dy: 1.368
+  dtheta: 1.6628
+  distance_m: 1.94
+- from: 107
+  to: 8
+  dx: 2.332
+  dy: 0.921
+  dtheta: -0.5039
+  distance_m: 2.507
+- from: 8
+  to: 107
+  dx: -2.332
+  dy: -0.921
+  dtheta: 0.5039
+  distance_m: 2.507
+- from: 105
+  to: 5
+  dx: 1.906
+  dy: -2.234
+  dtheta: -2.4353
+  distance_m: 2.937
+- from: 5
+  to: 105
+  dx: -1.906
+  dy: 2.234
+  dtheta: 2.4353
+  distance_m: 2.937

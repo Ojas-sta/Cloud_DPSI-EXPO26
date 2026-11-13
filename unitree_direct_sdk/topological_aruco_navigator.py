@@ -14,9 +14,11 @@ Features:
 """
 
 import os
+import sys
 import math
 import time
 import yaml
+import subprocess
 import networkx as nx
 from typing import Dict, List, Tuple, Any, Optional
 
@@ -78,35 +80,54 @@ class TopologicalArucoNavigator:
 
     def load_curricula(self) -> Dict[int, Dict[str, Any]]:
         """Loads speech narration scripts mapped by marker_id (NO hardcoded coords)."""
-        curricula_path = os.path.join(CONFIG_DIR, "exhibition_curricula.yaml")
-        curricula_map = {
-            1: {
-                "stall": "P01",
-                "title": "Stepwise AI: Biomechanical Gait Analysis",
-                "speech": (
-                    "Welcome to Stall P01: Stepwise AI — Biomechanical Gait Analysis! "
-                    "Our team deploys wearable 6-axis IMUs and computer vision to analyze ankle pronation, "
-                    "detect gait deviations, and quantify rehabilitation progress with clinical precision."
-                )
-            },
-            6: {
-                "stall": "P06",
-                "title": "Robotic Smart Moving Bin System",
-                "speech": (
-                    "Welcome to Stall P06: The Robotic Smart Moving Bin System! "
-                    "Engineered by DPSI student innovators, this mobile platform uses planar 2D LiDAR SLAM "
-                    "and ultrasonic fill-level telemetry to autonomously navigate concourses and cut maintenance manpower by 65%."
-                )
-            },
-            2: {
-                "stall": "P02",
-                "title": "Move Smarter: ADAS & Edge Driver Assistance",
-                "speech": (
-                    "Welcome to Stall P02: Move Smarter ADAS! "
-                    "Featuring millimetric forward radar and edge deep learning for predictive pedestrian collision braking."
-                )
+        curricula_map = {}
+        cfg_path = os.path.join(CONFIG_DIR, "dpsi_expo_31stalls.yaml")
+        if os.path.exists(cfg_path):
+            try:
+                with open(cfg_path, "r") as f:
+                    cfg_data = yaml.safe_load(f)
+                for s in cfg_data.get("stalls", []):
+                    tid = int(s["tag_id"])
+                    curricula_map[tid] = {
+                        "stall": s["id"],
+                        "title": s["title"],
+                        "speech": (
+                            f"Honorable evaluators and guests, welcome to Stall {s['id']}: {s['title']}! "
+                            f"Evaluated by {s.get('evaluator', 'our faculty panel')}, this student capstone demonstrates "
+                            f"cutting-edge mechatronics and engineering innovation here at DPSI EXPO 2026."
+                        )
+                    }
+            except Exception:
+                pass
+        if not curricula_map:
+            curricula_map = {
+                1: {
+                    "stall": "P01",
+                    "title": "Stepwise AI: Biomechanical Gait Analysis",
+                    "speech": (
+                        "Welcome to Stall P01: Stepwise AI — Biomechanical Gait Analysis! "
+                        "Our team deploys wearable 6-axis IMUs and computer vision to analyze ankle pronation, "
+                        "detect gait deviations, and quantify rehabilitation progress with clinical precision."
+                    )
+                },
+                6: {
+                    "stall": "P06",
+                    "title": "Robotic Smart Moving Bin System",
+                    "speech": (
+                        "Welcome to Stall P06: The Robotic Smart Moving Bin System! "
+                        "Engineered by DPSI student innovators, this mobile platform uses planar 2D LiDAR SLAM "
+                        "and ultrasonic fill-level telemetry to autonomously navigate concourses and cut maintenance manpower by 65%."
+                    )
+                },
+                2: {
+                    "stall": "P02",
+                    "title": "Move Smarter: ADAS & Edge Driver Assistance",
+                    "speech": (
+                        "Welcome to Stall P02: Move Smarter ADAS! "
+                        "Featuring millimetric forward radar and edge deep learning for predictive pedestrian collision braking."
+                    )
+                }
             }
-        }
         return curricula_map
 
     # --------------------------------------------------------------------------
@@ -328,11 +349,40 @@ class TopologicalArucoNavigator:
             update_visuals_fn(f"{stage_name}: STEP 3 - EYE CONTACT TILT (+8.0°)")
             time.sleep(0.04)
 
-        # Step 4: Deliver stall speech narration
+        # Step 4: Deliver stall speech narration through Go2 physical speaker
         print(f"\n  🔊 [Docent Speech — Stall #{booth_tag_id}]:\n  \"{speech_text}\"\n")
-        for _ in range(40):
-            update_visuals_fn(f"{stage_name}: STEP 4 - NARRATION", speech_text=speech_text)
-            time.sleep(0.04)
+        audio_file = self.get_audio_file_for_tag(booth_tag_id)
+        audio_proc = None
+
+        go2_speaker_script = os.path.join(WORKSPACE_DIR, "Day1_Testes", "play_on_go2_speaker.py")
+        webrtc_python = "/Users/roopalisingh/PycharmProjects/TEST/.venv/bin/python"
+
+        if os.path.exists(go2_speaker_script) and os.path.exists(webrtc_python):
+            print(f"  🐕 Blasting audio through Unitree Go2 PHYSICAL CHASSIS SPEAKER (Stall #{booth_tag_id})...")
+            audio_proc = subprocess.Popen([webrtc_python, go2_speaker_script, "--stall", str(booth_tag_id)])
+        elif audio_file:
+            print(f"  ▶️ Companion fallback audio track: {os.path.basename(audio_file)}")
+            if sys.platform == "darwin":
+                audio_proc = subprocess.Popen(["afplay", audio_file])
+            else:
+                audio_proc = subprocess.Popen(["ffplay", "-nodisp", "-autoexit", "-loglevel", "quiet", audio_file])
+        else:
+            if sys.platform == "darwin":
+                audio_proc = subprocess.Popen(["say", "-v", "Samantha", speech_text])
+
+        # Animate visualizer while audio plays (or fallback loop)
+        t_audio_start = time.time()
+        if audio_proc:
+            while audio_proc.poll() is None:
+                update_visuals_fn(f"{stage_name}: STEP 4 - NARRATION", speech_text=speech_text)
+                time.sleep(0.05)
+                if time.time() - t_audio_start > 26.0:  # Safety cap at 26 seconds
+                    audio_proc.kill()
+                    break
+        else:
+            for _ in range(40):
+                update_visuals_fn(f"{stage_name}: STEP 4 - NARRATION", speech_text=speech_text)
+                time.sleep(0.04)
 
         # Step 5: Reset pitch to 0.0° balance posture
         print("  • Step 5: Resetting head tilt to 0.0° balance posture...")
@@ -377,6 +427,29 @@ class TopologicalArucoNavigator:
         robot.stop()
         robot.yaw_deg = target_yaw_deg
         print(f"  ✓ Re-entered concourse arterial track (Yaw = {robot.yaw_deg:.1f}°). Ready for next hop.\n")
+
+    def get_audio_file_for_tag(self, booth_tag_id: int, voice: str = "v3") -> Optional[str]:
+        """Resolves local pre-generated audio file path for given booth tag ID."""
+        tag_to_code = {
+            1: "p_01", 2: "p_02", 3: "p_03", 4: "p_04", 5: "p_05", 6: "p_06",
+            7: "p_07", 8: "p_08", 9: "p_09", 10: "p_10", 11: "p_11", 12: "p_12",
+            13: "d_01", 14: "d_02", 15: "d_03", 16: "d_04", 17: "d_05", 18: "d_06",
+            19: "d_07", 20: "d_08", 21: "d_09", 22: "d_10", 23: "d_11", 24: "d_12",
+            25: "b_01", 26: "b_02", 27: "b_03", 28: "b_04", 29: "b_05", 30: "b_06",
+            31: "b_07", 32: "display"
+        }
+        code = tag_to_code.get(booth_tag_id)
+        if not code:
+            return None
+        candidates = [
+            os.path.join(WORKSPACE_DIR, "audio", "fish_audio_25s", voice, f"{code}_narration.mp3"),
+            os.path.join(WORKSPACE_DIR, "audio", "fish_audio_25s", "v1", f"{code}_narration.mp3"),
+            os.path.join(WORKSPACE_DIR, "audio", "docent_narration", f"{code}_narration.mp3")
+        ]
+        for c in candidates:
+            if os.path.exists(c):
+                return c
+        return None
 
     def get_speech_for_booth(self, booth_tag_id: int) -> str:
         """Retrieves domain speech text for stall."""

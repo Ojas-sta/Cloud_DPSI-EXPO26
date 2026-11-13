@@ -1,0 +1,261 @@
+# Expo Hall Layout, Stall Metadata, and Docent Routing Map
+# Generated for Cloud Argus Autonomous Docent
+version: "1.0"
+hall_dimensions_m:
+  width_x: 24.0   # West to East
+  length_y: 16.0  # South (Entrance) to North (Back Wall)
+
+entrances:
+  entrance_west:
+    x: 2.0
+    y: 0.5
+    type: "double_door"
+  entrance_center:
+    x: 12.0
+    y: 0.5
+    type: "main_foyer"
+  entrance_east:
+    x: 22.0
+    y: 0.5
+    type: "side_exit"
+
+home_dock:
+  x: 11.5
+  y: 0.8
+  yaw_deg: 90.0
+  description: "Charging station near center entrance"
+
+zones:
+  west_wall_south:
+    stalls: ["P-01", "P-02", "P-03"]
+    corridor_orientation: "north_south"
+    robot_stop_facing: "west"
+  west_wall_north:
+    stalls: ["P-04", "P-05", "P-06"]
+    corridor_orientation: "north_south"
+    robot_stop_facing: "west"
+  north_wall_west:
+    stalls: ["P-07", "P-08", "P-09", "P-10"]
+    corridor_orientation: "east_west"
+    robot_stop_facing: "north"
+  central_aisle_west_north:
+    stalls: ["P-11", "P-12", "D-01"]
+    corridor_orientation: "north_south"
+    robot_stop_facing: "west"
+  central_aisle_west_south:
+    stalls: ["D-02", "D-03", "D-04"]
+    corridor_orientation: "north_south"
+    robot_stop_facing: "west"
+  central_aisle_east_north:
+    stalls: ["D-10", "D-09", "D-08"]
+    corridor_orientation: "north_south"
+    robot_stop_facing: "east"
+  central_aisle_east_south:
+    stalls: ["D-07", "D-06", "D-05"]
+    corridor_orientation: "north_south"
+    robot_stop_facing: "east"
+  north_wall_east:
+    stalls: ["D-11", "D-12", "B-01", "B-02"]
+    corridor_orientation: "east_west"
+    robot_stop_facing: "north"
+  east_wall_north:
+    stalls: ["B-03", "B-04"]
+    corridor_orientation: "north_south"
+    robot_stop_facing: "east"
+  east_wall_south:
+    stalls: ["B-05", "B-06", "B-07"]
+    corridor_orientation: "north_south"
+    robot_stop_facing: "east"
+
+stalls:
+  # P-Series (Presentation & Prototype Stalls)
+  P-01:
+    tag_id: 1
+    title: "Stepwise AI"
+    lead: "Divya"
+    zone: "west_wall_south"
+    approx_coords: [2.5, 2.5]
+  P-02:
+    tag_id: 2
+    title: "ADAS (Advanced Driver Assistance)"
+    lead: "Shubham"
+    zone: "west_wall_south"
+    approx_coords: [2.5, 4.5]
+  P-03:
+    tag_id: 3
+    title: "Water Management System"
+    lead: "Vaibhav & Ajay"
+    zone: "west_wall_south"
+    approx_coords: [2.5, 6.5]
+  P-04:
+    tag_id: 4
+    title: "EcoVoice"
+    lead: "Krishna"
+    zone: "west_wall_north"
+    approx_coords: [2.5, 9.0]
+  P-05:
+    tag_id: 5
+    title: "Aero Lift"
+    lead: "Shubham & Divya"
+    zone: "west_wall_north"
+    approx_coords: [2.5, 11.0]
+  P-06:
+    tag_id: 6
+    title: "Binzo"
+    lead: "Shubham"
+    zone: "west_wall_north"
+    approx_coords: [2.5, 13.0]
+  P-07:
+    tag_id: 7
+    title: "Health Thread"
+    lead: "Shubham"
+    zone: "north_wall_west"
+    approx_coords: [4.0, 14.5]
+  P-08:
+    tag_id: 8
+    title: "QUBIT"
+    lead: "Vaibhav & Ajay"
+    zone: "north_wall_west"
+    approx_coords: [5.5, 14.5]
+  P-09:
+    tag_id: 9
+    title: "Smart Parcel Box"
+    lead: "Shubham"
+    zone: "north_wall_west"
+    approx_coords: [7.0, 14.5]
+  P-10:
+    tag_id: 10
+    title: "Automated Passes"
+    lead: "Vaibhav & Ajay"
+    zone: "north_wall_west"
+    approx_coords: [8.5, 14.5]
+  P-11:
+    tag_id: 11
+    title: "From Muscle to Motion"
+    lead: "Shashank"
+    zone: "central_aisle_west_north"
+    approx_coords: [9.5, 13.0]
+  P-12:
+    tag_id: 12
+    title: "AeroDry"
+    lead: "Vaibhav & Ajay"
+    zone: "central_aisle_west_north"
+    approx_coords: [9.5, 11.0]
+
+  # D-Series (Demonstration & Interactive Stalls)
+  D-01:
+    tag_id: 13
+    title: "Farm to Home"
+    lead: "Divya"
+    zone: "central_aisle_west_north"
+    approx_coords: [9.5, 9.0]
+  D-02:
+    tag_id: 14
+    title: "Hetu Setu"
+    lead: "Dana"
+    zone: "central_aisle_west_south"
+    approx_coords: [9.5, 6.5]
+  D-03:
+    tag_id: 15
+    title: "Rehab Path 360"
+    lead: "Divya"
+    zone: "central_aisle_west_south"
+    approx_coords: [9.5, 4.5]
+  D-04:
+    tag_id: 16
+    title: "Transportation Hub Crowd Management"
+    lead: "Divya"
+    zone: "central_aisle_west_south"
+    approx_coords: [9.5, 2.5]
+  D-05:
+    tag_id: 17
+    title: "CityWatch AI"
+    lead: "Divya"
+    zone: "central_aisle_east_south"
+    approx_coords: [13.5, 2.5]
+  D-06:
+    tag_id: 18
+    title: "Smart Exit Hub"
+    lead: "Divya"
+    zone: "central_aisle_east_south"
+    approx_coords: [13.5, 4.5]
+  D-07:
+    tag_id: 19
+    title: "Little Care"
+    lead: "Divya"
+    zone: "central_aisle_east_south"
+    approx_coords: [13.5, 6.5]
+  D-08:
+    tag_id: 20
+    title: "Munchly"
+    lead: "Shashank"
+    zone: "central_aisle_east_north"
+    approx_coords: [13.5, 9.0]
+  D-09:
+    tag_id: 21
+    title: "FindIT"
+    lead: "Shashank"
+    zone: "central_aisle_east_north"
+    approx_coords: [13.5, 11.0]
+  D-10:
+    tag_id: 22
+    title: "RouteWise"
+    lead: "Shashank"
+    zone: "central_aisle_east_north"
+    approx_coords: [13.5, 13.0]
+  D-11:
+    tag_id: 23
+    title: "AI Exam Monitor"
+    lead: "Shashank"
+    zone: "north_wall_east"
+    approx_coords: [15.5, 14.5]
+  D-12:
+    tag_id: 24
+    title: "Eagle's Eye"
+    lead: "Shashank"
+    zone: "north_wall_east"
+    approx_coords: [17.0, 14.5]
+
+  # B-Series (Business & Biotech Stalls)
+  B-01:
+    tag_id: 25
+    title: "Wish College"
+    lead: "Shashank"
+    zone: "north_wall_east"
+    approx_coords: [18.5, 14.5]
+  B-02:
+    tag_id: 26
+    title: "GrowGrid (Hydroponics)"
+    lead: "Dana"
+    zone: "north_wall_east"
+    approx_coords: [20.0, 14.5]
+  B-03:
+    tag_id: 27
+    title: "P&P"
+    lead: "Vaibhav & Ajay"
+    zone: "east_wall_north"
+    approx_coords: [22.0, 11.5]
+  B-04:
+    tag_id: 28
+    title: "Tera Mosac Lounges"
+    lead: "Vaibhav & Ajay"
+    zone: "east_wall_north"
+    approx_coords: [22.0, 9.5]
+  B-05:
+    tag_id: 29
+    title: "Steel & Stack"
+    lead: "Shashank"
+    zone: "east_wall_south"
+    approx_coords: [22.0, 6.5]
+  B-06:
+    tag_id: 30
+    title: "Zap Fit"
+    lead: "Avneet"
+    zone: "east_wall_south"
+    approx_coords: [22.0, 4.5]
+  B-07:
+    tag_id: 31
+    title: "WonderTech"
+    lead: "Vaibhav & Ajay"
+    zone: "east_wall_south"
+    approx_coords: [22.0, 2.5]

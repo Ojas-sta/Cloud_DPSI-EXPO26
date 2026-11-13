@@ -66,7 +66,10 @@ class UnitreeGo2Interface:
         self.posture = "BALANCE_STAND"
         self.pitch_deg = 0.0
         if self.use_physical_robot and self.sport_client:
-            self.sport_client.StandUp()
+            ret_up = self.sport_client.StandUp()
+            time.sleep(0.5)
+            ret_bal = self.sport_client.BalanceStand()
+            print(f"  • [Go2 SDK2]: StandUp={ret_up}, BalanceStand={ret_bal}")
         print("  • [Go2]: Posture -> BALANCE_STAND (Nominal height = 0.354m, Zero floor clipping)")
 
     def sit_down(self):
@@ -94,7 +97,9 @@ class UnitreeGo2Interface:
         self.vy = vy
         self.wz = wz
         if self.use_physical_robot and self.sport_client:
-            self.sport_client.Move(vx, vy, wz)
+            ret = self.sport_client.Move(vx, vy, wz)
+            if ret not in (0, None):
+                print(f"  ⚠️ [Go2 SDK2]: Move({vx:.2f}, {vy:.2f}, {wz:.2f}) returned code={ret}")
 
     def stop(self):
         self.move(0.0, 0.0, 0.0)

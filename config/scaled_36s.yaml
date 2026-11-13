@@ -1,0 +1,317 @@
+# 36-Stall Full Scale Exhibition Preset Configuration
+# Venue: DPSI EXPO-2026 | Architecture: 4 Cohorts x 9 Stalls with Scheduled RTB Battery Checkpoints
+version: "1.0"
+preset_name: "scaled_36s"
+total_stalls: 36
+cohort_count: 4
+stalls_per_cohort: 9
+
+home_base:
+  id: "HOME_DOCK"
+  tag_id: 99
+  x: 0.0
+  y: 0.0
+  yaw_deg: 90.0
+  description: "Foyer Induction Charging & Base Dock"
+
+cohorts:
+  - id: 1
+    name: "Cohort 1: Applied AI & Autonomous Mobility (Stalls 1-9)"
+    zone: "West Concourse"
+    stall_ids: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    floor_tags: [100, 101, 102, 103, 104, 105, 106, 107, 108]
+    rtb_checkpoint:
+      floor_tag: 108
+      action: "INSPECT_BATTERY_AND_COOLDOWN"
+      soc_threshold_warn: 35.0
+
+  - id: 2
+    name: "Cohort 2: HealthTech, Biosensors & Clinical Rehab (Stalls 10-18)"
+    zone: "North Concourse"
+    stall_ids: [10, 11, 12, 13, 14, 15, 16, 17, 18]
+    floor_tags: [109, 110, 111, 112, 113, 114, 115, 116, 117]
+    rtb_checkpoint:
+      floor_tag: 117
+      action: "INSPECT_BATTERY_AND_COOLDOWN"
+      soc_threshold_warn: 35.0
+
+  - id: 3
+    name: "Cohort 3: Smart Cities, Energy & Logistics (Stalls 19-27)"
+    zone: "Central Promenade"
+    stall_ids: [19, 20, 21, 22, 23, 24, 25, 26, 27]
+    floor_tags: [118, 119, 120, 121, 122, 123, 124, 125, 126]
+    rtb_checkpoint:
+      floor_tag: 126
+      action: "INSPECT_BATTERY_AND_COOLDOWN"
+      soc_threshold_warn: 35.0
+
+  - id: 4
+    name: "Cohort 4: EdTech, Enterprise Systems & Robotics (Stalls 28-36)"
+    zone: "East Concourse & Innovation Hub"
+    stall_ids: [28, 29, 30, 31, 32, 33, 34, 35, 36]
+    floor_tags: [127, 128, 129, 130, 131, 132, 133, 134, 135]
+    rtb_checkpoint:
+      floor_tag: 135
+      action: "RETURN_TO_HOME_DOCK"
+      soc_threshold_warn: 20.0
+
+stalls:
+  # Cohort 1 (Stalls 1-9)
+  - id: "P01"
+    tag_id: 1
+    cohort: 1
+    title: "Stepwise AI"
+    lead: "Divya"
+    booth_pose: {x: 1.60, y: 3.00, yaw: 0.0}
+    approach_tag: 100
+  - id: "P02"
+    tag_id: 2
+    cohort: 1
+    title: "Move Smarter: ADAS"
+    lead: "Shubham"
+    booth_pose: {x: 1.60, y: 5.00, yaw: 0.0}
+    approach_tag: 101
+  - id: "P03"
+    tag_id: 3
+    cohort: 1
+    title: "Water Management System"
+    lead: "Vaibhav & Ajay"
+    booth_pose: {x: 1.60, y: 7.00, yaw: 0.0}
+    approach_tag: 102
+  - id: "P04"
+    tag_id: 4
+    cohort: 1
+    title: "EcoVoice"
+    lead: "Krishna"
+    booth_pose: {x: 1.60, y: 9.00, yaw: 0.0}
+    approach_tag: 103
+  - id: "P05"
+    tag_id: 5
+    cohort: 1
+    title: "Aero Lift"
+    lead: "Shubham & Divya"
+    booth_pose: {x: 1.60, y: 11.00, yaw: 0.0}
+    approach_tag: 104
+  - id: "P06"
+    tag_id: 6
+    cohort: 1
+    title: "Binzo"
+    lead: "Shubham"
+    booth_pose: {x: 1.60, y: 13.00, yaw: 0.0}
+    approach_tag: 105
+  - id: "P07"
+    tag_id: 7
+    cohort: 1
+    title: "Health Thread"
+    lead: "Shubham"
+    booth_pose: {x: 1.60, y: 15.00, yaw: 0.0}
+    approach_tag: 106
+  - id: "P08"
+    tag_id: 8
+    cohort: 1
+    title: "QUBIT"
+    lead: "Vaibhav & Ajay"
+    booth_pose: {x: 1.60, y: 17.00, yaw: 0.0}
+    approach_tag: 107
+  - id: "P09"
+    tag_id: 9
+    cohort: 1
+    title: "Smart Parcel Box"
+    lead: "Shubham"
+    booth_pose: {x: 1.60, y: 19.00, yaw: 0.0}
+    approach_tag: 108
+
+  # Cohort 2 (Stalls 10-18)
+  - id: "P10"
+    tag_id: 10
+    cohort: 2
+    title: "Automated Passes"
+    lead: "Vaibhav & Ajay"
+    booth_pose: {x: 4.00, y: 21.00, yaw: 90.0}
+    approach_tag: 109
+  - id: "P11"
+    tag_id: 11
+    cohort: 2
+    title: "From Muscle to Motion"
+    lead: "Shashank"
+    booth_pose: {x: 6.00, y: 21.00, yaw: 90.0}
+    approach_tag: 110
+  - id: "P12"
+    tag_id: 12
+    cohort: 2
+    title: "AeroDry"
+    lead: "Vaibhav & Ajay"
+    booth_pose: {x: 8.00, y: 21.00, yaw: 90.0}
+    approach_tag: 111
+  - id: "D01"
+    tag_id: 13
+    cohort: 2
+    title: "Farm to Home"
+    lead: "Divya"
+    booth_pose: {x: 10.00, y: 21.00, yaw: 90.0}
+    approach_tag: 112
+  - id: "D02"
+    tag_id: 14
+    cohort: 2
+    title: "Hetu Setu"
+    lead: "Dana"
+    booth_pose: {x: 12.00, y: 21.00, yaw: 90.0}
+    approach_tag: 113
+  - id: "D03"
+    tag_id: 15
+    cohort: 2
+    title: "Rehab Path 360"
+    lead: "Divya"
+    booth_pose: {x: 14.00, y: 21.00, yaw: 90.0}
+    approach_tag: 114
+  - id: "D04"
+    tag_id: 16
+    cohort: 2
+    title: "Transportation Hub Crowd Mgt"
+    lead: "Divya"
+    booth_pose: {x: 16.00, y: 21.00, yaw: 90.0}
+    approach_tag: 115
+  - id: "D05"
+    tag_id: 17
+    cohort: 2
+    title: "CityWatch AI"
+    lead: "Divya"
+    booth_pose: {x: 18.00, y: 21.00, yaw: 90.0}
+    approach_tag: 116
+  - id: "D06"
+    tag_id: 18
+    cohort: 2
+    title: "Smart Exit Hub"
+    lead: "Divya"
+    booth_pose: {x: 20.00, y: 21.00, yaw: 90.0}
+    approach_tag: 117
+
+  # Cohort 3 (Stalls 19-27)
+  - id: "D07"
+    tag_id: 19
+    cohort: 3
+    title: "Little Care"
+    lead: "Divya"
+    booth_pose: {x: 14.00, y: 19.00, yaw: 180.0}
+    approach_tag: 118
+  - id: "D08"
+    tag_id: 20
+    cohort: 3
+    title: "Munchly"
+    lead: "Shashank"
+    booth_pose: {x: 14.00, y: 17.00, yaw: 180.0}
+    approach_tag: 119
+  - id: "D09"
+    tag_id: 21
+    cohort: 3
+    title: "FindIT"
+    lead: "Shashank"
+    booth_pose: {x: 14.00, y: 15.00, yaw: 180.0}
+    approach_tag: 120
+  - id: "D10"
+    tag_id: 22
+    cohort: 3
+    title: "RouteWise"
+    lead: "Shashank"
+    booth_pose: {x: 14.00, y: 13.00, yaw: 180.0}
+    approach_tag: 121
+  - id: "D11"
+    tag_id: 23
+    cohort: 3
+    title: "AI Exam Monitor"
+    lead: "Shashank"
+    booth_pose: {x: 14.00, y: 11.00, yaw: 180.0}
+    approach_tag: 122
+  - id: "D12"
+    tag_id: 24
+    cohort: 3
+    title: "Eagle's Eye"
+    lead: "Shashank"
+    booth_pose: {x: 14.00, y: 9.00, yaw: 180.0}
+    approach_tag: 123
+  - id: "B01"
+    tag_id: 25
+    cohort: 3
+    title: "Wish College"
+    lead: "Shashank"
+    booth_pose: {x: 14.00, y: 7.00, yaw: 180.0}
+    approach_tag: 124
+  - id: "B02"
+    tag_id: 26
+    cohort: 3
+    title: "GrowGrid"
+    lead: "Dana"
+    booth_pose: {x: 14.00, y: 5.00, yaw: 180.0}
+    approach_tag: 125
+  - id: "B03"
+    tag_id: 27
+    cohort: 3
+    title: "P&P"
+    lead: "Vaibhav & Ajay"
+    booth_pose: {x: 14.00, y: 3.00, yaw: 180.0}
+    approach_tag: 126
+
+  # Cohort 4 (Stalls 28-36)
+  - id: "B04"
+    tag_id: 28
+    cohort: 4
+    title: "Tera Mosac Lounges"
+    lead: "Vaibhav & Ajay"
+    booth_pose: {x: 22.00, y: 3.00, yaw: 270.0}
+    approach_tag: 127
+  - id: "B05"
+    tag_id: 29
+    cohort: 4
+    title: "Steel & Stack"
+    lead: "Shashank"
+    booth_pose: {x: 22.00, y: 5.00, yaw: 270.0}
+    approach_tag: 128
+  - id: "B06"
+    tag_id: 30
+    cohort: 4
+    title: "Zap Fit"
+    lead: "Avneet"
+    booth_pose: {x: 22.00, y: 7.00, yaw: 270.0}
+    approach_tag: 129
+  - id: "B07"
+    tag_id: 31
+    cohort: 4
+    title: "WonderTech"
+    lead: "Vaibhav & Ajay"
+    booth_pose: {x: 22.00, y: 9.00, yaw: 270.0}
+    approach_tag: 130
+  - id: "S32"
+    tag_id: 32
+    cohort: 4
+    title: "Autonomous Quadruped Docent"
+    lead: "Roopali & Shubham"
+    booth_pose: {x: 22.00, y: 11.00, yaw: 270.0}
+    approach_tag: 131
+  - id: "S33"
+    tag_id: 33
+    cohort: 4
+    title: "Cognitive Companion Core"
+    lead: "DPS Indirapuram Team"
+    booth_pose: {x: 22.00, y: 13.00, yaw: 270.0}
+    approach_tag: 132
+  - id: "S34"
+    tag_id: 34
+    cohort: 4
+    title: "Multi-Agent Swarm Relay"
+    lead: "Robotics Society"
+    booth_pose: {x: 22.00, y: 15.00, yaw: 270.0}
+    approach_tag: 133
+  - id: "S35"
+    tag_id: 35
+    cohort: 4
+    title: "Biomimetic Leg Kinematics"
+    lead: "Innovation Cell"
+    booth_pose: {x: 22.00, y: 17.00, yaw: 270.0}
+    approach_tag: 134
+  - id: "S36"
+    tag_id: 36
+    cohort: 4
+    title: "Grand Exhibition Finale"
+    lead: "DPSI Faculty & Leads"
+    booth_pose: {x: 22.00, y: 19.00, yaw: 270.0}
+    approach_tag: 135

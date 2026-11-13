@@ -30,12 +30,14 @@ class DiscoveryMapper:
         grid_resolution_m: float = 0.10,
         grid_size_cells: int = 200,
         grid_origin_xy: Tuple[float, float] = (-5.0, 5.0),
-        use_apriltag: bool = False
+        use_apriltag: bool = False,
+        layout_preset: str = "dpsi_expo_31stalls"
     ):
         self.resolution = grid_resolution_m
         self.grid_size = grid_size_cells
         self.origin_x, self.origin_y = grid_origin_xy
         self.use_apriltag = use_apriltag
+        self.layout_preset = layout_preset
         self.fiducial_family = "DICT_APRILTAG_36h11" if use_apriltag else "DICT_4X4_250"
 
         # 2D Occupancy Grid: 128 = unknown, 254 = free, 0 = occupied
@@ -51,13 +53,25 @@ class DiscoveryMapper:
         self.trajectory_history: List[Tuple[float, float, float]] = []
 
         # Booth Stall Name Mappings (Curricula metadata)
-        self.booth_stall_labels = {
-            1: "P01 (Stepwise AI)",
-            2: "P02 (Move Smarter: ADAS)",
-            6: "P06 (Robotic Smart Moving Bin)",
-            10: "BOOTH_01 (Solar Tracking Cart)",
-            11: "BOOTH_02 (Agri Drone)"
-        }
+        self.booth_stall_labels = {}
+        self.cohorts = []
+        cfg_name = "scaled_36s.yaml" if layout_preset == "scaled_36s" else "dpsi_expo_31stalls.yaml"
+        cfg_path = os.path.join(CONFIG_DIR, cfg_name)
+        if os.path.exists(cfg_path):
+            try:
+                with open(cfg_path, "r") as f:
+                    cfg_data = yaml.safe_load(f)
+                for s in cfg_data.get("stalls", []):
+                    self.booth_stall_labels[int(s["tag_id"])] = f"{s['id']} ({s['title']})"
+                self.cohorts = cfg_data.get("cohorts", [])
+            except Exception:
+                pass
+        if not self.booth_stall_labels:
+            self.booth_stall_labels = {
+                1: "P01 (Stepwise AI)",
+                2: "P02 (Move Smarter: ADAS)",
+                6: "P06 (Binzo)",
+            }
 
         # Status
         self.total_observations = 0
@@ -124,8 +138,8 @@ class DiscoveryMapper:
             dist = float(det["distance"])
             lat_dx = float(det["dx"])
 
-            # Reject noisy / extreme detections (>4.5m)
-            if dist > 4.5 or dist < 0.2:
+            # Reject noisy / extreme detections (>6.5m)
+            if dist > 6.5 or dist < 0.2:
                 continue
 
             self.total_observations += 1

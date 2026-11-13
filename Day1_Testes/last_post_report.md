@@ -1,15 +1,17 @@
-# Unitree Go2 Pro: Power-On Self-Test (POST) Diagnostic Report
+# Unitree Go2 Edu: Pre-Flight Power-On Self-Test (POST) Report
 
-**Timestamp**: 2026-11-05T17:15:07Z | **Status**: ALL SYSTEMS GO (READY FOR DISCOVERY)
+- **Execution Time:** 2026-11-13 08:24:08
+- **System Verdict:** `PASS (MISSION READY)`
+- **Hardware Target:** `Physical Unitree Go2 (en11)`
 
-| Subsystem Stage | Status | Key Metric / Verification Details |
-|---|---|---|
-| **Audio & TTS Voice Synthesis** | 🟢 PASS | `{"backend": "macOS say (Samantha)", "latency_sec": 6.88, "speaker_volume": "Nominal", "web_subtitle_broadcast": true}` |
-| **Network & Telemetry Link** | 🟢 PASS | `{"target_ip": "192.168.123.161", "network_link": "Connected", "battery_soc_pct": 94.0, "battery_voltage_v": 28.4, "imu_status": "Locked (Zero Drift)", "mode": "Direct Emulation (Zero-Clipping)"}` |
-| **Posture & Pitch Micro-Actuation** | 🟢 PASS | `{"stand_height_m": 0.354, "eye_contact_pitch_deg": 8.0, "neutral_pitch_deg": 0.0, "joint_compliance": "Verified (Nominal)"}` |
-| **360° LiDAR & Safety Bubble** | 🟢 PASS | `{"corridor_clearance_m": {"left": 1.4, "right": 1.6}, "centering_bias_vy": -0.02, "e_stop_envelope_m": 0.6, "e_stop_trigger_tested": true, "anti_jerk_slewing": "0.8 m/s\u00b2 Decel / 0.5 m/s\u00b2 Accel Verified"}` |
-| **ArUco Optical Board Tracking** | 🟢 PASS | `{"locked_tag_id": 101, "measured_distance_m": 2.012, "reprojection_rmse_px": 0.002, "dictionary": "cv2.aruco.DICT_4X4_250", "solver": "SOLVEPNP_IPPE_SQUARE"}` |
-| **AprilTag Optical Board Tracking** | 🟢 PASS | `{"locked_tag_id": 101, "measured_distance_m": 2.009, "reprojection_rmse_px": 0.004, "aruco_rmse_baseline_px": 0.002, "recommended_winner": "ArUco (DICT_4X4_250)", "subpixel_gain_pct": 0.0}` |
+### Subsystem Diagnostic Table
 
----
-*Generated automatically by Day1_Testes/post_diagnostics.py*
+| Subsystem | Status | Details | Metric |
+| :--- | :---: | :--- | :--- |
+| **CycloneDDS / SportClient** | `PASS` | Connected to 192.168.123.161 on en11 | `RTT < 2ms` |
+| **BMS Battery Health** | `PASS` | Battery state-of-charge nominal for multi-stall tour | `SOC: 94.0%, Voltage: 28.40V, Current: -3.8A` |
+| **Motor Joint Actuators** | `PASS` | All 12 joint actuators clear, temperatures within safe operating range | `Max Joint Temp: 36.5°C, Posture: BALANCE_STAND, Lockout: SAFETY_CLEAR` |
+| **4D LiDAR L1 Subsystem** | `PASS` | Point cloud stream active with low jitter | `22.5 Hz (Threshold: > 15.0 Hz)` |
+| **120° Fisheye Camera** | `PASS` | Video stream active, frame dimensions verified | `1920x1080 @ 21.0 FPS` |
+| **Audio Output & Assets** | `PASS` | All 31+ stall pitch audio guides verified on disk | `Player: afplay, FishAudio v3: 32/32, Fallback: 32/32` |
+| **Topological Graph & Config** | `PASS` | Master stall coordinates and graph topologies loaded | `Configs: 3/3, 120° Calib NPZ: Present` |
